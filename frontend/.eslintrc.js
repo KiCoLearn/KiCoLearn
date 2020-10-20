@@ -9,6 +9,7 @@ module.exports = {
     extends: [
         'plugin:vue/essential',
         'plugin:vue/strongly-recommended',
+        'plugin:vue/recommended',
         'eslint:recommended',
     ],
     parserOptions: {
@@ -20,59 +21,56 @@ module.exports = {
         // "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
         // "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
         // "no-var": 0,
-        'indent': [
+        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        indent: [
             'warn',
             4,
         ],
         'vue/html-indent': [
-            'warn', 
-            4, 
+            'warn',
+            4,
             {
                 attribute: 1,
                 closeBracket: 0,
                 alignAttributesVertically: true,
                 ignores: [],
-            }
+            },
         ],
         'vue/html-closing-bracket-newline': [
-            'warn', 
+            'warn',
             {
                 singleline: 'never',
                 multiline: 'always',
-            }
+            },
         ],
-        'semi': [
+        semi: [
             'warn',
             'always',
         ],
-        'quotes': [
-            'error', 
+        quotes: [
+            'error',
             'single',
             {
-                'allowTemplateLiterals': true,
+                allowTemplateLiterals: true,
             },
         ],
         'no-empty': [
-            'error', 
-            { 
-                'allowEmptyCatch': true 
-            }
+            'error',
+            {
+                allowEmptyCatch: true,
+            },
         ],
-        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     },
     settings: {
-        'webpack': {
-            'config': 'path/to/setup/webpack.config.js'
-        },
         'import/resolver': {
-            'alias': {
-                'map': [
+            alias: {
+                map: [
                     ['@', './resources'],
-                    ['~', './resources/js']
+                    ['~', './resources/js'],
                 ],
-                'extensions': ['.js', '.vue']
-            }
-        }
+                extensions: ['.js', '.vue'],
+            },
+        },
     },
 };

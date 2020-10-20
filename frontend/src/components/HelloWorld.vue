@@ -121,12 +121,17 @@
 </template>
 
 <script>
-import './';
 export default {
     name: 'HelloWorld',
     props: {
-        msg: String,
+        msg: {
+            type: String,
+            default: 'Hello, World!',            
+        },
     },
+    data: () => ({
+        message: 'Hello',
+    }),
 };
 </script>
 
