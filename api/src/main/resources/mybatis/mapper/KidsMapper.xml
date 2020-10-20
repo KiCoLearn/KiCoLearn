@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kids.api.mapper.Kids">
+	<select id="detail" parameterType="int" resultType="kids">
+		select * from kids where kidId = #{kidId}
+	</select>
+	
+	<insert id="insert" parameterType="kids">
+		insert into kids(name, age, parent_id) values(#{name}, #{age}, #{parent_id})			
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from kids where kidId = #{kidId}
+	</delete>
+	
+</mapper>
