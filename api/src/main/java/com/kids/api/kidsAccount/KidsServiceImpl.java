@@ -1,5 +1,7 @@
 package com.kids.api.kidsAccount;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +25,10 @@ public class KidsServiceImpl implements KidsService {
     public Kids detailKid(int kidId) { 
         return kDao.detailKid(kidId);
     }
+
+	@Override
+	public List<Kids> getKidsByParentId(int parentId) {
+		return kDao.getKidsByParentId(parentId);
+	}
 
 }

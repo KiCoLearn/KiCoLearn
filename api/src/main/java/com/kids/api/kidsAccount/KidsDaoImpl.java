@@ -1,5 +1,7 @@
 package com.kids.api.kidsAccount;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -7,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class KidsDaoImpl implements KidsDao {
 
-private static String ns = "om.kids.api.mapper.Kids.";
+	private static String ns = "com.kids.api.mapper.Kids.";
     
     @Autowired
     SqlSessionTemplate temp;
@@ -26,5 +28,10 @@ private static String ns = "om.kids.api.mapper.Kids.";
     public Kids detailKid(int kidId) {
         return temp.selectOne(ns+"detail", kidId);
     }
+
+	@Override
+	public List<Kids> getKidsByParentId(int parentId) {
+		return temp.selectList(ns+"list",parentId);
+	}
 
 }
