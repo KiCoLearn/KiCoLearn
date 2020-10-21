@@ -1,11 +1,17 @@
 <template>
     <div id="app">
         <div id="nav">
-            <router-link to="/">
-                Home
-            </router-link> |
-            <router-link to="/about">
-                About
+            <img 
+                class="mainimg"
+                src="@/assets/background.jpg"
+                alt="배경 이미지"
+            >
+            <router-link to="/sign">
+                <img 
+                    class="kakao-sign"
+                    src="@/assets/kakao.png"
+                    alt="카카오 로그인"
+                >
             </router-link>
         </div>
         <router-view />
@@ -22,7 +28,7 @@
 }
 
 #nav {
-  padding: 30px;
+  padding: 0px;
 }
 
 #nav a {
@@ -32,5 +38,16 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.mainimg {
+  opacity: 0.5;
+  background-size: 100%;
+  width: 100%;
+  height: 100%;
+}
+.kakao-sign{
+    position: absolute;
+    top: 400px;
+    left: 120px;
 }
 </style>
