@@ -1,4 +1,4 @@
-package com.kids.api.kidsAccount;
+package com.kids.api.kidsaccount;
 
 import java.util.List;
 
