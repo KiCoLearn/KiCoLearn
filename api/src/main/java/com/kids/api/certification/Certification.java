@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Certification {
-	private String certificationNo;
-	private int parentId;
-	private int kidId;
-	private Timestamp expiredTime;
-	
+    private String certificationNo;
+    private int parentId;
+    private int kidId;
+    private Timestamp expiredTime;
+
 }

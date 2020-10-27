@@ -10,7 +10,7 @@ public class KidsServiceImpl implements KidsService {
 
     @Autowired
     KidsDao kDao;
-    
+
     @Override
     public int addKid(Kids kid) {
         return kDao.addKid(kid);
@@ -22,13 +22,13 @@ public class KidsServiceImpl implements KidsService {
     }
 
     @Override
-    public Kids detailKid(int kidId) { 
+    public Kids detailKid(int kidId) {
         return kDao.detailKid(kidId);
     }
 
-	@Override
-	public List<Kids> getKidsByParentId(int parentId) {
-		return kDao.getKidsByParentId(parentId);
-	}
+    @Override
+    public List<Kids> getKidsByParentId(int parentId) {
+        return kDao.getKidsByParentId(parentId);
+    }
 
 }

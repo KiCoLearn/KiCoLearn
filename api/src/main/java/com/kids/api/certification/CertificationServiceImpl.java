@@ -6,22 +6,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class CertificationServiceImpl implements CertificationService {
 
-	@Autowired
-	CertificationDao cDao;
-	
-	@Override
-	public int addCertification(Certification certification) {
-		return cDao.addCertification(certification);
-	}
+    @Autowired
+    CertificationDao cDao;
 
-	@Override
-	public Certification getCertificationByNo(String certificationNo) {
-		return cDao.getCertificationByNo(certificationNo);
-	}
+    @Override
+    public int addCertification(Certification certification) {
+        return cDao.addCertification(certification);
+    }
 
-	@Override
-	public int createKidsAuth(KidsAuth kidsAuth) {
-		return cDao.createKidsAuth(kidsAuth);
-	}
+    @Override
+    public Certification getCertificationByNo(String certificationNo) {
+        return cDao.getCertificationByNo(certificationNo);
+    }
+
+    @Override
+    public int createKidsAuth(KidsAuth kidsAuth) {
+        return cDao.createKidsAuth(kidsAuth);
+    }
 
 }

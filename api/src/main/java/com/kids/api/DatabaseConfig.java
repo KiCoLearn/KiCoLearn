@@ -12,19 +12,19 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
 public class DatabaseConfig {
-	@Bean
-	public SqlSessionFactory sqlSessionFactory(DataSource dataSource)
-			throws Exception {
-		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-		sqlSessionFactory.setDataSource(dataSource);
-		Resource confiigLocation = new PathMatchingResourcePatternResolver()
-				.getResource("classpath:/mybatis/mybatis_config.xml");
-		sqlSessionFactory.setConfigLocation(confiigLocation);
-		return sqlSessionFactory.getObject();
-	}
+    @Bean
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource)
+                    throws Exception {
+        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(dataSource);
+        Resource confiigLocation = new PathMatchingResourcePatternResolver()
+                                                                            .getResource("classpath:/mybatis/mybatis_config.xml");
+        sqlSessionFactory.setConfigLocation(confiigLocation);
+        return sqlSessionFactory.getObject();
+    }
 
-	@Bean
-	public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
-		return new SqlSessionTemplate(sqlSessionFactory);
-	}
+    @Bean
+    public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
 }

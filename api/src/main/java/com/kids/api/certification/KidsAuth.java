@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KidsAuth {
-	private int kidId;
-	private String password;
+    private int kidId;
+    private String password;
 }

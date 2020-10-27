@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Parent {
-	private int parentId;
-	private String name;
-	private String email;
+    private int parentId;
+    private String name;
+    private String email;
 }

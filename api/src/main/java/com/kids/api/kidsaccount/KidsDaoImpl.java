@@ -9,29 +9,29 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class KidsDaoImpl implements KidsDao {
 
-	private static String ns = "com.kids.api.mapper.Kids.";
-    
+    private static String ns = "com.kids.api.mapper.Kids.";
+
     @Autowired
     SqlSessionTemplate temp;
-    
+
     @Override
     public int addKid(Kids kid) {
-        return temp.insert(ns+"insert", kid);
+        return temp.insert(ns + "insert", kid);
     }
 
     @Override
     public int deleteKid(int kidId) {
-        return temp.delete(ns+"delete", kidId);
+        return temp.delete(ns + "delete", kidId);
     }
 
     @Override
     public Kids detailKid(int kidId) {
-        return temp.selectOne(ns+"detail", kidId);
+        return temp.selectOne(ns + "detail", kidId);
     }
 
-	@Override
-	public List<Kids> getKidsByParentId(int parentId) {
-		return temp.selectList(ns+"list",parentId);
-	}
+    @Override
+    public List<Kids> getKidsByParentId(int parentId) {
+        return temp.selectList(ns + "list", parentId);
+    }
 
 }
