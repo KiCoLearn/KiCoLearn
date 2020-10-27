@@ -19,4 +19,9 @@ public class CertificationServiceImpl implements CertificationService {
 		return cDao.getCertificationByNo(certificationNo);
 	}
 
+	@Override
+	public int createKidsAuth(KidsAuth kidsAuth) {
+		return cDao.createKidsAuth(kidsAuth);
+	}
+
 }

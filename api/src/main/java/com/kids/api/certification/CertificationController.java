@@ -2,11 +2,12 @@ package com.kids.api.certification;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.time.Instant;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,10 +41,14 @@ public class CertificationController {
 			SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
 			int digit = sr.nextInt(900000) + 100000;
 			// 한국시간 + 5분뒤 만료
-			LocalDateTime now = LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis() + 300000),
-					ZoneId.of("Asia/Seoul"));
+			// LocalDateTime now =
+			// LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis() +
+			// 300000),ZoneId.of("Asia/Seoul"));
+			ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).plusMinutes(5);
+			System.out.println(now);
 
-			Certification certification = new Certification(digit+"", parent.getParentId(), kid.getKidId(), now);
+			Certification certification = new Certification(digit + "", parent.getParentId(), kid.getKidId(),
+					Timestamp.valueOf(now.toLocalDateTime()));
 			// DB 인증번호 등록
 			cService.addCertification(certification);
 
@@ -61,9 +66,47 @@ public class CertificationController {
 		logger.debug("certificationNo : " + certification.getCertificationNo());
 		try {
 			Certification temCertification = cService.getCertificationByNo(certification.getCertificationNo());
-			System.out.println(temCertification);
-			
-			entity = handleSuccess(temCertification);
+			Map<String, Object> resultMap = new HashMap<>();
+			if (temCertification == null) {
+				resultMap.put("success", false);
+				resultMap.put("message", "일치하는 데이터가 조회되지 않음");
+
+			} else {
+				if (System.currentTimeMillis() > temCertification.getExpiredTime().getTime()) {
+					resultMap.put("success", false);
+					resultMap.put("message", "시간이 만료됨");
+				} else {
+					StringBuffer temp = new StringBuffer();
+					Random rnd = new Random();
+					
+					//20자리 난수,문자열 조합
+					for (int i = 0; i < 20; i++) {
+						int rIndex = rnd.nextInt(3);
+						switch (rIndex) {
+						case 0:
+							// a-z
+							temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+							break;
+						case 1:
+							// A-Z
+							temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+							break;
+						case 2:
+							// 0-9
+							temp.append((rnd.nextInt(10)));
+							break;
+						}
+					}
+
+					KidsAuth auth = new KidsAuth(temCertification.getKidId(), temp.toString());
+					cService.createKidsAuth(auth);
+					resultMap.put("success", true);
+					resultMap.put("data", auth);
+
+				}
+			}
+			entity = handleSuccess(resultMap);
+
 		} catch (RuntimeException e) {
 			entity = handleException(e);
 		}
