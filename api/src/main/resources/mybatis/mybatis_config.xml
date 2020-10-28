@@ -15,6 +15,7 @@
 		<typeAlias type="com.kids.api.certification.Parent" alias="parent" />
 		<typeAlias type="com.kids.api.certification.KidsAuth" alias="kidsauth" />
 		<typeAlias type="com.kids.api.money.Money" alias="money" />
+		<typeAlias type="com.kids.api.money.Budget" alias="budget" />
 	</typeAliases>
 
 	<mappers>
