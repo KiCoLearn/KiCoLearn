@@ -29,7 +29,7 @@ public class QuestController {
     QuestService qService;
 
     @GetMapping("/list/{parentId}")
-    @ApiOperation(value = "부모번호로 퀘스트 정보 조회")
+    @ApiOperation(value = "부모 번호로 퀘스트 리스트 조회")
     public ResponseEntity<Map<String, Object>> getQuestList(@PathVariable int parentId) {
         ResponseEntity<Map<String, Object>> entity = null;
         try {
@@ -85,7 +85,7 @@ public class QuestController {
     }
 
     @GetMapping("/kid/list/{kidId}")
-    @ApiOperation(value = "아이번호로 퀘스트 리스트 조회")
+    @ApiOperation(value = "아이 번호로 퀘스트 리스트 조회")
     public ResponseEntity<Map<String, Object>> getKidsQuestListByKidId(@PathVariable int kidId) {
         ResponseEntity<Map<String, Object>> entity = null;
         try {
