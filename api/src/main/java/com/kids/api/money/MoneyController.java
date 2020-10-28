@@ -50,7 +50,7 @@ public class MoneyController {
 		return result;
 	}
 	
-	@PostMapping("/deposit")
+	@PostMapping("/withdraw")
 	public ResponseEntity<Map<String, Object>> withdraw(@RequestBody Map<String, Object> data) {		
 		ResponseEntity<Map<String, Object>> result = null;
 		try {
