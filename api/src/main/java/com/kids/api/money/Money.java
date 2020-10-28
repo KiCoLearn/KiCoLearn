@@ -1,7 +1,5 @@
 package com.kids.api.money;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
