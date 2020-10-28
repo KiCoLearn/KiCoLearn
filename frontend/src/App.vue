@@ -1,5 +1,7 @@
 <template>
     <div id="app">
+        <Kakao />
+        <Kakao2 />
         <div id="nav">
             <router-link to="/">
                 Home
@@ -11,6 +13,20 @@
         <router-view />
     </div>
 </template>
+
+<script>
+import Kakao from '@/components/oauth/OAuthKakao';
+import Kakao2 from '@/components/oauth/OAuthKakaoLogout';
+
+export default {
+    components: {
+        Kakao,
+        Kakao2,
+    },
+    mounted() {
+    },
+};
+</script>
 
 <style>
 #app {
