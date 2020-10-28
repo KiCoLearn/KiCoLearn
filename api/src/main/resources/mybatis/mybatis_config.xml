@@ -15,11 +15,15 @@
 		<typeAlias type="com.kids.api.certification.Parent" alias="parent" />
 		<typeAlias type="com.kids.api.certification.KidsAuth" alias="kidsauth" />
 		<typeAlias type="com.kids.api.quest.Quest" alias="quest" />
-			<typeAlias type="com.kids.api.quest.KidsQuest" alias="kidsquest" />
+		<typeAlias type="com.kids.api.quest.KidsQuest" alias="kidsquest" />
+		<typeAlias type="com.kids.api.money.Money" alias="money" />
+		<typeAlias type="com.kids.api.money.Budget" alias="budget" />
+
 	</typeAliases>
 
 	<mappers>
 		<!-- 사용할 mapper 등록 -->
+		<mapper resource="mybatis/mapper/MoneyMapper.xml" />
 		<mapper resource="mybatis/mapper/KidsMapper.xml" />
 		<mapper resource="mybatis/mapper/CertificationMapper.xml" />
 		<mapper resource="mybatis/mapper/QuestMapper.xml" />
