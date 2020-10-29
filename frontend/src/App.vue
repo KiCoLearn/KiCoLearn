@@ -1,22 +1,20 @@
 <template>
     <div id="app">
-        <div id="nav">
-            <img 
-                class="mainimg"
-                src="@/assets/background.jpg"
-                alt="배경 이미지"
-            >
-            <router-link to="/sign">
-                <img 
-                    class="kakao-sign"
-                    src="@/assets/kakao.png"
-                    alt="카카오 로그인"
-                >
-            </router-link>
+        <div id="nav">   
+            <router-link to="/" />    
         </div>
         <router-view />
     </div>
 </template>
+
+<script>
+export default {
+    name: 'App',
+    data(){
+
+    },
+};
+</script>
 
 <style>
 #app {
