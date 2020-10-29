@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import OAuthRoutes from '@/router/oauth';
 
 Vue.use(VueRouter);
 
 const routes = [
+    ...OAuthRoutes,
     {
         path: '/',
         name: 'Home',
