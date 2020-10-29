@@ -19,6 +19,7 @@
 		<typeAlias type="com.kids.api.money.Money" alias="money" />
 		<typeAlias type="com.kids.api.money.Budget" alias="budget" />
 		<typeAlias type="com.kids.api.quiz.Quiz" alias="quiz" />
+		<typeAlias type="com.kids.api.quiz.TodayQuiz" alias="today" />
 	</typeAliases>
 
 	<mappers>

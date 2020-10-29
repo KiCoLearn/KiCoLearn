@@ -36,4 +36,14 @@ public class QuizServiceImpl implements QuizService {
         return qDao.deleteQuiz(quizNo);
     }
 
+    @Override
+    public TodayQuiz getTodayQuiz() {
+        return qDao.getTodayQuiz();
+    }
+
+    @Override
+    public int createTodayQuiz(TodayQuiz newQuiz) {
+        return qDao.createTodayQuiz(newQuiz);
+    }
+
 }

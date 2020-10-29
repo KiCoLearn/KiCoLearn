@@ -1,5 +1,7 @@
 package com.kids.api.quiz;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,11 +102,35 @@ public class QuizController {
         }
         return null;
     }
-
-    private ResponseEntity<Map<String, Object>> template() {
+    
+    @GetMapping("/today")
+    @ApiOperation(value = "오늘의 퀴즈를 조회")
+    private ResponseEntity<Map<String, Object>> todayQuiz() {
         ResponseEntity<Map<String, Object>> result = null;
-        return null;
+        try {
+            TodayQuiz today = qService.getTodayQuiz();
+            Date time = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String day = format.format(time);
+            String comp = format.format(today.getDate());
+            if(!day.equals(comp)) {
+                int next = today.getQuizNo()+1;
+                TodayQuiz newQuiz = new TodayQuiz(next);
+                int ans = qService.createTodayQuiz(newQuiz);
+                today = qService.getTodayQuiz();                
+            }
+            Quiz quiz = qService.reference(today.getQuizNo());
+            result = handleSuccess(quiz);
+        } catch (Exception e) {
+            result = handleException(e);
+        }
+        return result;
     }
+    
+//    private ResponseEntity<Map<String, Object>> template() {
+//        ResponseEntity<Map<String, Object>> result = null;
+//        return null;
+//    }
 
     private ResponseEntity<Map<String, Object>> handleSuccess(Object data) {
         Map<String, Object> resultMap = new HashMap<>();

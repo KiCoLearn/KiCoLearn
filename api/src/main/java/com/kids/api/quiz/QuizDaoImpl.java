@@ -39,4 +39,14 @@ public class QuizDaoImpl implements QuizDao {
         return temp.delete(ns + "delete", quizNo);
     }
 
+    @Override
+    public TodayQuiz getTodayQuiz() {
+        return temp.selectOne(ns + "today");
+    }
+
+    @Override
+    public int createTodayQuiz(TodayQuiz newQuiz) {
+        return temp.insert(ns+"createToday", newQuiz);
+    }
+
 }

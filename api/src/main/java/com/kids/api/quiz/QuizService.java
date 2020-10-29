@@ -12,4 +12,8 @@ public interface QuizService {
     int update(Quiz quiz);
 
     int delete(int quizNo);
+    
+    TodayQuiz getTodayQuiz();
+
+    int createTodayQuiz(TodayQuiz newQuiz);
 }

@@ -12,4 +12,8 @@ public interface QuizDao {
     int updateQuiz(Quiz quiz);
 
     int deleteQuiz(int quizNo);
+
+    TodayQuiz getTodayQuiz();
+
+    int createTodayQuiz(TodayQuiz newQuiz);
 }

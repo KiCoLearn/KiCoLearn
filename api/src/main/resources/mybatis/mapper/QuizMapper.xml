@@ -13,7 +13,7 @@
 
 	</insert>
 	
-	<select id="select" parameterType="int">
+	<select id="select" parameterType="int" resultType="quiz">
 		select * from quiz where
 		quiz_no = #{quizNo}
 	</select>
@@ -28,5 +28,13 @@
 		delete from quiz where quiz_no
 		= #{quizNo}
 	</delete>
-
+	
+	<select id="today" resultType="today">
+		select * from today_quiz order by date desc limit 1
+	</select>
+	
+	<insert id="createToday" parameterType="today">
+		insert into today_quiz(quiz_no) values(#{quizNo})
+	</insert>
+	
 </mapper>
