@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Money {
     private int kidId;
-    private int calculation;
+    private int amount;
 }

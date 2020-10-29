@@ -16,6 +16,7 @@
 		<typeAlias type="com.kids.api.certification.KidsAuth" alias="kidsauth" />
 		<typeAlias type="com.kids.api.money.Money" alias="money" />
 		<typeAlias type="com.kids.api.money.Budget" alias="budget" />
+		<typeAlias type="com.kids.api.quiz.Quiz" alias="quiz" />
 	</typeAliases>
 
 	<mappers>
@@ -23,5 +24,6 @@
 		<mapper resource="mybatis/mapper/MoneyMapper.xml" />
 		<mapper resource="mybatis/mapper/KidsMapper.xml" />
 		<mapper resource="mybatis/mapper/CertificationMapper.xml" />
+		<mapper resource="mybatis/mapper/QuizMapper.xml" />
 	</mappers>
 </configuration>
