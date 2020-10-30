@@ -60,15 +60,6 @@ public class QuizController {
 
     @PostMapping("/create")
     @ApiOperation(value = "새로운 퀴즈를 생성")
-    @ApiImplicitParams({
-                    @ApiImplicitParam(
-                                      name = "quizInfo",
-                                      examples = @io.swagger.annotations.Example(
-
-                                                                                 value = {
-                                                                                                 @ExampleProperty(value = "{'property': 'test'}", mediaType = "application/json")
-                                                                                 }))
-    })
     private ResponseEntity<Map<String, Object>> createQuiz(@RequestBody Quiz quiz) {
         ResponseEntity<Map<String, Object>> result = null;
         try {
@@ -115,7 +106,7 @@ public class QuizController {
             String comp = format.format(today.getDate());
             if (!day.equals(comp)) { // 최근 퀴즈의 날짜와 오늘 날짜 비교 후 다르면 퀴즈 갱신
                 int next = today.getQuizNo() + 1;
-                if(next>qService.countQuiz()) {
+                if (next > qService.countQuiz()) {
                     next = 1;
                 }
                 TodayQuiz newQuiz = new TodayQuiz(next);
