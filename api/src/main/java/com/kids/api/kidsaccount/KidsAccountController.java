@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/kidsaccount")
+@RequestMapping("/api/kidsaccount")
 public class KidsAccountController {
     static Logger logger = LoggerFactory.getLogger(KidsAccountController.class);
 
     @Autowired
     KidsService kService;
-
+  
+    //@ApiImplicitParams({ @ApiImplicitParam(name = "jwt-auth-token", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
     @GetMapping("/list/{parentId}")
     @ApiOperation(value = "부모번호로 아이들 정보 조회")
     public ResponseEntity<Map<String, Object>> getKidsList(@PathVariable int parentId) {

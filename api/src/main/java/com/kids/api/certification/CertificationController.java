@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kids.api.jwt.JwtService;
 import com.kids.api.kidsaccount.Kids;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +33,9 @@ public class CertificationController {
 
     @Autowired
     CertificationService cService;
+    
+    @Autowired
+    JwtService jwtService;
 
     @PostMapping()
     @ApiOperation(value = "인증번호 요청")
@@ -61,7 +67,7 @@ public class CertificationController {
 
     @PostMapping("/login")
     @ApiOperation(value = "아이 인증번호로 로그인 요청")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Certification certification) {
+    public ResponseEntity<Map<String, Object>> login(HttpServletResponse response, @RequestBody Certification certification) {
         ResponseEntity<Map<String, Object>> entity = null;
         logger.debug("certificationNo : " + certification.getCertificationNo());
         try {
@@ -100,9 +106,12 @@ public class CertificationController {
 
                     KidsAuth auth = new KidsAuth(temCertification.getKidId(), temp.toString());
                     cService.createKidsAuth(auth);
+                    String token = jwtService.create(auth, "");
+                    response.setHeader("jwt-auth-token", token);
+                    
                     resultMap.put("success", true);
                     resultMap.put("data", auth);
-
+                    
                 }
             }
             entity = handleSuccess(resultMap);
