@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/api/money")
+@RequestMapping("/money")
 public class MoneyController {
     static Logger logger = LoggerFactory.getLogger(MoneyController.class);
 
@@ -27,7 +27,7 @@ public class MoneyController {
     MoneyService mService;
 
     @GetMapping("/{kidId}")
-    @ApiOperation(value="아이의 잔액 조회")
+    @ApiOperation(value = "아이의 잔액 조회")
     public ResponseEntity<Map<String, Object>> getLeftMoney(@PathVariable int kidId) {
         ResponseEntity<Map<String, Object>> result = null;
         try {
@@ -38,9 +38,9 @@ public class MoneyController {
         }
         return result;
     }
-    
+
     @PostMapping("/activity")
-    @ApiOperation(value="활동을 기록(용돈기입장)")
+    @ApiOperation(value = "활동을 기록(용돈기입장)")
     public ResponseEntity<Map<String, Object>> activity(@RequestBody Map<String, Object> data) {
         ResponseEntity<Map<String, Object>> result = null;
         try {
@@ -57,28 +57,25 @@ public class MoneyController {
             result = handleException(e);
         }
         return result;
-    }    
-    
+    }
+
     @GetMapping("/activity/{kidId}")
-    @ApiOperation(value="아이의 활동 기록 가져오기(용돈기입장)")
-    public ResponseEntity<Map<String, Object>> activityList(@PathVariable int kidId){
+    @ApiOperation(value = "아이의 활동 기록 조회(용돈기입장)")
+    public ResponseEntity<Map<String, Object>> activityList(@PathVariable int kidId) {
         ResponseEntity<Map<String, Object>> result = null;
         try {
             result = handleSuccess(mService.activityList(kidId));
         } catch (Exception e) {
             result = handleException(e);
         }
-        return result;        
+        return result;
     }
-    
+
     @PostMapping("/deposit")
-    @ApiOperation(value="입금")
-    public ResponseEntity<Map<String, Object>> deposit(@RequestBody Map<String, Object> data) {
+    @ApiOperation(value = "입금")
+    public ResponseEntity<Map<String, Object>> deposit(@RequestBody Money money) {
         ResponseEntity<Map<String, Object>> result = null;
-        try {
-            int kidId = (int) data.get("kidId");
-            int calculation = (int) data.get("calculation");
-            Money money = new Money(kidId, calculation);
+        try {            
             result = handleSuccess(mService.deposit(money));
         } catch (Exception e) {
             result = handleException(e);
@@ -87,13 +84,10 @@ public class MoneyController {
     }
 
     @PostMapping("/withdraw")
-    @ApiOperation(value="출금")
-    public ResponseEntity<Map<String, Object>> withdraw(@RequestBody Map<String, Object> data) {
+    @ApiOperation(value = "출금")
+    public ResponseEntity<Map<String, Object>> withdraw(@RequestBody Money money) {
         ResponseEntity<Map<String, Object>> result = null;
-        try {
-            int kidId = (int) data.get("kidId");
-            int calculation = (int) data.get("calculation");
-            Money money = new Money(kidId, calculation);
+        try {            
             result = handleSuccess(mService.withdraw(money));
         } catch (Exception e) {
             result = handleException(e);
