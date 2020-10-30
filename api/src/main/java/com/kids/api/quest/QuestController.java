@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/quest")
+@RequestMapping("/api/quest")
 public class QuestController {
     static Logger logger = LoggerFactory.getLogger(QuestController.class);
 

@@ -27,7 +27,7 @@ import com.kids.api.kidsaccount.Kids;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/api/certification")
+@RequestMapping("/certification")
 public class CertificationController {
     static Logger logger = LoggerFactory.getLogger(CertificationController.class);
 
