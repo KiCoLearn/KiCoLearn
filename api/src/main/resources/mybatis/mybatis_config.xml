@@ -18,6 +18,8 @@
 		<typeAlias type="com.kids.api.quest.KidsQuest" alias="kidsquest" />
 		<typeAlias type="com.kids.api.money.Money" alias="money" />
 		<typeAlias type="com.kids.api.money.Budget" alias="budget" />
+		<typeAlias type="com.kids.api.store.Item" alias="item" />
+		<typeAlias type="com.kids.api.store.KidsStore" alias="kidstore" />
 
 	</typeAliases>
 
@@ -27,5 +29,6 @@
 		<mapper resource="mybatis/mapper/KidsMapper.xml" />
 		<mapper resource="mybatis/mapper/CertificationMapper.xml" />
 		<mapper resource="mybatis/mapper/QuestMapper.xml" />
+		<mapper resource="mybatis/mapper/StoreMapper.xml" />
 	</mappers>
 </configuration>
