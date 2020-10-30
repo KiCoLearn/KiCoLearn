@@ -49,4 +49,9 @@ public class QuizDaoImpl implements QuizDao {
         return temp.insert(ns+"createToday", newQuiz);
     }
 
+    @Override
+    public int countQuiz() {
+        return temp.selectOne(ns+"count");
+    }
+
 }

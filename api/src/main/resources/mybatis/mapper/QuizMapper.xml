@@ -37,4 +37,8 @@
 		insert into today_quiz(quiz_no) values(#{quizNo})
 	</insert>
 	
+	<select id="count" resultType="int">
+		select count(*) from quiz
+	</select>
+	
 </mapper>

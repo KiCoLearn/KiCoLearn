@@ -16,4 +16,6 @@ public interface QuizService {
     TodayQuiz getTodayQuiz();
 
     int createTodayQuiz(TodayQuiz newQuiz);
+
+    int countQuiz();
 }

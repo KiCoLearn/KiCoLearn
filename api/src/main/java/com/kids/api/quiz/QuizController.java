@@ -61,17 +61,17 @@ public class QuizController {
     @PostMapping("/create")
     @ApiOperation(value = "새로운 퀴즈를 생성")
     @ApiImplicitParams({
-        @ApiImplicitParam(
-            name = "quizInfo",
-            examples = @io.swagger.annotations.Example(
-                                                       
-                value = {
-                    @ExampleProperty(value = "{'property': 'test'}", mediaType = "application/json")
-                })) 
+                    @ApiImplicitParam(
+                                      name = "quizInfo",
+                                      examples = @io.swagger.annotations.Example(
+
+                                                                                 value = {
+                                                                                                 @ExampleProperty(value = "{'property': 'test'}", mediaType = "application/json")
+                                                                                 }))
     })
     private ResponseEntity<Map<String, Object>> createQuiz(@RequestBody Quiz quiz) {
         ResponseEntity<Map<String, Object>> result = null;
-        try {           
+        try {
             result = handleSuccess(qService.create(quiz));
         } catch (Exception e) {
             result = handleException(e);
@@ -83,7 +83,7 @@ public class QuizController {
     @ApiOperation(value = "퀴즈의 정보를 수정")
     private ResponseEntity<Map<String, Object>> updateQuiz(@RequestBody Quiz quiz) {
         ResponseEntity<Map<String, Object>> result = null;
-        try {            
+        try {
             result = handleSuccess(qService.update(quiz));
         } catch (Exception e) {
             result = handleException(e);
@@ -102,7 +102,7 @@ public class QuizController {
         }
         return null;
     }
-    
+
     @GetMapping("/today")
     @ApiOperation(value = "오늘의 퀴즈를 조회")
     private ResponseEntity<Map<String, Object>> todayQuiz() {
@@ -113,11 +113,14 @@ public class QuizController {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String day = format.format(time);
             String comp = format.format(today.getDate());
-            if(!day.equals(comp)) {
-                int next = today.getQuizNo()+1;
+            if (!day.equals(comp)) { // 최근 퀴즈의 날짜와 오늘 날짜 비교 후 다르면 퀴즈 갱신
+                int next = today.getQuizNo() + 1;
+                if(next>qService.countQuiz()) {
+                    next = 1;
+                }
                 TodayQuiz newQuiz = new TodayQuiz(next);
                 int ans = qService.createTodayQuiz(newQuiz);
-                today = qService.getTodayQuiz();                
+                today = qService.getTodayQuiz();
             }
             Quiz quiz = qService.reference(today.getQuizNo());
             result = handleSuccess(quiz);
@@ -126,11 +129,11 @@ public class QuizController {
         }
         return result;
     }
-    
-//    private ResponseEntity<Map<String, Object>> template() {
-//        ResponseEntity<Map<String, Object>> result = null;
-//        return null;
-//    }
+
+    // private ResponseEntity<Map<String, Object>> template() {
+    // ResponseEntity<Map<String, Object>> result = null;
+    // return null;
+    // }
 
     private ResponseEntity<Map<String, Object>> handleSuccess(Object data) {
         Map<String, Object> resultMap = new HashMap<>();

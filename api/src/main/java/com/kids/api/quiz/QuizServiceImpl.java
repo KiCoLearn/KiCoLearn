@@ -46,4 +46,9 @@ public class QuizServiceImpl implements QuizService {
         return qDao.createTodayQuiz(newQuiz);
     }
 
+    @Override
+    public int countQuiz() {
+        return qDao.countQuiz();
+    }
+
 }
