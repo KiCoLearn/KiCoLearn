@@ -1,10 +1,5 @@
 <template>
     <div class="kidslogin">
-        <img 
-            class="mainimg"
-            src="@/assets/background.jpg"
-            alt="배경 이미지"
-        >
         <div class="input">
             <input 
                 id="otp"
@@ -13,11 +8,13 @@
                 placeholder="번호를 입력해주세요" 
                 required
             >
-            <p class="my-3">
-                <span
+            <p>
+                <button
                     class="items"
                     @click="kid"
-                >로그인하기</span>
+                >
+                    로그인하기
+                </button>
             </p>
         </div>
     </div>
@@ -32,6 +29,24 @@ export default {
 };
 </script>
 <style scoped>
-
+.mainimg {
+  opacity: 0.5;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+}
+.kidslogin{
+    background-image: url("../../assets/background.jpg");
+    background-size: contain;
+    margin: 0rem,0rem,0rem,0rem;
+    height: 45rem;
+    opacity: 0.5;
+    background-repeat:no-repeat;
+    
+}
+.input{
+    position: absolute;
+   
+}
 
 </style>

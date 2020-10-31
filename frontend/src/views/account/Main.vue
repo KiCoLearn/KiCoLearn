@@ -1,23 +1,23 @@
 <template>
     <div class="startmain">
-        <img 
-            class="mainimg"
-            src="@/assets/background.jpg"
-            alt="배경 이미지"
-        >
         <div class="login">
-            <img 
-                class="kakao-sign"
-                src="@/assets/kakao.png"
-                alt="카카오 로그인"
-                @click="clickkakaologin"
-            >
-            <button
-                class="kidslogin"
-                @click="kidslogin"
-            >
-                아이 로그인
-            </button><br>
+            <p>
+                <img 
+                    class="kakao-sign"
+                    src="@/assets/kakao.png"
+                    ty
+                    alt="카카오 로그인"
+                    @click="clickkakaologin"
+                >
+            </p>
+            <p>
+                <button
+                    class="kidslogin"
+                    @click="kidslogin"
+                >
+                    아이 로그인
+                </button>
+            </p>
             <button
                 class="sign"
                 @click="sign"
@@ -32,33 +32,22 @@
 export default {
     methods: {
         kidslogin(){
-            this.$router.push({name:'kidslogin'});
+            this.$router.push({name:'Kidslogin'});
         },
         sign(){//필요한가...?
-            this.$router.push({name:'sign'});
+            this.$router.push({name:'Sign'});
         },
     },
 };
 </script>
 
 <style scoped>
-.mainimg {
-  opacity: 0.5;
-  background-size: 100%;
-  width: 100%;
-  height: 100%;
-}
-.kakao-sign{
-    position: absolute;
-    top: 400px;
-    left: 120px;
-}
+
 .kidslogin,.sign{
     background-color: #8cca79;
     color: #F8F8F8;
     width: 6rem;
     border-radius: 2rem;
-    
 }
 
 </style>

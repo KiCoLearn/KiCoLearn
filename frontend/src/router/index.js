@@ -7,6 +7,10 @@ import Kidsconnect from '@/views/account/Kidsconnect';
 import Kidslogin from '@/views/account/Kidslogin';
 //kids
 import Kidsmain from '@/views/Kids/Kidsmain';
+import Report from '@/views/Kids/Report';
+import Quest from '@/views/Kids/Quest';
+import Store from '@/views/Kids/Store';
+import Quiz from '@/views/Kids/Quiz';
 Vue.use(VueRouter);
 
 const routes = [
@@ -35,6 +39,26 @@ const routes = [
         path: '/kidsmain',
         name: 'Kidsmain',
         component:Kidsmain
+    },
+    {
+        path: '/report',
+        name: 'Report',
+        component:Report
+    },
+    {
+        path: '/quest',
+        name: 'Quest',
+        component:Quest
+    },
+    {
+        path: '/store',
+        name: 'Store',
+        component:Store
+    },
+    {
+        path: '/quiz',
+        name: 'Quiz',
+        component:Quiz
     },
 ];
 

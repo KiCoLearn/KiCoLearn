@@ -1,7 +1,10 @@
 <template>
     <div id="app">
         <div id="nav">   
-            <router-link to="/" />    
+            <router-link
+                id="main"
+                to="/"
+            />    
         </div>
         <router-view />
     </div>
@@ -37,15 +40,7 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-.mainimg {
-  opacity: 0.5;
-  background-size: 100%;
-  width: 100%;
-  height: 100%;
-}
-.kakao-sign{
-    position: absolute;
-    top: 400px;
-    left: 120px;
-}
+
+
+
 </style>
