@@ -1,20 +1,29 @@
 <template>
     <div id="app">
-        <div id="nav">   
-            <router-link
-                id="main"
-                to="/"
-            />    
+        <Kakao />
+        <Kakao2 />
+        <div id="nav">
+            <router-link to="/">
+                Home
+            </router-link> |
+            <router-link to="/about">
+                About
+            </router-link>
         </div>
         <router-view />
     </div>
 </template>
 
 <script>
-export default {
-    name: 'App',
-    data(){
+import Kakao from '@/components/oauth/OAuthKakao';
+import Kakao2 from '@/components/oauth/OAuthKakaoLogout';
 
+export default {
+    components: {
+        Kakao,
+        Kakao2,
+    },
+    mounted() {
     },
 };
 </script>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kids.api.mapper.quiz">
+	<select id="quizlist" resultType="quiz">
+		select * from quiz;
+	</select>
+	
+	<insert id="create">
+		insert into quiz(question, answer, description,
+		category) values(#{question}, #{answer}, #{description}, #{category})
+
+	</insert>
+	
+	<select id="select" parameterType="int" resultType="quiz">
+		select * from quiz where
+		quiz_no = #{quizNo}
+	</select>
+
+	<update id="update" parameterType="quiz">
+		update quiz set quiz question
+		= #{question}, description = #{description}, answer = #{answer},
+		category = #{category} where quiz_no = #{quizNo}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from quiz where quiz_no
+		= #{quizNo}
+	</delete>
+	
+	<select id="today" resultType="today">
+		select * from today_quiz order by date desc limit 1
+	</select>
+	
+	<insert id="createToday" parameterType="today">
+		insert into today_quiz(quiz_no) values(#{quizNo})
+	</insert>
+	
+	<select id="count" resultType="int">
+		select count(*) from quiz
+	</select>
+	
+</mapper>

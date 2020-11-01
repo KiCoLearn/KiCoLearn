@@ -1,19 +1,25 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
 //account
 import Sign from '@/views/account/Sign';
 import Main from '@/views/account/Main';
 import Kidsconnect from '@/views/account/Kidsconnect';
 import Kidslogin from '@/views/account/Kidslogin';
+
 //kids
 import Kidsmain from '@/views/Kids/Kidsmain';
 import Report from '@/views/Kids/Report';
 import Quest from '@/views/Kids/Quest';
 import Store from '@/views/Kids/Store';
 import Quiz from '@/views/Kids/Quiz';
+
+import OAuthRoutes from '@/router/oauth';
+
 Vue.use(VueRouter);
 
 const routes = [
+    ...OAuthRoutes,
     {
         path: '/',
         name: 'main',
