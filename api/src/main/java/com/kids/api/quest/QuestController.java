@@ -28,6 +28,7 @@ public class QuestController {
     @Autowired
     QuestService qService;
 
+    @Autowired
     Handler resultHandler;
 
     @GetMapping("/list/{parentId}")

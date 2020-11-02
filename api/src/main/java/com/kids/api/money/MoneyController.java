@@ -46,7 +46,7 @@ public class MoneyController {
         ResponseEntity<Map<String, Object>> result = null;
         try {
             String contents = (String) data.get("contents");
-            int amount = (int) data.get("amount");
+            int amount = (int) data.get("amount");  
             boolean type = (boolean) data.get("type");
             int kidId = (int) data.get("kidId");
             int leftMoney = mService.getTotalMoney(kidId) - amount;
@@ -77,7 +77,7 @@ public class MoneyController {
     public ResponseEntity<Map<String, Object>> deposit(@RequestBody Money money) {
         ResponseEntity<Map<String, Object>> result = null;
         try {            
-            result = handleSuccess(mService.deposit(money));
+            result = resultHandler.handleSuccess(mService.deposit(money));
         } catch (Exception e) {
             result = resultHandler.handleException(e);
         }
@@ -89,7 +89,7 @@ public class MoneyController {
     public ResponseEntity<Map<String, Object>> withdraw(@RequestBody Money money) {
         ResponseEntity<Map<String, Object>> result = null;
         try {            
-            result = handleSuccess(mService.withdraw(money));
+            result = resultHandler.handleSuccess(mService.withdraw(money));
         } catch (Exception e) {
             result = resultHandler.handleException(e);
         }
