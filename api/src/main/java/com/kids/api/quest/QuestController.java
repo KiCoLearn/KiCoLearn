@@ -1,13 +1,11 @@
 package com.kids.api.quest;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.kids.api.global.handler.Handler;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -28,6 +28,8 @@ public class QuestController {
     @Autowired
     QuestService qService;
 
+    Handler resultHandler;
+
     @GetMapping("/list/{parentId}")
     @ApiOperation(value = "부모 번호로 퀘스트 리스트 조회")
     public ResponseEntity<Map<String, Object>> getQuestList(@PathVariable int parentId) {
@@ -35,9 +37,9 @@ public class QuestController {
         try {
             List<Quest> quests = qService.getQuestListByParentId(parentId);
             logger.debug("search quest list by parentId: " + parentId + ", kid : " + quests);
-            entity = handleSuccess(quests);
+            entity = resultHandler.handleSuccess(quests);
         } catch (RuntimeException e) {
-            entity = handleException(e);
+            entity = resultHandler.handleException(e);
         }
         return entity;
     }
@@ -49,9 +51,9 @@ public class QuestController {
         try {
             Quest quest = qService.detailQuest(questNo);
             logger.debug("search quest by questNo: " + questNo + ", kid : " + quest);
-            entity = handleSuccess(quest);
+            entity = resultHandler.handleSuccess(quest);
         } catch (RuntimeException e) {
-            entity = handleException(e);
+            entity = resultHandler.handleException(e);
         }
         return entity;
     }
@@ -63,9 +65,9 @@ public class QuestController {
         logger.debug("insert quest: " + quest);
         try {
             qService.createQuest(quest);
-            entity = handleSuccess("success");
+            entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
-            entity = handleException(e);
+            entity = resultHandler.handleException(e);
         }
         return entity;
     }
@@ -77,9 +79,9 @@ public class QuestController {
         logger.debug("update quest: " + quest);
         try {
             qService.updateQuest(quest.getQusestNo());
-            entity = handleSuccess("success");
+            entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
-            entity = handleException(e);
+            entity = resultHandler.handleException(e);
         }
         return entity;
     }
@@ -91,9 +93,9 @@ public class QuestController {
         try {
             List<KidsQuest> list = qService.getKidQuestListByKidId(kidId);
             logger.debug("kid_quest: " + list);
-            entity = handleSuccess(list);
+            entity = resultHandler.handleSuccess(list);
         } catch (RuntimeException e) {
-            entity = handleException(e);
+            entity = resultHandler.handleException(e);
         }
         return entity;
     }
@@ -105,9 +107,9 @@ public class QuestController {
         logger.debug("set kid_quest: " + kidQuest);
         try {
             qService.setKidsQuest(kidQuest);
-            entity = handleSuccess("success");
+            entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
-            entity = handleException(e);
+            entity = resultHandler.handleException(e);
         }
         return entity;
     }
@@ -119,9 +121,9 @@ public class QuestController {
         logger.debug("finish kid_quest: " + kidQuest);
         try {
             qService.finishKidsQuest(kidQuest);
-            entity = handleSuccess("success");
+            entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
-            entity = handleException(e);
+            entity = resultHandler.handleException(e);
         }
         return entity;
     }
@@ -136,25 +138,11 @@ public class QuestController {
             kidQuest.setQuestNo(questNo);
             kidQuest.setKidId(kidId);
             qService.deleteKidQuest(kidQuest);
-            entity = handleSuccess("success");
+            entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
-            entity = handleException(e);
+            entity = resultHandler.handleException(e);
         }
         return entity;
     }
 
-    private ResponseEntity<Map<String, Object>> handleSuccess(Object data) {
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("status", true);
-        resultMap.put("data", data);
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-    }
-
-    private ResponseEntity<Map<String, Object>> handleException(Exception e) {
-        logger.error("예외 발생 : ", e);
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("status", false);
-        resultMap.put("data", e.getMessage());
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }

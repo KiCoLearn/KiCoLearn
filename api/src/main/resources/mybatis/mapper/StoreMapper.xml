@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kids.api.mapper.Store">
+	<select id="detailItem" parameterType="int" resultType="item">
+		select * from items where item_no = #{itemNo}
+	</select>
+	
+	<insert id="insertItem" parameterType="item">
+		insert into items(name, price, description, parent_id) values(#{name}, #{price}, #{description}, #{parentId})			
+	</insert>
+	
+	<update id="updateItem" parameterType="int">
+		update items set name=#{name}, price=#{price}, description=#{description} where item_no = #{itemNo}
+	</update>
+	
+	<select id="parentItem" parameterType="int" resultType="item">
+		select * from items where parent_id = #{parentId} or parent_id=0
+	</select>
+	
+	<delete id="deleteItem" parameterType="int">
+		delete from items where item_no = {itemNo}
+	</delete>
+	
+	<insert id="addKidItem" parameterType="kidstore">
+		insert into kids_store values(#{kidId}, #{itemNo})
+	</insert>
+	
+	<select id="kidsStore" parameterType="int" resultType="item">
+		select * from items where item_no in (
+		select item_no from kids_store where kid_id = #{kidId})
+	</select>
+	
+</mapper>
