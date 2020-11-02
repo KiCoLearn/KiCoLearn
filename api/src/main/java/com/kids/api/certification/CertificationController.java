@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,13 +38,14 @@ public class CertificationController {
     @Autowired
     JwtService jwtService;
 
+    @Autowired
     Handler resultHandler;
 
     @PostMapping()
     @ApiOperation(value = "인증번호 요청")
-    public ResponseEntity<Map<String, Object>> requestNumber(@RequestBody Kids kid, Parent parent) {
+    public ResponseEntity<Map<String, Object>> requestNumber(@RequestBody Kids kid) {
         ResponseEntity<Map<String, Object>> entity = null;
-        logger.debug("parentId : " + parent.getParentId() + ", kidId: " + kid.getKidId());
+        logger.debug("parentId : " + kid.getParentId() + ", kidId: " + kid.getKidId());
         try {
             // 인증번호 6자리 난수
             SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
@@ -55,7 +57,7 @@ public class CertificationController {
             ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).plusMinutes(5);
             System.out.println(now);
 
-            Certification certification = new Certification(digit + "", parent.getParentId(), kid.getKidId(),
+            Certification certification = new Certification(digit + "", kid.getParentId(), kid.getKidId(),
                                                             Timestamp.valueOf(now.toLocalDateTime()));
             // DB 인증번호 등록
             cService.addCertification(certification);
@@ -88,7 +90,7 @@ public class CertificationController {
                     Random rnd = new Random();
 
                     // 20자리 난수,문자열 조합
-                    for (int i = 0; i < 20; i++) {
+                    for (int i = 0;     i < 20; i++) {
                         int rIndex = rnd.nextInt(3);
                         switch (rIndex) {
                         case 0:
@@ -123,5 +125,5 @@ public class CertificationController {
         }
         return entity;
     }
-
+    
 }

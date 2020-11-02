@@ -28,6 +28,7 @@ public class StoreController {
     @Autowired
     StoreService sService;
 
+    @Autowired
     Handler resultHandler;
 
     @GetMapping("/list/{parentId}")

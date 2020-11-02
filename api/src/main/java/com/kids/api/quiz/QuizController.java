@@ -19,10 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import com.kids.api.global.handler.Handler;
+
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ExampleProperty;
 
 @RestController
 @RequestMapping("/quiz")
@@ -31,6 +30,9 @@ public class QuizController {
 
     @Autowired
     QuizService qService;
+    
+    @Autowired
+    Handler resultHandler;
 
     @GetMapping("/")
     @ApiOperation(value = "퀴즈 목록 조회")
@@ -38,7 +40,7 @@ public class QuizController {
         ResponseEntity<Map<String, Object>> result = null;
         try {
             List<Quiz> quizzes = qService.quizList();
-            result = handleSuccess(quizzes);
+            result = resultHandler.handleSuccess(quizzes);
         } catch (Exception e) {
 
         }
@@ -51,9 +53,9 @@ public class QuizController {
         ResponseEntity<Map<String, Object>> result = null;
         try {
             Quiz quiz = qService.reference(quizNo);
-            result = handleSuccess(quiz);
+            result = resultHandler.handleSuccess(quiz);
         } catch (Exception e) {
-            result = handleException(e);
+            result = resultHandler.handleException(e);
         }
         return result;
     }
@@ -63,9 +65,9 @@ public class QuizController {
     private ResponseEntity<Map<String, Object>> createQuiz(@RequestBody Quiz quiz) {
         ResponseEntity<Map<String, Object>> result = null;
         try {
-            result = handleSuccess(qService.create(quiz));
+            result = resultHandler.handleSuccess(qService.create(quiz));
         } catch (Exception e) {
-            result = handleException(e);
+            result = resultHandler.handleException(e);
         }
         return null;
     }
@@ -75,9 +77,9 @@ public class QuizController {
     private ResponseEntity<Map<String, Object>> updateQuiz(@RequestBody Quiz quiz) {
         ResponseEntity<Map<String, Object>> result = null;
         try {
-            result = handleSuccess(qService.update(quiz));
+            result = resultHandler.handleSuccess(qService.update(quiz));
         } catch (Exception e) {
-            result = handleException(e);
+            result = resultHandler.handleException(e);
         }
         return null;
     }
@@ -87,9 +89,9 @@ public class QuizController {
     private ResponseEntity<Map<String, Object>> deleteQuiz(@PathVariable int quizNo) {
         ResponseEntity<Map<String, Object>> result = null;
         try {
-            result = handleSuccess(qService.delete(quizNo));
+            result = resultHandler.handleSuccess(qService.delete(quizNo));
         } catch (Exception e) {
-            result = handleException(e);
+            result = resultHandler.handleException(e);
         }
         return null;
     }
@@ -114,9 +116,9 @@ public class QuizController {
                 today = qService.getTodayQuiz();
             }
             Quiz quiz = qService.reference(today.getQuizNo());
-            result = handleSuccess(quiz);
+            result = resultHandler.handleSuccess(quiz);
         } catch (Exception e) {
-            result = handleException(e);
+            result = resultHandler.handleException(e);
         }
         return result;
     }
@@ -126,19 +128,5 @@ public class QuizController {
     // return null;
     // }
 
-    private ResponseEntity<Map<String, Object>> handleSuccess(Object data) {
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("status", true);
-        resultMap.put("data", data);
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-    }
-
-    private ResponseEntity<Map<String, Object>> handleException(Exception e) {
-        logger.error("예외 발생 : ", e);
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("status", false);
-        resultMap.put("data", e.getMessage());
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 
 }

@@ -27,6 +27,7 @@ public class KidsAccountController {
     @Autowired
     KidsService kService;
 
+    @Autowired
     Handler resultHandler;
 
     // @ApiImplicitParams({ @ApiImplicitParam(name = "jwt-auth-token", value = "로그인 성공 후 access_token", required = true,
