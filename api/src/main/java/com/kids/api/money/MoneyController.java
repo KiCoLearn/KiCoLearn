@@ -18,7 +18,7 @@ import com.kids.api.global.handler.Handler;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/api/money")
+@RequestMapping("/money")
 public class MoneyController {
     static Logger logger = LoggerFactory.getLogger(MoneyController.class);
 
@@ -61,7 +61,7 @@ public class MoneyController {
     }
 
     @GetMapping("/activity/{kidId}")
-    @ApiOperation(value = "아이의 활동 기록 가져오기(용돈기입장)")
+    @ApiOperation(value = "아이의 활동 기록 조회(용돈기입장)")
     public ResponseEntity<Map<String, Object>> activityList(@PathVariable int kidId) {
         ResponseEntity<Map<String, Object>> result = null;
         try {
@@ -74,13 +74,10 @@ public class MoneyController {
 
     @PostMapping("/deposit")
     @ApiOperation(value = "입금")
-    public ResponseEntity<Map<String, Object>> deposit(@RequestBody Map<String, Object> data) {
+    public ResponseEntity<Map<String, Object>> deposit(@RequestBody Money money) {
         ResponseEntity<Map<String, Object>> result = null;
-        try {
-            int kidId = (int) data.get("kidId");
-            int calculation = (int) data.get("calculation");
-            Money money = new Money(kidId, calculation);
-            result = resultHandler.handleSuccess(mService.deposit(money));
+        try {            
+            result = handleSuccess(mService.deposit(money));
         } catch (Exception e) {
             result = resultHandler.handleException(e);
         }
@@ -89,13 +86,10 @@ public class MoneyController {
 
     @PostMapping("/withdraw")
     @ApiOperation(value = "출금")
-    public ResponseEntity<Map<String, Object>> withdraw(@RequestBody Map<String, Object> data) {
+    public ResponseEntity<Map<String, Object>> withdraw(@RequestBody Money money) {
         ResponseEntity<Map<String, Object>> result = null;
-        try {
-            int kidId = (int) data.get("kidId");
-            int calculation = (int) data.get("calculation");
-            Money money = new Money(kidId, calculation);
-            result = resultHandler.handleSuccess(mService.withdraw(money));
+        try {            
+            result = handleSuccess(mService.withdraw(money));
         } catch (Exception e) {
             result = resultHandler.handleException(e);
         }
