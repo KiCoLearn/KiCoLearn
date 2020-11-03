@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <v-app id="app">
         <Kakao />
         <Kakao2 />
         <div id="nav">
@@ -10,8 +10,12 @@
                 About
             </router-link>
         </div>
-        <router-view />
-    </div>
+        <v-main>
+            <v-container fluid>
+                <router-view />
+            </v-container>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
