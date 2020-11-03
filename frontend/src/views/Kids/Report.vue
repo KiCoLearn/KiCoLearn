@@ -1,101 +1,116 @@
 <template>
-    <v-card
-        max-width="400"
-        class="mx-auto"
-    >
-        <v-container>
-            <v-btn>최근 입출금기록</v-btn>
-            <v-btn>레포트</v-btn>
-            <li
-                v-for="uselog in uselogs"
-                :key="uselog.id"
-            >
-                <v-card class="useloglist">
-                    <v-layout>
-                        <v-flex xs3>
-                            <v-img
-                                :src="uselog.imgsrc"
-                                contain
-                                height="4rem"
-                            />
-                        </v-flex>
-                        <v-layout column>
-                            <v-card-title><h5>{{ uselog.title }}</h5></v-card-title>
-                            <v-card-text>{{ `${uselog.price}원` }}</v-card-text>
-                        </v-layout>
-                    </v-layout>
-                </v-card>
-            </li>
-            <v-card
-                v-for="report in reports"
-                :key="report.id"
-            >
-                <v-layout>
-                    <v-flex xs3>
-                        <v-img
-                            :src="report.imgsrc"
-                            contain
-                            height="4rem"
-                        />
-                    </v-flex>
-                    <v-layout column>
-                        <v-card-title><h5>{{ report.title }}</h5></v-card-title>
-                        <v-card-text>{{ `${report.percent}%` }}</v-card-text>
-                    </v-layout>
-                </v-layout>
-            </v-card>
-            <v-spacer />
-        </v-container>
-    </v-card>
+    <div>
+        <div
+            id="tabs"
+            class="container"
+        >
+            <div class="tabs">
+                <a
+                    :class="[ activetab === 1 ? 'active' : '' ]"
+                    @click="activetab=1"
+                >최근이용내역</a>
+                <a
+                    :class="[ activetab === 2 ? 'active' : '' ]"
+                    @click="activetab=2"
+                >소비 레포트</a>
+            </div>
+
+            <div class="content">
+                <div
+                    v-if="activetab === 1"
+                    class="tabcontent"
+                >
+                    <History />
+                </div>
+                <div
+                    v-if="activetab === 2"
+                    class="tabcontent"
+                >
+                    <UseReport />
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
-<script lang="js">
+<script >
+import History from '@/components/report/History.vue';
+import UseReport from '@/components/report/UseReport.vue';
+
+
 export default {
+    name:'Report',
+    components:{
+        History,
+        UseReport,
+   
+    },
     data() {
         return {
-            uselogs: [
-                {
-                    id: 1,
-                    title: '미션 성공',
-                    price: 500,
-                    imgsrc: require('@/assets/questsuc.png')
-                },
-                {
-                    id: 2,
-                    title: '깁밥',
-                    price: 749,
-                    imgsrc: require('@/assets/questsuc.png')
-                },
-                {
-                    id: 3,
-                    title: '용돈',
-                    price: 949,
-                    imgsrc: require('@/assets/questsuc.png')
-                },
-            ],
-            reports:[
-                {
-                    id: 1,
-                    title: '소비가 줄었어요!',
-                    percent: 23,
-                    imgsrc: require('@/assets/questsuc.png')
-                },
-                {
-                    id: 2,
-                    title: '소비가 줄었어요!',
-                    percent: 50,
-                    imgsrc: require('@/assets/questsuc.png')
-                },
-                {
-                    id: 3,
-                    title: '소비가 늘었어요!',
-                    percent: 40,
-                    imgsrc: require('@/assets/questsuc.png')
-                },
+            activetab:1,
 
-            ],
         };
-    },
+    },  
         
 };
 </script>
+<style scoped>
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.container {  
+    max-width: 100%; 
+    min-width: 20rem;
+    margin: 2.5rem auto;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #888;
+}
+.tabs {
+    overflow: hidden;
+  margin-left: 1rem;
+    margin-bottom: -0.1rem; 
+}
+.tabs ul {
+    list-style-type: none;
+    margin-left: 1rem;
+}
+.tabs a{
+    float: initial;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s;
+    border: 1px solid #ccc;
+    border-right: none;
+    background-color: #f1f1f1;
+    border-radius: 1rem 1rem 0 0;
+    font-weight: bold;
+}
+.tabs a:last-child { 
+    border-right: 0.1rem solid #ccc;
+}
+
+/* Change background color of tabs on hover */
+.tabs a:hover {
+    background-color: #aaa;
+    color: #fff;
+}
+
+/* Styling for active tab */
+.tabs a.active {
+    background-color: #fff;
+    color: #484848;
+    border-bottom: 0.1rem solid #fff;
+    cursor: default;
+}
+
+/* Style the tab content */
+.tabcontent {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 2rem;
+  box-shadow: 3px 3px 6px #e1e1e1
+}
+</style>
