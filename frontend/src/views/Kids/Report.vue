@@ -1,39 +1,101 @@
 <template>
-    <div class="report">
-        <div class="header">
-            <KidsHeader />
-        </div>
-        <div class="mainreport">
-            <button
-                id="btn"
-                class="points"
+    <v-card
+        max-width="400"
+        class="mx-auto"
+    >
+        <v-container>
+            <v-btn>최근 입출금기록</v-btn>
+            <v-btn>레포트</v-btn>
+            <li
+                v-for="uselog in uselogs"
+                :key="uselog.id"
             >
-                이거는 포인트 확인
-            </button>
-            <h3>여기는레포트</h3>
-            <h3>여기는레포트</h3>
-            <h3>여기는레포트</h3>
-            <h3>여기는레포트</h3>
-        </div>
-    </div>
+                <v-card class="useloglist">
+                    <v-layout>
+                        <v-flex xs3>
+                            <v-img
+                                :src="uselog.imgsrc"
+                                contain
+                                height="4rem"
+                            />
+                        </v-flex>
+                        <v-layout column>
+                            <v-card-title><h5>{{ uselog.title }}</h5></v-card-title>
+                            <v-card-text>{{ `${uselog.price}원` }}</v-card-text>
+                        </v-layout>
+                    </v-layout>
+                </v-card>
+            </li>
+            <v-card
+                v-for="report in reports"
+                :key="report.id"
+            >
+                <v-layout>
+                    <v-flex xs3>
+                        <v-img
+                            :src="report.imgsrc"
+                            contain
+                            height="4rem"
+                        />
+                    </v-flex>
+                    <v-layout column>
+                        <v-card-title><h5>{{ report.title }}</h5></v-card-title>
+                        <v-card-text>{{ `${report.percent}%` }}</v-card-text>
+                    </v-layout>
+                </v-layout>
+            </v-card>
+            <v-spacer />
+        </v-container>
+    </v-card>
 </template>
 
-<script>
-import KidsHeader from '@/components/Kids/KidsHeader.vue';
+<script lang="js">
 export default {
-    components:{
-        KidsHeader
+    data() {
+        return {
+            uselogs: [
+                {
+                    id: 1,
+                    title: '미션 성공',
+                    price: 500,
+                    imgsrc: require('@/assets/questsuc.png')
+                },
+                {
+                    id: 2,
+                    title: '깁밥',
+                    price: 749,
+                    imgsrc: require('@/assets/questsuc.png')
+                },
+                {
+                    id: 3,
+                    title: '용돈',
+                    price: 949,
+                    imgsrc: require('@/assets/questsuc.png')
+                },
+            ],
+            reports:[
+                {
+                    id: 1,
+                    title: '소비가 줄었어요!',
+                    percent: 23,
+                    imgsrc: require('@/assets/questsuc.png')
+                },
+                {
+                    id: 2,
+                    title: '소비가 줄었어요!',
+                    percent: 50,
+                    imgsrc: require('@/assets/questsuc.png')
+                },
+                {
+                    id: 3,
+                    title: '소비가 늘었어요!',
+                    percent: 40,
+                    imgsrc: require('@/assets/questsuc.png')
+                },
+
+            ],
+        };
     },
-    methods: {
         
-    },
-    
 };
 </script>
-
-<style scoped>
-.mainreport{
-    height: 80 rem;
-    margin-top: 20rem;
-}
-</style>

@@ -20,7 +20,7 @@ import Kakao2 from '@/components/oauth/OAuthKakaoLogout';
 
 export default {
     components: {
-        Kakao,
+        Kakao,     
         Kakao2,
     },
     mounted() {
