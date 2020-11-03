@@ -18,12 +18,15 @@ import Quiz from '@/views/Kids/Quiz';
 import KidsList from '@/views/Parent/KidsList';
 import KidsRegist from '@/views/Parent/KidsRegist';
 
+import QuizTestRoutes from '@/router/quiz';
+
 import OAuthRoutes from '@/router/oauth';
 
 Vue.use(VueRouter);
 
 const routes = [
     ...OAuthRoutes,
+    ...QuizTestRoutes,
     {
         path: '/',
         name: 'main',

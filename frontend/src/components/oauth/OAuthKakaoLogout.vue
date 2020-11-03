@@ -1,10 +1,11 @@
 <template>
     <div>
-        <img
-            alt="kakao logo"
-            src="@/assets/kakao_login_medium_narrow.png"
+        <button
+            text="LOGOUT"
             @click="logout"
         >
+            로그아웃
+        </button>
     </div>
 </template>
 
