@@ -14,7 +14,12 @@ import Quest from '@/views/Kids/Quest';
 import Store from '@/views/Kids/Store';
 import Quiz from '@/views/Kids/Quiz';
 
+//parent
+import KidsList from '@/views/Parent/KidsList';
+import KidsRegist from '@/views/Parent/KidsRegist';
+
 import QuizTestRoutes from '@/router/quiz';
+
 import OAuthRoutes from '@/router/oauth';
 
 Vue.use(VueRouter);
@@ -67,6 +72,16 @@ const routes = [
         path: '/quiz',
         name: 'Quiz',
         component:Quiz
+    },
+    {
+        path: '/kidslist',
+        name: 'KidsList',
+        component:KidsList
+    },
+    {
+        path: '/kidsregist',
+        name: 'KidsRegist',
+        component:KidsRegist
     },
 ];
 

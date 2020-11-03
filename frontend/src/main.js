@@ -5,9 +5,11 @@ import store from './store';
 import '@/plugins/format.js';
 import vuetify from '@/plugins/vuetify.js';
 
+Vue.use(Vuetify);
 Vue.config.productionTip = false;
 
 new Vue({
+    vuetify: new Vuetify(),
     router,
     store,
     vuetify,
