@@ -14,12 +14,14 @@ import Quest from '@/views/Kids/Quest';
 import Store from '@/views/Kids/Store';
 import Quiz from '@/views/Kids/Quiz';
 
+import QuizTestRoutes from '@/router/quiz';
 import OAuthRoutes from '@/router/oauth';
 
 Vue.use(VueRouter);
 
 const routes = [
     ...OAuthRoutes,
+    ...QuizTestRoutes,
     {
         path: '/',
         name: 'main',
