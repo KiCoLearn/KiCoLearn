@@ -1,4 +1,4 @@
-package com.kids.api.oauth.error.exception;
+package com.kids.api.account.model.exception;
 
 import lombok.Getter;
 

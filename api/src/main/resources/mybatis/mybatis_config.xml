@@ -20,6 +20,7 @@
 		<typeAlias type="com.kids.api.money.Budget" alias="budget" />
 		<typeAlias type="com.kids.api.quiz.Quiz" alias="quiz" />
 		<typeAlias type="com.kids.api.quiz.TodayQuiz" alias="today" />
+		<typeAlias type="com.kids.api.account.parents.Parents" alias="parents" />
 	</typeAliases>
 
 	<mappers>
@@ -29,5 +30,6 @@
 		<mapper resource="mybatis/mapper/CertificationMapper.xml" />
 		<mapper resource="mybatis/mapper/QuizMapper.xml" />
 		<mapper resource="mybatis/mapper/QuestMapper.xml" />
+		<mapper resource="mybatis/mapper/ParentsMapper.xml" />
 	</mappers>
 </configuration>
