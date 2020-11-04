@@ -1,5 +1,23 @@
 <template>
     <div class="quset">
-        <h3>이건 퀘스트</h3>
+        <QuestList />
     </div>
 </template>
+
+<script>
+import QuestList from '@/components/quest/QuestList.vue';
+
+export default {
+    name:'Report',
+    components:{
+        QuestList,
+    },
+    data() {
+        return {
+
+        };
+    },  
+        
+};
+</script>
+
