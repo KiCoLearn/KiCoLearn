@@ -34,7 +34,7 @@ export default {
     position: fixed;
     top: 0;
     width: 100%;
-    height: 15rem;
+    height: 12rem;
     background-repeat: no-repeat;
 }
 </style>
