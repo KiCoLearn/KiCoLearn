@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <v-app id="app">
         <Kakao />
         <Kakao2 />
         <div id="nav">
@@ -10,8 +10,12 @@
                 About
             </router-link>
         </div>
-        <router-view />
-    </div>
+        <v-main>
+            <v-container fluid>
+                <router-view />
+            </v-container>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
@@ -20,7 +24,7 @@ import Kakao2 from '@/components/oauth/OAuthKakaoLogout';
 
 export default {
     components: {
-        Kakao,     
+        Kakao,
         Kakao2,
     },
     mounted() {
