@@ -40,7 +40,7 @@ export default {
                 });
             });
         },
-        login({commit}, code) {
+        getToken({commit}, code) {
             return new Promise((resolve, reject) => {
                 axios({
                     url: 'https://kauth.kakao.com/oauth/token',
@@ -69,6 +69,24 @@ export default {
                     });
             });
         },
+        login(ignore, {token, provider}) {
+            return new Promise((resolve, reject) => {
+                axiosAPI({
+                    url: `login/${provider}`,
+                    method: 'POST',
+                    params: {
+                        'token': token,
+                    },
+                })
+                    .then((response) => {
+                        console.log(response);
+                        resolve(response);
+                        
+                    }).catch((error) => {
+                        reject(error);
+                    });
+            });
+        },
         logout({state, commit}) {
             return new Promise((resolve) => {
                 axiosAPI({
@@ -80,7 +98,25 @@ export default {
                 })
                     .then((response) => {
                         commit('LOGOUT');
-                        
+
+                        resolve(response.data.id);
+                    }).catch((error) => {
+                        console.warn(error.response);
+                    });
+            });
+        },
+        unlink({state, commit}) {
+            return new Promise((resolve) => {
+                axiosAPI({
+                    url: '/unlink/kakao',
+                    method: 'post',
+                    params: {
+                        token: state.accessToken,
+                    },
+                })
+                    .then((response) => {
+                        commit('LOGOUT');
+
                         resolve(response.data.id);
                     }).catch((error) => {
                         console.warn(error.response);
