@@ -1,15 +1,15 @@
 <template>
     <div class="startmain">
         <div class="login">
-            <p>
+            <!-- <p>
                 <img 
                     class="kakao-sign"
                     src="@/assets/kakao.png"
-                    ty
+                    tyE
                     alt="카카오 로그인"
                     @click="clickkakaologin"
                 >
-            </p>
+            </p> -->
             <p>
                 <button
                     class="kidslogin"
@@ -24,6 +24,20 @@
             >
                 회원가입
             </button>
+            <p>
+                <button
+                    class="sign"
+                    @click="$router.push({ name: 'QuizTest' })"
+                >
+                    퀴즈풀기*
+                </button>
+                <button
+                    class="sign"
+                    @click="$router.push({ name: 'QuizManage' })"
+                >
+                    퀴즈관리*
+                </button>
+            </p>
         </div>
     </div>
 </template>
