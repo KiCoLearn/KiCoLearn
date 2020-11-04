@@ -65,6 +65,7 @@ public class KidsAccountController {
     public ResponseEntity<Map<String, Object>> registKid(@RequestBody Kids kid) {
         ResponseEntity<Map<String, Object>> entity = null;
         logger.debug("insert kid: " + kid);
+        System.out.println(kid);
         try {
             kService.addKid(kid);
             entity = resultHandler.handleSuccess("success");
