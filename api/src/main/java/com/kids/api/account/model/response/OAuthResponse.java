@@ -1,9 +1,9 @@
-package com.kids.api.oauth.error;
+package com.kids.api.account.model.response;
 
 import java.time.ZonedDateTime;
 
+import com.kids.api.account.model.exception.BasicOAuthException;
 import com.kids.api.global.response.BasicResponse;
-import com.kids.api.oauth.error.exception.BasicOAuthException;
 
 import lombok.Getter;
 

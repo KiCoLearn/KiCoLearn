@@ -1,4 +1,4 @@
-package com.kids.api.oauth;
+package com.kids.api.account.oauth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
