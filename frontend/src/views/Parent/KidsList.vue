@@ -7,7 +7,19 @@
         >
             <!-- 카드 헤더 --> 
             <div class="card-header">
+                <div class="card-header-is_closed"> 
+                    <div class="card-header-text">
+                        퀘스트
+                    </div> 
+                    <div class="card-header-number">
+                        2 / 5
+                    </div> 
+                </div>
                 <div class="card-header-close">
+                    <img
+                        src="@/assets/information.png"
+                        width="40px"
+                    >
                     <img
                         src="@/assets/close.png"
                         width="40px"
@@ -43,29 +55,25 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-                </div> 
-                <img
-                    :src="photo(kid.gender)"
-                    width="140px"
-                    style="margin-top:10px"
-                >
-                <div class="card-header-is_closed"> 
-                    <div class="card-header-text">
-                        퀘스트
-                    </div> 
-                    <div class="card-header-number">
-                        2 / 5
-                    </div> 
                 </div>
             </div>
             <!--  카드 바디 -->
             <div class="card-body">
+                <img
+                    :src="photo(kid.characterIdx)"
+                    width="140px"
+                >
+                
                 <!--  카드 바디 헤더 -->
                 <div class="card-body-header">
                     <h1>{{ kid.name }}</h1>
-                    <p class="card-body-hashtag">
-                        <b>{{ kid.totalMoney }}원</b>
-                    </p>
+                    
+                    <img
+                        src="@/assets/wallet.png"
+                        width="30px"
+                        style="margin-left:10px;"
+                    >
+                    <b style="font-size: 1.2rem; color:navy;margin-top:3px;margin-left:5px">{{ format(kid.totalMoney) }}원</b> 
                 </div>
                 
                 <!--  카드 바디 푸터 -->
@@ -111,7 +119,7 @@ export default {
             })
             .then((res) => {
                 this.kids = res.data.data;
-                //console.log(this.kids);
+                console.log(this.kids);
             });
     },
     methods: {
@@ -121,19 +129,17 @@ export default {
         deleteKid(kidId, index){
             axios.delete(process.env.VUE_APP_API_URL + '/api/kidsaccount/delete/'+kidId)
                 .then(() => {
-                    console.log(index);
                     this.kids.splice(index,1);
                     alert('삭제 완료');
                     this.dialog=false;
-                    console.log(this.kids);
                 });
         },
-        photo(flag){
-            if(flag){
-                return require('@/assets/character/001.png');
-            }else{
-                return require('@/assets/character/047.png');
-            }
+        photo(idx){
+            if(idx<10) return require('@/assets/character/00'+idx+'.png');
+            return require('@/assets/character/0'+idx+'.png');
+        },
+        format(x){
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
     },
 };
@@ -169,9 +175,9 @@ export default {
     -o-transition: 0.5s;  /*오페라*/
     transition: 0.5s;
 	width: 100%;
-	height: 160px;
+	height: 61px;
 	border-radius: 15px 15px 0 0;
-    margin-top: 15px;
+    margin-top: 10px;
 		
 }
 
@@ -186,10 +192,10 @@ export default {
     font-weight: bold ;
     text-align: center ;
     float: left;
-    margin: 20px 0 0 15px;
+    margin: 5px 0 0 15px;
     border-radius: 50%;
     font-weight: bold;
-    padding: 10px 10px;
+    padding: 8px 8px;
     line-height: 20px;
 }
 
@@ -199,13 +205,9 @@ h1 {
 }
 
 .card-body-header{
-	line-height: 25px;
-	margin: 10px 20px 0px 20px;
-}
-
-.card-body-hashtag {
-	color: #2478FF;
-    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+	align-items: center;
 }
 
 .card-body-footer {
@@ -257,5 +259,4 @@ h1 {
     margin:0;
     padding: 0;
 }
-
 </style>

@@ -16,4 +16,5 @@ public class Kids {
     private int totalMoney;
     private int parentId;
     private boolean gender;
+    private int characterIdx;
 }
