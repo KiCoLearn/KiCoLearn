@@ -7,14 +7,31 @@
             >
                 <div class="list">
                     <div id="example">
-                        <carousel-3d>
+                        <carousel
+                            class="slide-container"
+                            :autoplay="false"
+                            :autoplay-hover-pause="true"
+                            :speed="300"
+                        >
                             <slide
                                 v-for="(quest, i) in quests"
                                 :key="i"
+                                class="custom-slide"
                             >
-                                <img src="https://placehold.it/360x270">
+                                <div
+                                    class="tile pointer mx-auto my-auto"
+                                    @click="postDetail(post.id)"
+                                >
+                                    <div class="tile-media">
+                                        <div class="content">
+                                            <div class="content-overlay" />
+                                            <h5>이미지</h5>
+                                            <div class="content-details fadeIn-top" />
+                                        </div>
+                                    </div>
+                                </div> 
                             </slide>
-                        </carousel-3d>
+                        </carousel>
                     </div>
                 </div>
                 <div class="buttons">
@@ -31,10 +48,10 @@
 </template>
 
 <script lang="js">
-import {Carousel3d, Slide} from 'vue-carousel-3d';
+import {Carousel, Slide} from 'vue-carousel';
 export default {
     components:{
-        Carousel3d,
+        Carousel,
         Slide,
     },
     data() {
