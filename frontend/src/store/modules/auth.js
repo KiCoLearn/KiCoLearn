@@ -1,5 +1,5 @@
 import axios from 'axios';
-import baseAxios from '@/axios';
+import axiosAPI from '@/plugins/axios.js';
 
 export default {
     namespaced: true,
@@ -19,43 +19,25 @@ export default {
         GET_ACCESS_TOKEN(state, { accessToken, provider }) {
             state.accessToken = accessToken;
             state.provider = provider;
-        }
+        },
+        LOGOUT(state) {
+            state.accessToken = '';
+            state.provider = '';
+        },
     },
     actions: {
         auth() {
             return new Promise((resolve, reject) => {
-                baseAxios({
+                axiosAPI({
                     url: '/test',
-                    method: 'GET',
+                    method: 'get',
                 }).then((response) => {
-                    console.log(response);
+                    console.debug(response);
                     resolve(response);
                 }).catch((error) => {
-                    console.log(error.response);
+                    console.debug(error.response);
                     reject(error);
                 });
-            });
-        },
-        logout({state, commit}) {
-            return new Promise((resolve) => {
-                baseAxios({
-                    url: '/logout/kakao',
-                    method: 'post',
-                    params: {
-                        token: state.accessToken,
-                    },
-                })
-                    .then((response) => {
-                        console.log('logout');
-                        console.log(response);
-                        commit('GET_ACCESS_TOKEN', {
-                            accessToken: '',
-                            provider: '',
-                        });
-                        resolve(response.data.id);
-                    }).catch((error) => {
-                        console.warn(error.response);
-                    });
             });
         },
         login({commit}, code) {
@@ -86,6 +68,24 @@ export default {
                         reject(error);
                     });
             });
-        }
+        },
+        logout({state, commit}) {
+            return new Promise((resolve) => {
+                axiosAPI({
+                    url: '/logout/kakao',
+                    method: 'post',
+                    params: {
+                        token: state.accessToken,
+                    },
+                })
+                    .then((response) => {
+                        commit('LOGOUT');
+                        
+                        resolve(response.data.id);
+                    }).catch((error) => {
+                        console.warn(error.response);
+                    });
+            });
+        },
     },
 };
