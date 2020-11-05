@@ -1,24 +1,87 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+
+//account
+import Sign from '@/views/account/Sign';
+import Main from '@/views/account/Main';
+import Kidsconnect from '@/views/account/Kidsconnect';
+import Kidslogin from '@/views/account/Kidslogin';
+
+//kids
+import Kidsmain from '@/views/Kids/Kidsmain';
+import Report from '@/views/Kids/Report';
+import Quest from '@/views/Kids/Quest';
+import Store from '@/views/Kids/Store';
+import Quiz from '@/views/Kids/Quiz';
+
+//parent
+import KidsList from '@/views/Parent/KidsList';
+import KidsRegist from '@/views/Parent/KidsRegist';
+
+import QuizTestRoutes from '@/router/quiz';
+
 import OAuthRoutes from '@/router/oauth';
 
 Vue.use(VueRouter);
 
 const routes = [
     ...OAuthRoutes,
+    ...QuizTestRoutes,
     {
         path: '/',
-        name: 'Home',
-        component: Home,
+        name: 'main',
+        component:Main
+
     },
     {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        path: '/sign',
+        name: 'Sign',
+        component:Sign
+    },
+    {
+        path: '/kidsconnect',
+        name: 'Kidsconnect',
+        component:Kidsconnect
+    },
+    {
+        path: '/kidslogin',
+        name: 'Kidslogin',
+        component:Kidslogin
+    },
+    {
+        path: '/kidsmain',
+        name: 'Kidsmain',
+        component:Kidsmain
+    },
+    {
+        path: '/report',
+        name: 'Report',
+        component:Report
+    },
+    {
+        path: '/quest',
+        name: 'Quest',
+        component:Quest
+    },
+    {
+        path: '/store',
+        name: 'Store',
+        component:Store
+    },
+    {
+        path: '/quiz',
+        name: 'Quiz',
+        component:Quiz
+    },
+    {
+        path: '/kidslist',
+        name: 'KidsList',
+        component:KidsList
+    },
+    {
+        path: '/kidsregist',
+        name: 'KidsRegist',
+        component:KidsRegist
     },
 ];
 

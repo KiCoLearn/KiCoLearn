@@ -1,5 +1,8 @@
 <template>
-    <div id="app">
+    <v-app
+        id="app"
+        style="background-color:cornsilk"
+    >
         <Kakao />
         <Kakao2 />
         <div id="nav">
@@ -10,8 +13,12 @@
                 About
             </router-link>
         </div>
-        <router-view />
-    </div>
+        <v-main>
+            <v-container fluid>
+                <router-view />
+            </v-container>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
@@ -38,7 +45,7 @@ export default {
 }
 
 #nav {
-  padding: 30px;
+  padding: 0px;
 }
 
 #nav a {
@@ -49,4 +56,7 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+
+
 </style>

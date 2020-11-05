@@ -8,7 +8,6 @@
 export default {
     mounted() {
         const code = this.$route.query.code;
-        console.log(this.$router);
         this.$store.dispatch('auth/login', code)
             .then(() => {
 
@@ -17,8 +16,7 @@ export default {
             }).finally(() => {
                 this.$store.dispatch('auth/auth')
                     .finally(() => {
-                        console.log(this.$router);
-                        this.$router.go(-1);
+                        this.$router.push('/');
                     });
             });
     },

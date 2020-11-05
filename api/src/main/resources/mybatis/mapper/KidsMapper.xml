@@ -8,7 +8,7 @@
 	</select>
 	
 	<insert id="insert" parameterType="kids">
-		insert into kids(name, age, parent_id) values(#{name}, #{age}, #{parentId})			
+		insert into kids(name, birth, parent_id, gender) values(#{name}, #{birth}, #{parentId}, #{gender})			
 	</insert>
 	
 	<delete id="delete" parameterType="int">

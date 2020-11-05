@@ -8,6 +8,7 @@
 		<setting name="returnInstanceForEmptyRow" value="true"/>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
+	
 	<typeAliases>
 		<!-- 사용할 DTO들을 예약어로 등록 -->
 		<typeAlias type="com.kids.api.kidsaccount.Kids" alias="kids" />
@@ -18,6 +19,8 @@
 		<typeAlias type="com.kids.api.quest.KidsQuest" alias="kidsquest" />
 		<typeAlias type="com.kids.api.money.Money" alias="money" />
 		<typeAlias type="com.kids.api.money.Budget" alias="budget" />
+		<typeAlias type="com.kids.api.store.Item" alias="item" />
+		<typeAlias type="com.kids.api.store.KidsStore" alias="kidstore" />
 		<typeAlias type="com.kids.api.quiz.Quiz" alias="quiz" />
 		<typeAlias type="com.kids.api.quiz.TodayQuiz" alias="today" />
 		<typeAlias type="com.kids.api.account.parents.Parents" alias="parents" />
@@ -31,5 +34,6 @@
 		<mapper resource="mybatis/mapper/QuizMapper.xml" />
 		<mapper resource="mybatis/mapper/QuestMapper.xml" />
 		<mapper resource="mybatis/mapper/ParentsMapper.xml" />
+		<mapper resource="mybatis/mapper/StoreMapper.xml" />
 	</mappers>
 </configuration>
