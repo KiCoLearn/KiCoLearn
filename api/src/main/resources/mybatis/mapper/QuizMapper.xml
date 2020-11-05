@@ -19,7 +19,7 @@
 	</select>
 
 	<update id="update" parameterType="quiz">
-		update quiz set quiz question
+		update quiz set question
 		= #{question}, description = #{description}, answer = #{answer},
 		category = #{category} where quiz_no = #{quizNo}
 	</update>
@@ -36,6 +36,17 @@
 	<insert id="createToday" parameterType="today">
 		insert into today_quiz(quiz_no) values(#{quizNo})
 	</insert>
+	
+	<select id="getNext" resultType="int">
+		select quiz_no
+			from quiz
+			where (quiz_no > (select quiz_no
+				from today_quiz
+				order by date desc
+				limit 1))
+			order by quiz_no asc
+			limit 1
+	</select>
 	
 	<select id="count" resultType="int">
 		select count(*) from quiz

@@ -19,9 +19,6 @@ export default {
                 }).catch(() => {
 
                 }).finally(() => {
-                    this.$store.dispatch('auth/auth')
-                        .finally(() => {
-                        });
                 });
         },
     }

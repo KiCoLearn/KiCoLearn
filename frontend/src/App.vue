@@ -1,5 +1,8 @@
 <template>
-    <v-app id="app">
+    <v-app
+        id="app"
+        style="background-color:cornsilk"
+    >
         <Kakao />
         <Kakao2 />
         <div id="nav">

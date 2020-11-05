@@ -1,16 +1,12 @@
 <template>
-    <div>
-        <div 
-            v-for="kid in kids"
+    <div>       
+        <div
+            v-for="(kid, index) in kids"
             :key="kid.kidId"
             class="card"
         >
-            <!-- 카드 헤더 -->
+            <!-- 카드 헤더 --> 
             <div class="card-header">
-                <img
-                    src="@/assets/character/001.png"
-                    width="150px"
-                > 
                 <div class="card-header-is_closed"> 
                     <div class="card-header-text">
                         퀘스트
@@ -19,25 +15,76 @@
                         2 / 5
                     </div> 
                 </div>
+                <div class="card-header-close">
+                    <img
+                        src="@/assets/information.png"
+                        width="40px"
+                    >
+                    <img
+                        src="@/assets/close.png"
+                        width="40px"
+                        @click="dialog=true"
+                    >
+
+                    <v-dialog
+                        v-model="dialog"
+                        width="300"
+                    >
+                        <v-card>
+                            <v-card-title style="display:flex;justify-content:center">
+                                <b>정말 아이 정보를<br>삭제하시겠습니까?</b>
+                            </v-card-title>
+                            <v-card-actions>
+                                <v-spacer />
+
+                                <v-btn
+                                    color="green darken-1"
+                                    text
+                                    @click="dialog = false"
+                                >
+                                    <b>취소</b>
+                                </v-btn>
+
+                                <v-btn
+                                    color="green darken-1"
+                                    text
+                                    @click="deleteKid(kid.kidId, index)"
+                                >
+                                    <b>삭제</b>
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </div>
             </div>
             <!--  카드 바디 -->
             <div class="card-body">
+                <img
+                    :src="photo(kid.characterIdx)"
+                    width="140px"
+                >
+                
                 <!--  카드 바디 헤더 -->
                 <div class="card-body-header">
                     <h1>{{ kid.name }}</h1>
-                    <p class="card-body-hashtag">
-                        <b>{{ kid.totalMoney }}원</b>
-                    </p>
+                    
+                    <img
+                        src="@/assets/wallet.png"
+                        width="30px"
+                        style="margin-left:10px;"
+                    >
+                    <b style="font-size: 1.2rem; color:navy;margin-top:3px;margin-left:5px">{{ format(kid.totalMoney) }}원</b> 
                 </div>
                 
                 <!--  카드 바디 푸터 -->
                 <div class="card-body-footer">
                     <i class="icon icon-view_count" />완료 38회
                     <i class="icon icon-comments_count" />요청 4개
-                    <i class="reg_date"> 2020/11/03 </i>
+                    <i class="reg_date"> {{ kid.birth }} </i>
                 </div>
             </div>
         </div>
+     
         <br>
         <button 
             class="btn" 
@@ -45,7 +92,7 @@
         >
             <img 
                 src="@/assets/add.png"
-                width="100px"
+                width="80px"
             >
         </button>
     </div>
@@ -60,6 +107,7 @@ export default {
         return {
             parentId:1,
             kids: new Array(),
+            dialog:false
         };
     },
     created() {
@@ -71,11 +119,27 @@ export default {
             })
             .then((res) => {
                 this.kids = res.data.data;
+                console.log(this.kids);
             });
     },
     methods: {
         addKid(){
             this.$router.push('/kidsregist');
+        },
+        deleteKid(kidId, index){
+            axios.delete(process.env.VUE_APP_API_URL + '/api/kidsaccount/delete/'+kidId)
+                .then(() => {
+                    this.kids.splice(index,1);
+                    alert('삭제 완료');
+                    this.dialog=false;
+                });
+        },
+        photo(idx){
+            if(idx<10) return require('@/assets/character/00'+idx+'.png');
+            return require('@/assets/character/0'+idx+'.png');
+        },
+        format(x){
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
     },
 };
@@ -89,17 +153,18 @@ export default {
 
 .card {
     height: 300px;
-    width: 300px;
+    width: 300px !important;
     border-radius: 15px;
-    display: inline-block;
+    display: block;
+    margin: auto;
     margin-top: 30px;
-    margin-bottom: 30px;
     position: relative;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: hidden;
+    background: white;
 }
 
-.card:hover{
+.card-header-close:hover{
     cursor: pointer;
 }
 
@@ -110,10 +175,15 @@ export default {
     -o-transition: 0.5s;  /*오페라*/
     transition: 0.5s;
 	width: 100%;
-	height: 160px;
+	height: 61px;
 	border-radius: 15px 15px 0 0;
-    margin-top: 15px;
+    margin-top: 10px;
 		
+}
+
+.card-header-close{
+    float: right;
+    margin-right: 10px;
 }
 
 .card-header-is_closed{
@@ -121,11 +191,11 @@ export default {
     color: #FFF ;
     font-weight: bold ;
     text-align: center ;
-    float: right;
-    margin: 15px 15px 0 0;
+    float: left;
+    margin: 5px 0 0 15px;
     border-radius: 50%;
     font-weight: bold;
-    padding: 10px 10px;
+    padding: 8px 8px;
     line-height: 20px;
 }
 
@@ -135,13 +205,9 @@ h1 {
 }
 
 .card-body-header{
-	line-height: 25px;
-	margin: 10px 20px 0px 20px;
-}
-
-.card-body-hashtag {
-	color: #2478FF;
-    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+	align-items: center;
 }
 
 .card-body-footer {
@@ -189,4 +255,8 @@ h1 {
     cursor: pointer;
 }
 
+.row, .col{
+    margin:0;
+    padding: 0;
+}
 </style>
