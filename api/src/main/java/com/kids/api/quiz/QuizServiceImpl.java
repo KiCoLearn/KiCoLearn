@@ -51,4 +51,9 @@ public class QuizServiceImpl implements QuizService {
         return qDao.countQuiz();
     }
 
+    @Override
+    public Integer getNextQuiz() {
+        return qDao.getNextQuiz();
+    }
+
 }

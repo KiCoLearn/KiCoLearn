@@ -34,7 +34,7 @@ public class QuizController {
     @Autowired
     Handler resultHandler;
 
-    @GetMapping("/")
+    @GetMapping("")
     @ApiOperation(value = "퀴즈 목록 조회")
     private ResponseEntity<Map<String, Object>> quizList() {
         ResponseEntity<Map<String, Object>> result = null;
@@ -98,7 +98,7 @@ public class QuizController {
 
     @GetMapping("/today")
     @ApiOperation(value = "오늘의 퀴즈를 조회")
-    private ResponseEntity<Map<String, Object>> todayQuiz() {
+    private Object todayQuiz() {
         ResponseEntity<Map<String, Object>> result = null;
         try {
             TodayQuiz today = qService.getTodayQuiz();
@@ -107,7 +107,7 @@ public class QuizController {
             String day = format.format(time);
             String comp = format.format(today.getDate());
             if (!day.equals(comp)) { // 최근 퀴즈의 날짜와 오늘 날짜 비교 후 다르면 퀴즈 갱신
-                int next = today.getQuizNo() + 1;
+                Integer next = qService.getNextQuiz();
                 if (next > qService.countQuiz()) {
                     next = 1;
                 }

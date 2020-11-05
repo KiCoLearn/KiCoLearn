@@ -14,14 +14,16 @@
 		insert into parents(uuid,
 		provider, name, email) values(#{uuid}, #{provider}, #{name}, #{email})
 	</insert>
-	
+
 	<update id="unlink" parameterType="parents">
-		update parents set enabled = false, disable_time = current_timestamp where uuid = #{uuid}
+		update parents set enabled =
+		false, disable_time = current_timestamp where uuid = #{uuid}
 	</update>
 
-	
+
 	<update id="enable" parameterType="parents">
-		update parents set enabled = true, disable_time = null where uuid = #{uuid}
+		update parents set enabled =
+		true, disable_time = null where uuid = #{uuid}
 	</update>
 
 </mapper>
