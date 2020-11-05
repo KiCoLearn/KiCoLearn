@@ -19,12 +19,30 @@ public class ParentsAccountService<T extends User> implements AccountService<T> 
     OAuth2Service oauthService;
 
     @Override
-    public <T extends User> T login(T request) {
+    public T login(T request) {
         Parents p = (Parents) request;
         Parents parents = null;
         try {
-            parents = parentsRepository.getParentsByUID((Parents) request).get(0);
-            System.out.println(parents.toString());
+            System.out.println(p.toString());
+            List<Parents> list = parentsRepository.getParentsByUID(p);
+            System.out.println(list.toString());
+            if (list.size() == 1) {
+                parents = list.get(0);
+                
+            } else {
+                User userInformation = oauthService.getUserInformation(p.getToken(), request.getProvider());
+
+                parents = Parents.builder()
+                                 .uuid(userInformation.getUuid())
+                                 .provider(userInformation.getProvider())
+                                 .name(userInformation.getName())
+                                 .build();
+                
+                int count = parentsRepository.insert(parents);
+                
+                parents = parentsRepository.getParentsByUID(parents).get(0);
+            }
+            
             if (!parents.getEnabled()) {
                 parents.setEnabled(true);
                 parents.setDisableTime(null);
@@ -33,19 +51,7 @@ public class ParentsAccountService<T extends User> implements AccountService<T> 
             }
             
         } catch (IndexOutOfBoundsException e) {
-            User userInformation = oauthService.getUserInformation(p.getToken(), request.getProvider());
-
-            parents = Parents.builder()
-                             .uuid(userInformation.getUuid())
-                             .provider(userInformation.getProvider())
-                             .name(userInformation.getName())
-                             .build();
-            
-            int count = parentsRepository.insert((Parents) parents);
-            
-            if (count == 0) {
-                return null;
-            }
+            e.printStackTrace();
         }
 
         return (T) parents;
@@ -53,7 +59,7 @@ public class ParentsAccountService<T extends User> implements AccountService<T> 
 
     @Transactional
     @Override
-    public <T extends User> long delete(T request) {
+    public long delete(T request) {
         Parents p = (Parents) request;
         Parents parents = null;
         try {
@@ -73,19 +79,19 @@ public class ParentsAccountService<T extends User> implements AccountService<T> 
     }
 
     @Override
-    public <T extends User> int add(T object) {
+    public int add(T object) {
         // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-    public <T extends User> T detail(int kidId) {
+    public T detail(int kidId) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public <T extends User> List<T> getKidsByParentId(int parentId) {
+    public List<T> getKidsByParentId(int parentId) {
         // TODO Auto-generated method stub
         return null;
     }
