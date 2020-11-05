@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ExampleProperty;
 
 @RestController
 @RequestMapping("/quiz")
@@ -32,7 +29,7 @@ public class QuizController {
     @Autowired
     QuizService qService;
 
-    @GetMapping("/")
+    @GetMapping("")
     @ApiOperation(value = "퀴즈 목록 조회")
     private ResponseEntity<Map<String, Object>> quizList() {
         ResponseEntity<Map<String, Object>> result = null;
@@ -96,7 +93,7 @@ public class QuizController {
 
     @GetMapping("/today")
     @ApiOperation(value = "오늘의 퀴즈를 조회")
-    private ResponseEntity<Map<String, Object>> todayQuiz() {
+    private Object todayQuiz() {
         ResponseEntity<Map<String, Object>> result = null;
         try {
             TodayQuiz today = qService.getTodayQuiz();
@@ -105,7 +102,7 @@ public class QuizController {
             String day = format.format(time);
             String comp = format.format(today.getDate());
             if (!day.equals(comp)) { // 최근 퀴즈의 날짜와 오늘 날짜 비교 후 다르면 퀴즈 갱신
-                int next = today.getQuizNo() + 1;
+                Integer next = qService.getNextQuiz();
                 if (next > qService.countQuiz()) {
                     next = 1;
                 }
@@ -114,7 +111,8 @@ public class QuizController {
                 today = qService.getTodayQuiz();
             }
             Quiz quiz = qService.reference(today.getQuizNo());
-            result = handleSuccess(quiz);
+            // result = handleSuccess(quiz);
+            return new ResponseEntity<>(quiz, HttpStatus.OK);
         } catch (Exception e) {
             result = handleException(e);
         }

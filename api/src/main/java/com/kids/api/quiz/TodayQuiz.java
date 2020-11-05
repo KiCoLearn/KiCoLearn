@@ -12,5 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TodayQuiz {
     private Date date;
-    @NonNull private Integer quizNo;
+
+    @NonNull
+    private Integer quizNo;
 }
