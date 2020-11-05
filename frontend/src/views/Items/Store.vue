@@ -51,7 +51,7 @@ export default {
             titles:['내 아이템', '아이 목록'],
             myItems: [{itemNo:1, name: '연필'}, {itemNo:2, name: '색연필'}],
             kidsList: new Array(),
-            text:'hello!!!!'
+            addItem:false,
         };
     },
     
@@ -65,7 +65,7 @@ export default {
     },
     
     methods: {
-        addItem(){
+        handleAddItem(){
             console.log('create item!');
         }
     },

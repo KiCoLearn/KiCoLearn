@@ -15,7 +15,7 @@ import Quiz from '@/views/Kids/Quiz';
 
 //items
 import Store from '@/views/Items/Store';
-import AddItem from '@/views/Items/AddItem';
+import AddItem from '@/components/items/AddItem';
 
 //parent
 import KidsList from '@/views/Parent/KidsList';

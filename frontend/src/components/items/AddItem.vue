@@ -42,7 +42,7 @@ export default {
             let s3 = new AWS.S3({
                 apiVersion:'2006-03-01',
                 params : {
-                    Bucket: process.env.VUE_APP_BUCKET_NAME,
+                    Bucket: process.env.VUE_APP_BUCKET_NAME+'/items',
                 }
             });
             let photoKey = this.file.name;
