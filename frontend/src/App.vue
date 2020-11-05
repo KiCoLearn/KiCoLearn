@@ -14,10 +14,7 @@
             </router-link>|
             <router-link to="/store">
                 Store
-            </router-link>|
-            <router-link to="/additem">
-                AddItem
-            </router-link>
+            </router-link>            
         </div>
         <v-main>
             <v-container fluid>
