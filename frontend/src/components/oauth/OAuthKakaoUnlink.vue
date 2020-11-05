@@ -4,7 +4,7 @@
             text="LOGOUT"
             @click="logout"
         >
-            로그아웃
+            회원탈퇴
         </button>
     </div>
 </template>
@@ -13,7 +13,7 @@
 export default {
     methods: {
         logout() {
-            this.$store.dispatch('auth/logout')
+            this.$store.dispatch('auth/unlink')
                 .then(() => {
 
                 }).catch(() => {
