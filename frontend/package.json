@@ -22,7 +22,8 @@
     "dependencies": {
         "@mdi/font": "^5.8.55",
         "@vue/cli": "^4.5.8",
-        "aws-sdk": "^2.785.0",
+        "animated-number-vue": "^1.0.0",
+        "aws-sdk": "^2.786.0",
         "axios": "^0.20.0",
         "core-js": "^3.6.5",
         "material-design-icons-iconfont": "^6.1.0",
