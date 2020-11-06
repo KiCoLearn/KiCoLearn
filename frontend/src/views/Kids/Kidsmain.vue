@@ -32,8 +32,8 @@
                 >
                     <img
                         class="btn-quest"
-                        src="@/assets/report.png"
-                        alt="용돈 기입장"
+                        src="@/assets/quest.png"
+                        alt="오늘의 퀘스트"
                     >
                 </button>
             </p>
