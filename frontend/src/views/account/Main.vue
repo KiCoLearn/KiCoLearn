@@ -1,15 +1,8 @@
 <template>
     <div class="startmain">
         <div class="login">
-            <!-- <p>
-                <img 
-                    class="kakao-sign"
-                    src="@/assets/kakao.png"
-                    tyE
-                    alt="카카오 로그인"
-                    @click="clickkakaologin"
-                >
-            </p> -->
+            <Kakao />
+            <Kakao2 />
             <p>
                 <button
                     class="kidslogin"
@@ -43,7 +36,14 @@
 </template>
 
 <script>
+import Kakao from '@/components/oauth/OAuthKakao';
+import Kakao2 from '@/components/oauth/OAuthKakaoLogout';
+
 export default {
+    components: {
+        Kakao,
+        Kakao2,
+    },
     methods: {
         kidslogin(){
             this.$router.push({name:'Kidslogin'});
