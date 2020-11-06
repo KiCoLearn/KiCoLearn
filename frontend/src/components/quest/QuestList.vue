@@ -18,36 +18,12 @@
                                 :key="i"
                                 class="custom-slide"
                             >
-                                <v-layout>
-                                    <v-flex
-                                        xs12
-                                        sm6
-                                        offset-sm3
-                                    >
-                                        <v-card>
-                                            <v-img
-                                                height="10rem"
-                                                width="30%"
-                                                :src="quest.imgsrc"
-                                            />
-                                            <v-card-title>
-                                                <div>
-                                                    <span class="grey--text">{{ quest.id }}</span><br>
-                                                    <span>{{ quest.title }}</span><br>
-                                                    <span>{{ quest.price }}</span>
-                                                </div>
-                                            </v-card-title>
-                                            <v-card-actions>
-                                                <v-btn
-                                                    flat
-                                                    color="orange"
-                                                >
-                                                    완료
-                                                </v-btn>
-                                            </v-card-actions>
-                                        </v-card>
-                                    </v-flex>
-                                </v-layout>
+                                <v-card
+                                    :title="quest.title"
+                                    img-src="http://placehold.it/130?text=No-image"
+                                    img-alt="Img"
+                                    img-top
+                                />
                             </slide>
                         </carousel>
                     </div>
@@ -68,7 +44,6 @@
 <script lang="js">
 import {Carousel, Slide} from 'vue-carousel';
 export default {
-    name : 'Quest',
     components:{
         Carousel,
         Slide,
@@ -98,7 +73,6 @@ export default {
            
         };
     },
-    
         
 };
 </script>
