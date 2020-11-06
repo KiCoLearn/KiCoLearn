@@ -3,18 +3,16 @@
         id="app"
         style="background-color:cornsilk"
     >
-        <Kakao />
-        <Kakao2 />
         <div id="nav">
             <router-link to="/">
                 Home
             </router-link>|
-            <router-link to="/about">
-                About
-            </router-link>|
             <router-link to="/store">
                 Store
-            </router-link>            
+            </router-link>|
+            <router-link to="/kidslist">
+                KidsList
+            </router-link>              
         </div>
         <v-main>
             <v-container fluid>
@@ -25,14 +23,9 @@
 </template>
 
 <script>
-import Kakao from '@/components/oauth/OAuthKakao';
-import Kakao2 from '@/components/oauth/OAuthKakaoLogout';
 
 export default {
-    components: {
-        Kakao,
-        Kakao2,
-    },
+    
     mounted() {
     },
 };

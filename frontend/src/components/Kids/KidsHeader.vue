@@ -37,4 +37,11 @@ export default {
     height: 12rem;
     background-repeat: no-repeat;
 }
+/* .kidsheader {
+  background: #5f2967;
+  padding-bottom: 72px;
+  background-image: url("https://i.ibb.co/jwLXqyd/clouds-min.png");
+  background-repeat: no-repeat;
+  background-position: bottom;
+} */
 </style>
