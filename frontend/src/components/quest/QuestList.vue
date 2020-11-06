@@ -18,18 +18,12 @@
                                 :key="i"
                                 class="custom-slide"
                             >
-                                <div
-                                    class="tile pointer mx-auto my-auto"
-                                    @click="postDetail(post.id)"
-                                >
-                                    <div class="tile-media">
-                                        <div class="content">
-                                            <div class="content-overlay" />
-                                            <h5>이미지</h5>
-                                            <div class="content-details fadeIn-top" />
-                                        </div>
-                                    </div>
-                                </div> 
+                                <v-card
+                                    :title="quest.title"
+                                    img-src="http://placehold.it/130?text=No-image"
+                                    img-alt="Img"
+                                    img-top
+                                />
                             </slide>
                         </carousel>
                     </div>
