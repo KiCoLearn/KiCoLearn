@@ -20,6 +20,7 @@ import AddItem from '@/components/items/AddItem';
 //parent
 import KidsList from '@/views/Parent/KidsList';
 import KidsRegist from '@/views/Parent/KidsRegist';
+import KidDetail from '@/views/Parent/KidDetail';
 
 import QuizTestRoutes from '@/router/quiz';
 
@@ -90,6 +91,11 @@ const routes = [
         path: '/additem',
         name: 'AddItem',
         component:AddItem
+    },
+    {
+        path: '/kidinfo',
+        name: 'KidDetail',
+        component:KidDetail
     },
 ];
 

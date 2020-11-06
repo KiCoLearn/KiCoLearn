@@ -16,10 +16,17 @@
                     </div> 
                 </div>
                 <div class="card-header-close">
-                    <img
-                        src="@/assets/information.png"
-                        width="40px"
+                    <button
+                        class="btn"
+                        @click="goInfo(kid.kidId)"
                     >
+                        <img
+                            src="@/assets/information.png"
+                            width="40px"
+                        >
+                    </button>
+
+
                     <img
                         src="@/assets/close.png"
                         width="40px"
@@ -133,6 +140,9 @@ export default {
                     alert('삭제 완료');
                     this.dialog=false;
                 });
+        },
+        goInfo(idx){
+            this.$router.push({name: 'KidDetail', query: {'id': idx}});
         },
         photo(idx){
             if(idx<10) return require('@/assets/character/00'+idx+'.png');
