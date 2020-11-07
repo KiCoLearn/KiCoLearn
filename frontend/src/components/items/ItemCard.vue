@@ -7,7 +7,7 @@
                 <div class="d-flex flex-no-wrap">
                     <v-avatar
                         class="ma-4"
-                        size="150"
+                        size="120"
                         tile
                     >
                         <v-img :src="sendData.field" />
@@ -45,6 +45,7 @@
                                 height="40px"
                                 right
                                 width="40px"
+                                @click="handleItemDelete"
                             >
                                 <v-icon>mdi-delete</v-icon>
                             </v-btn>                                        
@@ -76,6 +77,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
     name:'ItemCard',
@@ -85,6 +87,19 @@ export default {
             required:true,
         }
     },
+    methods:{
+        handleItemDelete () {
+            let answer = confirm('아이템을 삭제하시겠습니까?');
+            if(answer){
+                axios.delete(process.env.VUE_APP_API_URL+'/api/store/item/delete/'+this.sendData.itemNo)
+                    .then(()=>{
+                        window.location.reload();
+                    });
+            } else {
+                return;
+            }
+        }
+    }
 };
 </script>
 

@@ -21,13 +21,17 @@
                     />
                     <button 
                         class="btn" 
-                        @click="addItem"
+                        @click="handleAddItem"
                     >
                         <img 
                             src="@/assets/add.png"
                             width="100px"
                         >
-                    </button>                          
+                    </button>
+                    <add-item 
+                        :dialog="addItem"
+                        @handle="handleAddItem"
+                    />                          
                 </div>
             </v-tab-item>
         </v-tabs-items>
@@ -38,10 +42,12 @@
 <script>
 import axios from 'axios';
 import ItemCard from '@/components/items/ItemCard';
+import AddItem from '@/components/items/AddItem';
 export default {    
     name:'Store',
     components: {
         ItemCard,
+        AddItem,
     },
     
     data() {
@@ -49,7 +55,7 @@ export default {
             tab:null,
             parentId:0,
             titles:['내 아이템', '아이 목록'],
-            myItems: [{itemNo:1, name: '연필'}, {itemNo:2, name: '색연필'}],
+            myItems: new Array(),
             kidsList: new Array(),
             addItem:false,
         };
@@ -66,7 +72,8 @@ export default {
     
     methods: {
         handleAddItem(){
-            console.log('create item!');
+            //console.log('create item!');
+            this.addItem = this.addItem ? false : true;
         }
     },
 };
