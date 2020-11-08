@@ -127,7 +127,7 @@
                                             placeholder="월"
                                             outlined
                                             dense
-                                            :rules="[rules.required]"
+                                            :rules="[rules.required, rules.month]"
                                         />
                                     </v-col>
                                     <v-col
@@ -139,7 +139,7 @@
                                             placeholder="일"
                                             outlined
                                             dense
-                                            :rules="[rules.required]"
+                                            :rules="[rules.required, rules.day]"
                                         />
                                     </v-col>
                                 </v-col>
@@ -238,6 +238,8 @@ export default {
         noGender:false,
         rules:{
             required: (value) => !!value,
+            month : (value) => (value>=1 && value<=12),
+            day : (value) => (value>=1 && value<=31),
             genderRequired: (value) => (value===0 || value===1),
         },
     }),
@@ -324,7 +326,7 @@ export default {
         padding: 20px 20px 5px 20px;
         background-color: white;
         border-radius: 4px;
-        border:1px solid rgba(0,0,0,.42);
+       
     }
 
     label{

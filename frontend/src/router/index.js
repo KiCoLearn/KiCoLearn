@@ -11,12 +11,16 @@ import Kidslogin from '@/views/account/Kidslogin';
 import Kidsmain from '@/views/Kids/Kidsmain';
 import Report from '@/views/Kids/Report';
 import Quest from '@/views/Kids/Quest';
-import Store from '@/views/Kids/Store';
 import Quiz from '@/views/Kids/Quiz';
+
+//items
+import Store from '@/views/Items/Store';
+import AddItem from '@/components/items/AddItem';
 
 //parent
 import KidsList from '@/views/Parent/KidsList';
 import KidsRegist from '@/views/Parent/KidsRegist';
+import KidDetail from '@/views/Parent/KidDetail';
 
 import QuizTestRoutes from '@/router/quiz';
 
@@ -82,6 +86,16 @@ const routes = [
         path: '/kidsregist',
         name: 'KidsRegist',
         component:KidsRegist
+    },
+    {
+        path: '/additem',
+        name: 'AddItem',
+        component:AddItem
+    },
+    {
+        path: '/kidinfo',
+        name: 'KidDetail',
+        component:KidDetail
     },
 ];
 
