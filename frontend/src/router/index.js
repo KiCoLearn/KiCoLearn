@@ -21,6 +21,8 @@ import AddItem from '@/components/items/AddItem';
 import KidsList from '@/views/Parent/KidsList';
 import KidsRegist from '@/views/Parent/KidsRegist';
 import KidDetail from '@/views/Parent/KidDetail';
+import KidsUpdate from '@/views/Parent/KidsUpdate';
+
 
 import QuizTestRoutes from '@/router/quiz';
 
@@ -96,6 +98,11 @@ const routes = [
         path: '/kidinfo',
         name: 'KidDetail',
         component:KidDetail
+    },
+    {
+        path: '/kidsupdate',
+        name: 'KidsUpdate',
+        component:KidsUpdate
     },
 ];
 
