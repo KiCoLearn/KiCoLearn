@@ -13,4 +13,5 @@ public interface AccountService<T extends User> {
 
     List<T> getKidsByParentId(int parentId);
 
+    boolean updateToken(int id, String token);
 }
