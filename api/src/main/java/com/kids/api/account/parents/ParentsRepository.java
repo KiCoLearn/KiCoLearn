@@ -13,4 +13,6 @@ public interface ParentsRepository {
     int unlink(Parents parents);
 
     int enable(Parents parents);
+
+    int updateToken(Parents parents);
 }

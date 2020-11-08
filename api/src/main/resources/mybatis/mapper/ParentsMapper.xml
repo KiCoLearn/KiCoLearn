@@ -26,4 +26,9 @@
 		true, disable_time = null where uuid = #{uuid}
 	</update>
 
+	<update id="updateToken" parameterType="parents">
+		update parents set
+		messaging_token =
+		#{messagingToken} where id = #{id}
+	</update>
 </mapper>

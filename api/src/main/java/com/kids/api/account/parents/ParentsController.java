@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
 import lombok.NonNull;
 
 @RestController
@@ -38,15 +40,15 @@ public class ParentsController {
                     @ApiParam(value = "발급받은 엑세스 토큰") @RequestParam @NonNull String token,
                     @ApiParam(value = "OAuth 제공자", example = "kakao") @PathVariable String provider) {
         long uuid = oauthService.getUserId(token, provider);
-        
+
         System.out.println("uuid " + uuid);
-        
+
         Parents parents = parentsAccountService.login(Parents.builder()
-                                           .token(token)
-                                           .uuid(uuid)
-                                           .provider(provider)
-                                           .build());
-        
+                                                             .token(token)
+                                                             .uuid(uuid)
+                                                             .provider(provider)
+                                                             .build());
+
         return LoginResponse.of(parents);
     }
 
@@ -79,13 +81,13 @@ public class ParentsController {
                     @ApiParam(value = "OAuth 제공자", example = "kakao") @PathVariable String provider) {
         long uuid = oauthService.getUserId(token, provider);
         parentsAccountService.delete(Parents.builder()
-                                     .token(token)
-                                     .uuid(uuid)
-                                     .provider(provider)
-                                     .build());
-        
+                                            .token(token)
+                                            .uuid(uuid)
+                                            .provider(provider)
+                                            .build());
+
         uuid = oauthService.unlink(token, provider);
-        
+
         return ResponseEntity.noContent().build();
     }
 
@@ -94,4 +96,15 @@ public class ParentsController {
         return "Hello, World!";
     }
 
+    @ApiOperation("메시징 ID 등록")
+    @Authorization(value = "role")
+    @PostMapping("/accounts/{id}/messaging-token")
+    public ResponseEntity<Object> postMessagingToken(
+                    @PathVariable int id,
+                    @RequestBody Parents parent) {
+        System.out.println(parent.toString());
+        boolean result = parentsAccountService.updateToken(id, parent.getMessagingToken());
+        
+        return ResponseEntity.noContent().build();
+    }
 }
