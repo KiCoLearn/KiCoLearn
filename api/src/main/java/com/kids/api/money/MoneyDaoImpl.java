@@ -40,4 +40,14 @@ public class MoneyDaoImpl implements MoneyDao {
         return temp.selectList(ns + "activityList", kidId);
     }
 
+    @Override
+    public int getTodaySpend(int kidId) {
+        return temp.selectOne(ns + "todaySpend", kidId);
+    }
+
+    @Override
+    public int getWeekSpend(int kidId) {
+        return temp.selectOne(ns + "weekSpend", kidId);
+    }
+
 }

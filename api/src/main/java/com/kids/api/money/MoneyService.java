@@ -12,4 +12,8 @@ public interface MoneyService {
     int activity(Budget budget);
 
     List<Budget> activityList(int kidId);
+
+    int getTodaySpend(int kidId);
+
+    int getWeekSpend(int kidId);
 }

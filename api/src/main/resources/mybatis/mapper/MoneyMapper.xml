@@ -10,23 +10,36 @@
 
 	<update id="deposit" parameterType="money">
 		update kids set total_money =
-		total_money + #{calculation} where kid_id = #{kidId}
+		total_money + #{amount} where kid_id = #{kidId}
 	</update>
 
 	<update id="withdraw" parameterType="money">
 		update kids set total_money
-		= total_money - #{calculation} where kid_id = #{kidId}
+		= total_money - #{amount} where kid_id = #{kidId}
 	</update>
 
 	<insert id="activity">
-		insert into budget(contents, amount, type,
-		left_money, kid_id) values(#{contents}, #{amount}, #{type},
+		insert into budget(contents, amount, is_deposit,
+		left_money, kid_id) values(#{contents}, #{amount}, #{isDeposit},
 		#{leftMoney}, #{kidId});
 	</insert>
 
 	<select id="activityList" resultType="budget">
 		select contents, amount,
-		date, type, left_money, kid_id from budget where kid_id = #{kidId}
+		date, is_deposit, left_money, kid_id from budget where kid_id = #{kidId}
 	</select>
 
+
+	<select id="todaySpend" parameterType="int" resultType="int">
+		select sum(case when is_deposit then amount else -amount end) from budget where kid_id=#{kidId}
+		and date(date) = curdate()
+	</select>
+
+	
+	<select id="weekSpend" parameterType="int" resultType="int">
+		select sum(case when is_deposit then amount else -amount end) from budget where kid_id=#{kidId} 
+		and date_format(date, "%Y-%m-%d") between adddate(curdate(),-weekday(curdate())+0) and adddate(curdate(),-weekday(curdate())+6)
+	</select>
+
+	
 </mapper>
