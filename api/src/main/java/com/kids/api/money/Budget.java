@@ -13,7 +13,7 @@ public class Budget {
     private String contents;
     private int amount;
     private Date date;
-    private boolean type;
+    private Boolean isDeposit;
     private int leftMoney;
     private int kidId;
 }
