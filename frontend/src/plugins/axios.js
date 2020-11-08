@@ -14,6 +14,22 @@ instance.interceptors.request.use(
         }
         
         return config;
+    },
+    (response) => {
+        return response;
+    },
+    (error) => {
+        if(error.status === 401 && error.config && !error.config.__isRetryRequest) {
+            return store.dispatch('auth/refreshToken')
+                .then(() => {
+                    error.config.__isRetryRequest = true;
+                    return instance(error.config);
+                })
+                .catch((error) => {
+                    throw error;
+                });
+        }
+        throw error;
     }
 );
 

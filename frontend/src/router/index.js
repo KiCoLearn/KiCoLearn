@@ -91,4 +91,28 @@ const router = new VueRouter({
     routes,
 });
 
+import store from '@/store';
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.admin)) {
+        if (store.getters['auth/isAdmin'] !== true) {
+            next({
+                path: from.fullPath,
+            });
+        } else {
+            next();
+        }
+    } else if (to.matched.some(record => record.meta.authorized)) {
+        if (store.getters['auth/isAuthorized'] !== true) {
+            next({
+                path: from.fullPath,
+            });
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
 export default router;
