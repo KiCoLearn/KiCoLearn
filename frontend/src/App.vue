@@ -5,6 +5,8 @@
     >
         <Kakao />
         <Kakao2 />
+        <Kakao3 />
+        <Kakao4 />
         <div id="nav">
             <router-link to="/">
                 Home
@@ -24,13 +26,22 @@
 <script>
 import Kakao from '@/components/oauth/OAuthKakao';
 import Kakao2 from '@/components/oauth/OAuthKakaoLogout';
+import Kakao3 from '@/components/oauth/OAuthKakaoUnlink';
+import Kakao4 from '@/components/oauth/OAuthKakaoTest';
 
 export default {
     components: {
         Kakao,
         Kakao2,
+        Kakao3,
+        Kakao4,
     },
     mounted() {
+        this.$store.dispatch('fcm/requestPermission')
+            .then(() => {
+                this.$store.dispatch('fcm/getToken');
+            }).catch(() => {
+            });
     },
 };
 </script>

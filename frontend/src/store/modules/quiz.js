@@ -43,7 +43,7 @@ export default {
                 })
                     .then((response) => {
                         commit('SET_TODAY_PROBLEM', {
-                            todayProblem: response.data,
+                            todayProblem: response.data.data,
                         });
 
                         resolve(response);
