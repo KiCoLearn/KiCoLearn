@@ -8,6 +8,7 @@
 export default {
     mounted() {
         const code = this.$route.query.code;
+
         this.$store.dispatch('auth/getToken', code)
             .then((token) => {
                 this.$store.dispatch('auth/login', {
@@ -15,17 +16,18 @@ export default {
                     provider: 'kakao',
                 })
                     .finally(() => {
-                        this.$router.push('/');
+                        this.$router.push({
+                            name: 'main'
+                        });
                     });
             }).catch(() => {
 
             }).finally(() => {
-                this.$store.dispatch('auth/auth')
-                    .finally(() => {
-                        this.$router.push('/');
-                    });
+                this.$store.dispatch('auth/auth');
             });
     },
+    methods: {
+    }
 };
 </script>
 
