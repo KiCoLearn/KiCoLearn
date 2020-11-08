@@ -31,4 +31,9 @@ public class KidsServiceImpl implements KidsService {
         return kDao.getKidsByParentId(parentId);
     }
 
+    @Override
+    public int updateKid(Kids kid) {
+        return kDao.updateKid(kid);
+    }
+
 }

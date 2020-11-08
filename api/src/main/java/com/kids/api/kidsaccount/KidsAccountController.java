@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,6 +69,21 @@ public class KidsAccountController {
         System.out.println(kid);
         try {
             kService.addKid(kid);
+            entity = resultHandler.handleSuccess("success");
+        } catch (RuntimeException e) {
+            entity = resultHandler.handleException(e);
+        }
+        return entity;
+    }
+    
+    @PutMapping("/update")
+    @ApiOperation(value = "아이 정보 수")
+    public ResponseEntity<Map<String, Object>> updateKid(@RequestBody Kids kid) {
+        ResponseEntity<Map<String, Object>> entity = null;
+        logger.debug("update kid: " + kid);
+        System.out.println(kid);
+        try {
+            kService.updateKid(kid);
             entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
             entity = resultHandler.handleException(e);
