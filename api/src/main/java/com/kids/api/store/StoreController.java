@@ -31,7 +31,7 @@ public class StoreController {
     @Autowired
     Handler resultHandler;
 
-    @GetMapping("/list/{parentId}")
+    @GetMapping("/plist/{parentId}")
     @ApiOperation(value = "부모 번호로 아이템 리스트 조회")
     public ResponseEntity<Map<String, Object>> getStore(@PathVariable int parentId) {
         ResponseEntity<Map<String, Object>> entity = null;
@@ -101,7 +101,7 @@ public class StoreController {
         return entity;
     }
 
-    @GetMapping("/list/{kidId}")
+    @GetMapping("/klist/{kidId}")
     @ApiOperation(value = "아이 번호로 아이템 리스트 조회")
     public ResponseEntity<Map<String, Object>> getKidsStore(@PathVariable int kidId) {
         ResponseEntity<Map<String, Object>> entity = null;
