@@ -1,55 +1,35 @@
 <template>
-    <div class="startmain">
-        <div class="login">
-            <Kakao />
-            <Kakao2 />
-            <p>
-                <button
-                    class="kidslogin"
-                    @click="kidslogin"
-                >
-                    아이 로그인
-                </button>
-            </p>
-            <button
-                class="sign"
-                @click="sign"
-            >
-                회원가입
-            </button>
-            <p>
-                <button
-                    class="sign"
-                    @click="$router.push({ name: 'QuizTest' })"
-                >
-                    퀴즈풀기*
-                </button>
-                <button
-                    class="sign"
-                    @click="$router.push({ name: 'QuizManage' })"
-                >
-                    퀴즈관리*
-                </button>
-            </p>
-        </div>
+    <div class="login">
+        <v-layout>
+            <v-flex>
+                <v-row justify="center">
+                    <Kakao />
+                </v-row>
+
+                <v-row justify="center"> 
+                    <v-btn
+                        text
+                        class="kidslogin"
+                        @click="kidslogin"
+                    >
+                        아이 로그인
+                    </v-btn>
+                </v-row>
+            </v-flex>
+        </v-layout> 
     </div>
 </template>
 
 <script>
 import Kakao from '@/components/oauth/OAuthKakao';
-import Kakao2 from '@/components/oauth/OAuthKakaoLogout';
 
 export default {
     components: {
         Kakao,
-        Kakao2,
     },
     methods: {
         kidslogin(){
             this.$router.push({name:'Kidslogin'});
-        },
-        sign(){//필요한가...?
-            this.$router.push({name:'Sign'});
         },
     },
 };
@@ -57,11 +37,16 @@ export default {
 
 <style scoped>
 
-.kidslogin,.sign{
-    background-color: #8cca79;
-    color: #F8F8F8;
-    width: 6rem;
-    border-radius: 2rem;
+.kidslogin{
+  font-size: 1rem !important;
+}
+
+.login{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 </style>

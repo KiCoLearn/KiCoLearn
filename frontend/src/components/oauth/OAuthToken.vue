@@ -17,7 +17,7 @@ export default {
                 })
                     .finally(() => {
                         this.$router.push({
-                            name: 'main'
+                            name: 'KidsList'
                         });
                     });
             }).catch(() => {

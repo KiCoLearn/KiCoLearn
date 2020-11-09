@@ -3,10 +3,6 @@
         id="app"
         style="background-color:cornsilk"
     >
-        <Kakao />
-        <Kakao2 />
-        <Kakao3 />
-        <Kakao4 />
         <div id="nav">
             <router-link to="/">
                 Home
@@ -18,27 +14,19 @@
                 KidsList
             </router-link>              
         </div>
-        <v-main>
-            <v-container fluid>
-                <router-view />
-            </v-container>
-        </v-main>
+     
+        <v-container
+            fluid
+            style="height: 100%;"
+        >
+            <router-view />
+        </v-container>
     </v-app>
 </template>
 
 <script>
-import Kakao from '@/components/oauth/OAuthKakao';
-import Kakao2 from '@/components/oauth/OAuthKakaoLogout';
-import Kakao3 from '@/components/oauth/OAuthKakaoUnlink';
-import Kakao4 from '@/components/oauth/OAuthKakaoTest';
-
 export default {
-    components: {
-        Kakao,
-        Kakao2,
-        Kakao3,
-        Kakao4,
-    },
+   
     mounted() {
         this.$store.dispatch('fcm/requestPermission')
             .then(() => {
@@ -49,13 +37,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
 }
 
 #nav {
