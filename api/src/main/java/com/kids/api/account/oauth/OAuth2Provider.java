@@ -6,26 +6,25 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.kids.api.account.model.exception.InvalidTokenException;
 import com.kids.api.account.model.exception.OAuthServerException;
+import com.kids.api.global.util.Connection;
 
 public enum OAuth2Provider {
     KAKAO {
         @Override
         public JSONObject getTokenInformation(String accessToken) throws IOException {
-            URL url = new URL("https://kapi.kakao.com/v1/user/access_token_info");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Authorization", String.format("Bearer %s", accessToken));
-            connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
+            HttpURLConnection connection = Connection.builder("GET",
+                                                              "https://kapi.kakao.com/v1/user/access_token_info")
+                                                     .header("Authorization", String.format("Bearer %s", accessToken))
+                                                     .header("Content-type", "application/x-www-form-urlencoded;charset=utf-8")
+                                                     .build()
+                                                     .getConnection();
             JSONObject response = request(connection);
-            
+
             return response;
         }
 
@@ -37,7 +36,7 @@ public enum OAuth2Provider {
             connection.setRequestProperty("Authorization", String.format("Bearer %s", accessToken));
 
             JSONObject response = request(connection);
-            
+
             return response;
         }
 
@@ -50,7 +49,7 @@ public enum OAuth2Provider {
             connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
             JSONObject response = request(connection);
-            
+
             return response;
         }
 
@@ -62,15 +61,15 @@ public enum OAuth2Provider {
             connection.setRequestProperty("Authorization", String.format("Bearer %s", accessToken));
 
             JSONObject response = request(connection);
-            
+
             return response;
         }
     };
-    
+
     private static JSONObject request(HttpURLConnection connection) {
         try {
             connection.connect();
-        
+
             int responseCode = connection.getResponseCode();
             if (200 <= responseCode && responseCode < 300) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -79,9 +78,9 @@ public enum OAuth2Provider {
                 while ((line = br.readLine()) != null) {
                     sb.append(line);
                 }
-    
+
                 JSONObject response = new JSONObject(sb.toString());
-    
+
                 return response;
             } else {
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
@@ -90,9 +89,9 @@ public enum OAuth2Provider {
                 while ((line = br.readLine()) != null) {
                     sb.append(line);
                 }
-    
+
                 JSONObject response = new JSONObject(sb.toString());
-    
+
                 try {
                     int code = response.getInt("code");
                     switch (code) {
@@ -115,7 +114,10 @@ public enum OAuth2Provider {
     }
 
     public abstract JSONObject unlink(String accessToken) throws IOException;
+
     public abstract JSONObject logout(String accessToken) throws IOException;
+
     public abstract JSONObject getTokenInformation(String accessToken) throws IOException;
+
     public abstract JSONObject getUserInformation(String accessToken) throws IOException;
 }

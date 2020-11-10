@@ -15,15 +15,21 @@ public class OAuthConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(oAuthTokenInterceptor)
-                .addPathPatterns("/test/**");
+                .addPathPatterns("/api/kidsaccount/**")
+                .addPathPatterns("/api/money/**")
+                .addPathPatterns("/api/parents/**")
+                .excludePathPatterns("/api/parents/login/**")
+                .addPathPatterns("/api/quest/**")
+                .addPathPatterns("/api/quiz/**")
+                .addPathPatterns("/api/store/**");
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-        .allowedOrigins("*")
-        .allowedMethods("*")
-        .allowedHeaders("*")
-        .exposedHeaders("Authorization", "Provider");
+                .allowedOrigins("*")
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .exposedHeaders("Authorization", "Provider");
     }
 }

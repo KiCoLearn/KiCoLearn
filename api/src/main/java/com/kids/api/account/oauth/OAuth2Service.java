@@ -3,10 +3,12 @@ package com.kids.api.account.oauth;
 import java.io.IOException;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kids.api.account.User;
 import com.kids.api.account.model.exception.InvalidProviderException;
+import com.kids.api.jwt.JwtService;
 
 import lombok.NonNull;
 
@@ -31,6 +33,21 @@ public class OAuth2Service {
         }
 
         return -1;
+    }
+    
+    @Autowired
+    JwtService jwtService;
+    
+    public boolean isValid(String token, String provider) {
+        switch (provider.toLowerCase()) {
+        case "kakao":
+            return getUserId(token, provider)!=-1;
+        case "kicolearn" :
+            return jwtService.checkValid(token);
+        default:
+            throw new InvalidProviderException("invailid provider", provider);
+        }
+
     }
     
     public User getUserInformation(String token, String provider) {

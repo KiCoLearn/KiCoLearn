@@ -24,7 +24,7 @@ import com.kids.api.global.handler.Handler;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/quiz")
+@RequestMapping("/api/quiz")
 public class QuizController {
     static Logger logger = LoggerFactory.getLogger(QuizController.class);
 

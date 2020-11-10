@@ -14,13 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kids.api.certification.exception.BasicCertificationException;
+import com.kids.api.certification.exception.ExpireTimeException;
+import com.kids.api.certification.exception.CodeNotFoundException;
 import com.kids.api.global.handler.Handler;
 import com.kids.api.jwt.JwtService;
 import com.kids.api.kidsaccount.Kids;
@@ -28,7 +30,7 @@ import com.kids.api.kidsaccount.Kids;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/certification")
+@RequestMapping("/api/certification")
 public class CertificationController {
     static Logger logger = LoggerFactory.getLogger(CertificationController.class);
 
@@ -74,56 +76,48 @@ public class CertificationController {
     public ResponseEntity<Map<String, Object>> login(HttpServletResponse response, @RequestBody Certification certification) {
         ResponseEntity<Map<String, Object>> entity = null;
         logger.debug("certificationNo : " + certification.getCertificationNo());
-        try {
-            Certification temCertification = cService.getCertificationByNo(certification.getCertificationNo());
-            Map<String, Object> resultMap = new HashMap<>();
-            if (temCertification == null) {
-                resultMap.put("success", false);
-                resultMap.put("message", "일치하는 데이터가 조회되지 않음");
 
+        Certification temCertification = cService.getCertificationByNo(certification.getCertificationNo());
+       
+        if (temCertification == null) {
+            throw new CodeNotFoundException("일치하는 데이터가 조회되지 않습니다.");
+        } else {
+            if (System.currentTimeMillis() > temCertification.getExpiredTime().getTime()) {
+                throw new ExpireTimeException("인증코드 시간이 만료되었습니다.");
             } else {
-                if (System.currentTimeMillis() > temCertification.getExpiredTime().getTime()) {
-                    resultMap.put("success", false);
-                    resultMap.put("message", "시간이 만료됨");
-                } else {
-                    StringBuffer temp = new StringBuffer();
-                    Random rnd = new Random();
+                StringBuffer temp = new StringBuffer();
+                Random rnd = new Random();
 
-                    // 20자리 난수,문자열 조합
-                    for (int i = 0;     i < 20; i++) {
-                        int rIndex = rnd.nextInt(3);
-                        switch (rIndex) {
-                        case 0:
-                            // a-z
-                            temp.append((char) ((int) (rnd.nextInt(26)) + 97));
-                            break;
-                        case 1:
-                            // A-Z
-                            temp.append((char) ((int) (rnd.nextInt(26)) + 65));
-                            break;
-                        case 2:
-                            // 0-9
-                            temp.append((rnd.nextInt(10)));
-                            break;
-                        }
+                // 20자리 난수,문자열 조합
+                for (int i = 0; i < 20; i++) {
+                    int rIndex = rnd.nextInt(3);
+                    switch (rIndex) {
+                    case 0:
+                        // a-z
+                        temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+                        break;
+                    case 1:
+                        // A-Z
+                        temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+                        break;
+                    case 2:
+                        // 0-9
+                        temp.append((rnd.nextInt(10)));
+                        break;
                     }
-
-                    KidsAuth auth = new KidsAuth(temCertification.getKidId(), temp.toString());
-                    cService.createKidsAuth(auth);
-                    String token = jwtService.create(auth, "");
-                    response.setHeader("jwt-auth-token", token);
-
-                    resultMap.put("success", true);
-                    resultMap.put("data", auth);
-
                 }
-            }
-            entity = resultHandler.handleSuccess(resultMap);
 
-        } catch (RuntimeException e) {
-            entity = resultHandler.handleException(e);
+                KidsAuth auth = new KidsAuth(temCertification.getKidId(), temp.toString());
+                cService.createKidsAuth(auth);
+                String token = jwtService.create(auth);
+                response.setHeader("Authorization", token);
+                System.out.println(token);
+                response.setHeader("provider", "kicolearn");
+                entity = resultHandler.handleSuccess(auth);
+            }
         }
+
         return entity;
     }
-    
+
 }

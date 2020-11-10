@@ -1,7 +1,7 @@
 <template>
     <div class="kidsmain">
         <div class="header">
-            <KidsHeader />
+            <KidHeader />
         </div>
         <div class="point">
             <h3> 오늘 쓴거 내역</h3> 
@@ -67,12 +67,13 @@
             </p>
         </div>
     </div>
-</template>
+</template> 
 <script>
-import KidsHeader from '@/components/Kids/KidsHeader.vue';
+import KidHeader from '@/components/kid/KidHeader';
 export default {
+    name:'KidMain',
     components:{
-        KidsHeader
+        KidHeader
     },
     methods: {
         clickreport(){

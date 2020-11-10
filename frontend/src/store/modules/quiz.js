@@ -25,7 +25,7 @@ export default {
         fetchProblemResult() {
             return new Promise((resolve, reject) => {
                 axios({
-                    url: 'quiz/solve',
+                    url: '/api/quiz/solve',
                     method: 'post',
                 })
                     .then((response) => {
@@ -38,7 +38,7 @@ export default {
         fetchTodayProblem({ commit }) {
             return new Promise((resolve, reject) => {
                 axios({
-                    url: 'quiz/today',
+                    url: '/api/quiz/today',
                     method: 'get',
                 })
                     .then((response) => {

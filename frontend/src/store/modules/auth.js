@@ -8,13 +8,29 @@ export default {
         refreshToken: null,
         provider: null,
         id: null,
+        role : null,
     },
     getters: {
         isAdmin() {
             return true;
         },
         isAuthorized(state) {
-            return state.accessToken !== null && state.provider !== null;
+            return state.accessToken !== null 
+            && state.provider !== null 
+            && state.id !== null
+            && state.role !== null;
+        },
+        isParents(state) {
+            return state.accessToken !== null 
+            && state.provider !== null 
+            && state.id !== null
+            && state.role === 'parents';
+        },
+        isKid(state) {
+            return state.accessToken !== null 
+            && state.provider !== null 
+            && state.id !== null
+            && state.role === 'kid';
         },
         id(state) {
             return state.id;
@@ -24,13 +40,27 @@ export default {
         },
         provider(state) {
             return state.provider;
+        },
+        role(state){
+            return state.role;
+        },
+        GET_ROLE(state, {provider}) {
+            switch(provider) {
+            case 'kakao':
+                return 'parents';
+            case 'kicolearn':
+                return 'kid';
+            default : 
+                return null;
+            }
         }
     },
     mutations: {
-        LOGIN(state, { id }) {
+        LOGIN(state, { id, role }) {
             state.id = id;
+            state.role = role;
         },
-        GET_TOKEN(state, { accessToken, refreshToken, provider }) {
+        SET_TOKEN(state, { accessToken, refreshToken, provider }) {
             state.accessToken = accessToken;
             state.refreshToken = refreshToken;
             state.provider = provider;
@@ -46,13 +76,14 @@ export default {
             state.refreshToken = null;
             state.provider = null;
             state.id = null;
+            state.role = null;
         },
     },
     actions: {
         auth() {
             return new Promise((resolve, reject) => {
                 axiosAPI({
-                    url: '/test',
+                    url: '/api/parents/test',
                     method: 'get',
                 }).then((response) => {
                     resolve(response);
@@ -109,7 +140,7 @@ export default {
                     .then((response) => {
                         const accessToken = response.data.access_token;
                         const refreshToken = response.data.refresh_token;
-                        commit('GET_TOKEN', {
+                        commit('SET_TOKEN', {
                             accessToken,
                             refreshToken,
                             provider: 'kakao',
@@ -121,21 +152,36 @@ export default {
                     });
             });
         },
-        login({commit}, {token, provider}) {
+        login({ commit, rootState, dispatch }, {token, provider}) {
             return new Promise((resolve, reject) => {
                 axiosAPI({
-                    url: `login/${provider}`,
+                    url: `/api/parents/login/${provider}`,
                     method: 'POST',
                     params: {
                         'token': token,
                     },
                 })
-                    .then((response) => {
+                    .then(async (response) => {
                         const id = response.data.id;
-                        commit('LOGIN', { id });
+                        const role = 'parents';
+                        commit('LOGIN', { id, role });
 
-                        resolve(response);
-                        
+                        const token = rootState.fcm.token;
+                        const registResponse = await dispatch('fcm/registToken', {
+                            token: token,
+                            id: id,
+                        }, {
+                            root: true,
+                        })
+                            .catch((error) => {
+                                console.warn(error.response);
+                            });
+                        if (200 <= registResponse.status && registResponse.status < 300) {
+
+                            resolve(response);
+                        } else {
+                            reject(registResponse);
+                        }
                     }).catch((error) => {
                         reject(error);
                     });
@@ -144,7 +190,7 @@ export default {
         logout({state, commit}) {
             return new Promise((resolve) => {
                 axiosAPI({
-                    url: '/logout/kakao',
+                    url: '/api/parents/logout/kakao',
                     method: 'post',
                     params: {
                         token: state.accessToken,
@@ -162,7 +208,7 @@ export default {
         unlink({state, commit}) {
             return new Promise((resolve) => {
                 axiosAPI({
-                    url: '/unlink/kakao',
+                    url: '/api/parents/unlink/kakao',
                     method: 'post',
                     params: {
                         token: state.accessToken,

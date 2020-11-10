@@ -2,6 +2,13 @@
     <div class="login">
         <v-layout>
             <v-flex>
+                <v-row justify="center"> 
+                    <img
+                        src="@/assets/adults.png"
+                        width="150px"
+                    >
+                </v-row>
+
                 <v-row justify="center">
                     <Kakao />
                 </v-row>
@@ -9,7 +16,7 @@
                 <v-row justify="center"> 
                     <v-btn
                         text
-                        class="kidslogin"
+                        class="kidlogin"
                         @click="kidslogin"
                     >
                         아이 로그인
@@ -29,15 +36,18 @@ export default {
     },
     methods: {
         kidslogin(){
-            this.$router.push({name:'Kidslogin'});
+            this.$router.push({name:'KidLogin'});
         },
     },
 };
 </script>
 
 <style scoped>
+.row{
+    margin-bottom: 10px;
+}
 
-.kidslogin{
+.kidlogin{
   font-size: 1rem !important;
 }
 

@@ -3,9 +3,9 @@ module.exports = {
         'vuetify'
     ],
     pwa: {
-        workboxPluginMode: "InjectManifest",
+        workboxPluginMode: 'InjectManifest',
         workboxOptions: {
-            swSrc: "src/service-worker.js"
+            swSrc: 'src/service-worker.js'
         }
     }
 };
