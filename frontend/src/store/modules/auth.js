@@ -152,7 +152,7 @@ export default {
                     });
             });
         },
-        login({commit}, {token, provider}) {
+        login({ commit, rootState, dispatch }, {token, provider}) {
             return new Promise((resolve, reject) => {
                 axiosAPI({
                     url: `/api/parents/login/${provider}`,
@@ -161,13 +161,27 @@ export default {
                         'token': token,
                     },
                 })
-                    .then((response) => {
+                    .then(async (response) => {
                         const id = response.data.id;
                         const role = 'parents';
                         commit('LOGIN', { id, role });
 
-                        resolve(response);
-                        
+                        const token = rootState.fcm.token;
+                        const registResponse = await dispatch('fcm/registToken', {
+                            token: token,
+                            id: id,
+                        }, {
+                            root: true,
+                        })
+                            .catch((error) => {
+                                console.warn(error.response);
+                            });
+                        if (200 <= registResponse.status && registResponse.status < 300) {
+
+                            resolve(response);
+                        } else {
+                            reject(registResponse);
+                        }
                     }).catch((error) => {
                         reject(error);
                     });
