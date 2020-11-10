@@ -20,7 +20,7 @@
 export default {
     methods: {
         home(){
-            this.$router.push({name:'Kidsmain'});
+            this.$router.push({name:'KidMain'});
         },
     },
     

@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import axios from 'axios';
-import ItemCard from '@/components/items/ItemCard';
-import AddItem from '@/components/items/AddItem';
+import axios from '@/plugins/axios';
+import ItemCard from '@/components/shop/ItemCard';
+import AddItem from '@/components/shop/AddItem';
 export default {    
     name:'Store',
     components: {

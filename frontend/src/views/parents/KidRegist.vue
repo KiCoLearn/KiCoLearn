@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <h2>아이 정보 수정</h2>
+        <h2>아이 정보 등록</h2>
         <v-layout justify-center>
             <div class="character">
                 <img
@@ -194,17 +194,17 @@
                         >
                             <button
                                 class="btn"
-                                @click="back"
+                                @click="cancel"
                             >
                                 <img
-                                    src="@/assets/close.png"
+                                    src="@/assets/list.png"
                                     width="80px"
                                 >
                             </button>
                             <button
                                 class="btn"
                                 style="margin-left: 10px;"
-                                @click="update"
+                                @click="regist"
                             >
                                 <img
                                     src="@/assets/success.png"
@@ -220,9 +220,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/plugins/axios';
 export default {
-    name:'KidsUpdate',
+    name:'KidsRegist',
     data: () => ({
         valid:true,
         dialog:false,
@@ -232,7 +232,7 @@ export default {
         month:'',
         day:'',
         gender:-1,
-        photo:'',
+        photo:require('@/assets/character/001.png'),
         pick:1,
         items:48,
         noGender:false,
@@ -243,54 +243,25 @@ export default {
             genderRequired: (value) => (value===0 || value===1),
         },
     }),
-    computed: {
-        kidId(){
-            return this.$route.query.id;
-        }
-    },
-    created() {
-        axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/detail/'+this.kidId,
-            {
-                headers: {
-                    'jwt-auth-token':''
-                },
-            })
-            .then((res) => {
-                this.name = res.data.data.name;
-                const birth = res.data.data.birth.split('-');
-                this.year = birth[0];
-                this.month = birth[1];
-                this.day = birth[2];
-                this.gender = res.data.data.gender? 1: 0;
-                this.photo = this.getPhotoPath(res.data.data.characterIdx);
-                this.pick = res.data.data.characterIdx;
-            });
-    },
     methods: {
-        update(){
+        regist(){
             if (this.$refs.form.validate()) {
-                axios.put(process.env.VUE_APP_API_URL + '/api/kidsaccount/update',
+                axios.post(process.env.VUE_APP_API_URL + '/api/kidsaccount/regist',
                     {
-                        'kidId': this.kidId,
                         'birth': new Date(this.year, this.month-1, this.day),
                         'name': this.name,
                         'parentId': 1,
                         'gender' : this.gender,
                         'characterIdx': this.pick
-                    },
-                    {
-                        headers: {
-                            'jwt-auth-token':''
-                        },
                     })
                     .then(() => {
-                        alert('수정 되었습니다.');
-                        this.back();
+                        alert('등록 되었습니다.');
+                        this.$router.push('/kidslist');
                     });
             }
         },
-        back(){
-            this.$router.push({name: 'KidDetail', query: {'id': this.kidId}});
+        cancel(){
+            this.$router.push({name:'ParentsMain'});
         },
 
         changeProfile(){
@@ -349,7 +320,8 @@ export default {
         margin-top: 50px;
         padding: 20px 20px 5px 20px;
         background-color: white;
-        border-radius: 4px; 
+        border-radius: 4px;
+       
     }
 
     label{

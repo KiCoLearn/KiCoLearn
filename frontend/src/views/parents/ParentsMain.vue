@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/plugins/axios';
 
 export default {
     name : 'KidsList',
@@ -120,18 +120,16 @@ export default {
     created() {
         axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentId,
             {
-                headers: {
-                    'jwt-auth-token':''
-                },
             })
             .then((res) => {
+                //console.log('response', res);
                 this.kids = res.data.data;
-                console.log(this.kids);
+                //console.log(this.kids);
             });
     },
     methods: {
         addKid(){
-            this.$router.push('/kidsregist');
+            this.$router.push({name: 'KidRegist'});
         },
         deleteKid(kidId, index){
             axios.delete(process.env.VUE_APP_API_URL + '/api/kidsaccount/delete/'+kidId)
@@ -179,16 +177,10 @@ export default {
 }
 
 .card-header {
-	-webkit-transition: 0.5s; /*사파리 & 크롬*/
-    -moz-transition: 0.5s;  /*파이어폭스*/
-    -ms-transition: 0.5s;	/*인터넷 익스플로러*/
-    -o-transition: 0.5s;  /*오페라*/
-    transition: 0.5s;
 	width: 100%;
 	height: 61px;
 	border-radius: 15px 15px 0 0;
     margin-top: 10px;
-		
 }
 
 .card-header-close{

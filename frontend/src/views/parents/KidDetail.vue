@@ -156,7 +156,7 @@
 </template>
 
 <script>
-import axios from 'axios';  
+import axios from '@/plugins/axios';  
 import AnimatedNumber from 'animated-number-vue';
 
 export default {
@@ -203,10 +203,10 @@ export default {
             return `${value.toFixed(0)}`;
         },
         goList(){
-            this.$router.push('/kidslist');
+            this.$router.push({name:'ParentsMain'});
         }, 
         goUpdate(){
-            this.$router.push({name: 'KidsUpdate', query: {'id': this.kidId}});
+            this.$router.push({name: 'KidUpdate', query: {'id': this.kidId}});
         }
     },
 
