@@ -1,108 +1,61 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-//account
-import Sign from '@/views/account/Sign';
 import Main from '@/views/account/Main';
-import Kidsconnect from '@/views/account/Kidsconnect';
-import Kidslogin from '@/views/account/Kidslogin';
+import KidMain from '@/views/kid/KidMain';
+import ParentsMain from '@/views/parents/ParentsMain';
 
-//kids
-import Kidsmain from '@/views/Kids/Kidsmain';
-import Report from '@/views/Kids/Report';
-import Quest from '@/views/Kids/Quest';
-import Quiz from '@/views/Kids/Quiz';
+import AccountRoutes from '@/router/account';
+import ManageQuizRoutes from '@/router/quiz';
+import ShopRoutes from '@/router/shop';
 
-//items
-import Store from '@/views/Items/Store';
-import AddItem from '@/components/items/AddItem';
-
-//parent
-import KidsList from '@/views/Parent/KidsList';
-import KidsRegist from '@/views/Parent/KidsRegist';
-import KidDetail from '@/views/Parent/KidDetail';
-import KidsUpdate from '@/views/Parent/KidsUpdate';
-
-
-import QuizTestRoutes from '@/router/quiz';
-
-import OAuthRoutes from '@/router/oauth';
+/* todo : 지울것 */
+import DummyRoutes from '@/router/dummy';
 
 Vue.use(VueRouter);
 
 const routes = [
-    ...OAuthRoutes,
-    ...QuizTestRoutes,
+    ...AccountRoutes,
+    ...ManageQuizRoutes,
+    ...ShopRoutes,
+    ...DummyRoutes,
+    
+    {
+        path: '/kid',
+        name: 'KidMain',
+        component: KidMain,
+        meta: { requireAuth: true, kidOnly: true },
+    },
+  
+    {
+        path: '/parents',
+        name: 'ParentsMain',
+        component:ParentsMain,
+        meta: { requireAuth: true, parentsOnly: true },
+    },
+  
     {
         path: '/',
-        name: 'main',
-        component:Main
+        component: Main,
+        name: 'Main',
+        beforeEnter: (to, from, next) => {
+            switch (store.getters['auth/role']) {
+            case 'parents':
+                next({
+                    name: 'ParentsMain'
+                });
+                break;
+            case 'kid':   
+                next({
+                    name : 'KidMain'
+                });
+                break;
+            default : 
+                next();
+            }
+            
+        }
 
-    },
-    {
-        path: '/sign',
-        name: 'Sign',
-        component:Sign
-    },
-    {
-        path: '/kidsconnect',
-        name: 'Kidsconnect',
-        component:Kidsconnect
-    },
-    {
-        path: '/kidslogin',
-        name: 'Kidslogin',
-        component:Kidslogin
-    },
-    {
-        path: '/kidsmain',
-        name: 'Kidsmain',
-        component:Kidsmain
-    },
-    {
-        path: '/report',
-        name: 'Report',
-        component:Report
-    },
-    {
-        path: '/quest',
-        name: 'Quest',
-        component:Quest
-    },
-    {
-        path: '/store',
-        name: 'Store',
-        component:Store
-    },
-    {
-        path: '/quiz',
-        name: 'Quiz',
-        component:Quiz
-    },
-    {
-        path: '/kidslist',
-        name: 'KidsList',
-        component:KidsList
-    },
-    {
-        path: '/kidsregist',
-        name: 'KidsRegist',
-        component:KidsRegist
-    },
-    {
-        path: '/additem',
-        name: 'AddItem',
-        component:AddItem
-    },
-    {
-        path: '/kidinfo',
-        name: 'KidDetail',
-        component:KidDetail
-    },
-    {
-        path: '/kidsupdate',
-        name: 'KidsUpdate',
-        component:KidsUpdate
     },
 ];
 
@@ -115,25 +68,30 @@ const router = new VueRouter({
 import store from '@/store';
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.admin)) {
+    if (to.matched.some(record => record.meta.adminOnly)) {
         if (store.getters['auth/isAdmin'] !== true) {
             next({
-                path: from.fullPath,
+                name: 'Main',
             });
         } else {
             next();
         }
-    } else if (to.matched.some(record => record.meta.authorized)) {
-        if (store.getters['auth/isAuthorized'] !== true) {
+    }   
+    if (to.matched.some(record => record.meta.parentsOnly)) {
+        if (store.getters['auth/isParents'] !== true) {
             next({
-                path: from.fullPath,
+                name: 'Main'
             });
-        } else {
-            next();
         }
-    } else {
-        next();
-    }
+    } else if (to.matched.some(record => record.meta.kidOnly)) {
+        if (store.getters['auth/isKid'] !== true) {
+            next({
+                name: 'Main'
+            });
+        }
+    } 
+    
+    next();
 });
 
 export default router;
