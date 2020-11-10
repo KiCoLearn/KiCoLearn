@@ -2,6 +2,13 @@
     <div class="login">
         <v-layout>
             <v-flex>
+                <v-row justify="center"> 
+                    <img
+                        src="@/assets/adults.png"
+                        width="150px"
+                    >
+                </v-row>
+
                 <v-row justify="center">
                     <Kakao />
                 </v-row>
@@ -36,6 +43,9 @@ export default {
 </script>
 
 <style scoped>
+.row{
+    margin-bottom: 10px;
+}
 
 .kidslogin{
   font-size: 1rem !important;

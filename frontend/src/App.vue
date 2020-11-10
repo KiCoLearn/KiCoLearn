@@ -9,10 +9,10 @@
             </router-link>|
             <router-link to="/store">
                 Store
-            </router-link>|
-            <router-link to="/kidslist">
-                KidsList
-            </router-link>              
+            </router-link>
+            <div v-if="role === 'parents' && isAuthorized">
+                <KaKaoLogout />
+            </div>
         </div>
      
         <v-container
@@ -25,8 +25,16 @@
 </template>
 
 <script>
+import KaKaoLogout from '@/components/oauth/OAuthKakaoLogout';
+import { mapGetters } from 'vuex';
 export default {
-   
+    components:{KaKaoLogout},
+    computed: {
+        ...mapGetters({
+            role : 'auth/role',
+            isAuthorized: 'auth/isAuthorized',
+        })
+    },
     mounted() {
         this.$store.dispatch('fcm/requestPermission')
             .then(() => {
@@ -34,6 +42,8 @@ export default {
             }).catch(() => {
             });
     },
+
+
 };
 </script>
 
