@@ -42,11 +42,13 @@ public class MoneyDaoImpl implements MoneyDao {
 
     @Override
     public int getTodaySpend(int kidId) {
+        if(temp.selectOne(ns + "todaySpend", kidId)==null) return 0;
         return temp.selectOne(ns + "todaySpend", kidId);
     }
 
     @Override
     public int getWeekSpend(int kidId) {
+        if(temp.selectOne(ns + "weekSpend", kidId)==null) return 0;
         return temp.selectOne(ns + "weekSpend", kidId);
     }
 
