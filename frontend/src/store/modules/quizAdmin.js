@@ -19,7 +19,7 @@ export default {
         delete({dispatch}, quizNo) {
             return new Promise((resolve, reject) => {
                 axios({
-                    url: `quiz/delete/${quizNo}`,
+                    url: `/api/quiz/delete/${quizNo}`,
                     method: 'delete',
                 })
                     .then((response) => {
@@ -35,7 +35,7 @@ export default {
         edit({dispatch}, quiz) {
             return new Promise((resolve, reject) => {
                 axios({
-                    url: 'quiz/update',
+                    url: '/api/quiz/update',
                     method: 'post',
                     data: quiz,
                 })
@@ -52,7 +52,7 @@ export default {
         post({dispatch}, quiz) {
             return new Promise((resolve, reject) => {
                 axios({
-                    url: 'quiz/create',
+                    url: '/api/quiz/create',
                     method: 'post',
                     data: quiz,
                 })
@@ -69,7 +69,7 @@ export default {
         fetchProblems({ commit }) {
             return new Promise((resolve, reject) => {
                 axios({
-                    url: 'quiz',
+                    url: '/api/quiz',
                     method: 'get',
                 })
                     .then((response) => {

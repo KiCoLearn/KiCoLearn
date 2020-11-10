@@ -97,20 +97,20 @@ export default {
             return new Promise((resolve, reject) => {
                 messaging.getToken(process.env.VUE_APP_PUBLIC_VAPID_KEY)
                     .then(async (token) => {
-                        console.log('token', token);
+                        //console.log('token', token);
                         commit('SET_TOKEN', token);
-                        console.log(rootState);
-                        console.log(rootState.auth);
-                        console.log(rootState.auth.id);
+                        // console.log(rootState);
+                        // console.log(rootState.auth);
+                        // console.log(rootState.auth.id);
                         const id = rootState.auth.id;
-                        const response = await dispatch('registToken', {
+                        await dispatch('registToken', {
                             token: token,
                             id: id,
                         })
                             .catch((error) => {
                                 console.warn(error.response);
                             });
-                        console.log(response);
+                        //console.log(response);
                         resolve(token);
                     }).catch(() => {
                         commit('RESET_TOKEN');
@@ -121,15 +121,13 @@ export default {
         registToken(ignore, {token, id}) {
             return new Promise((resolve, reject) => {
                 axios({
-                    url: `v1/parent/accounts/${id}/messaging-token`,
+                    url: `/api/parents/accounts/${id}/messaging-token`,
                     method: 'post',
                     data: {
                         'messaging-token': token,
                     },
                 })
                     .then((response) => {
-                        console.error(response);
-
                         resolve(response);
                     })
                     .catch((error) => {
