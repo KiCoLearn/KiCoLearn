@@ -17,6 +17,11 @@ public class ParentsAccountService<T extends User> implements AccountService<T> 
 
     @Autowired
     OAuth2Service oauthService;
+    
+    @SuppressWarnings("unchecked")
+    private final static <T> T castToT(Object object) {
+        return (T) object;
+    }
 
     @Override
     public T login(T request) {
@@ -54,7 +59,7 @@ public class ParentsAccountService<T extends User> implements AccountService<T> 
             e.printStackTrace();
         }
 
-        return (T) parents;
+        return castToT(parents);
     }
 
     @Transactional
@@ -94,6 +99,16 @@ public class ParentsAccountService<T extends User> implements AccountService<T> 
     public List<T> getKidsByParentId(int parentId) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean updateToken(int id, String messagingToken) {
+        Parents parents = Parents.builder()
+                        .id(id)
+                        .messagingToken(messagingToken)
+                        .build();
+        int count = parentsRepository.updateToken(parents);
+        return count == 1;
     }
 
 }

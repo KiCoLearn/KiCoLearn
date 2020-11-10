@@ -4,10 +4,21 @@ import axiosAPI from '@/plugins/axios.js';
 export default {
     namespaced: true,
     state: {
-        accessToken: '',
-        provider: '',
+        accessToken: null,
+        refreshToken: null,
+        provider: null,
+        id: null,
     },
     getters: {
+        isAdmin() {
+            return true;
+        },
+        isAuthorized(state) {
+            return state.accessToken !== null && state.provider !== null;
+        },
+        id(state) {
+            return state.id;
+        },
         token(state) {
             return state.accessToken;
         },
@@ -16,13 +27,25 @@ export default {
         }
     },
     mutations: {
-        GET_ACCESS_TOKEN(state, { accessToken, provider }) {
+        LOGIN(state, { id }) {
+            state.id = id;
+        },
+        GET_TOKEN(state, { accessToken, refreshToken, provider }) {
             state.accessToken = accessToken;
+            state.refreshToken = refreshToken;
             state.provider = provider;
         },
+        REFRESH_ACCESS_TOKEN(state, { accessToken, refreshToken }) {
+            if (refreshToken) {
+                state.refreshToken = refreshToken;
+            }
+            state.accessToken = accessToken;
+        },
         LOGOUT(state) {
-            state.accessToken = '';
-            state.provider = '';
+            state.accessToken = null;
+            state.refreshToken = null;
+            state.provider = null;
+            state.id = null;
         },
     },
     actions: {
@@ -32,12 +55,39 @@ export default {
                     url: '/test',
                     method: 'get',
                 }).then((response) => {
-                    console.debug(response);
                     resolve(response);
                 }).catch((error) => {
-                    console.debug(error.response);
                     reject(error);
                 });
+            });
+        },
+        refreshToken({state, commit}) {
+            return new Promise((resolve, reject) => {
+                axios({
+                    url: 'https://kauth.kakao.com/oauth/token',
+                    method: 'POST',
+                    params: {
+                        'grant_type': 'refresh_token',
+                        'client_id': process.env.VUE_APP_OAUTH_KAKAO_CLIENT_ID,
+                        'code': state.refreshToken,
+                        'client_secret': process.env.VUE_APP_OAUTH_KAKAO_CLIENT_SECRET,
+                    },
+                    headers: {
+                        'Content-type': 'application/x-www-form-urlencoded'
+                    },
+                })
+                    .then((response) => {
+                        const accessToken = response.data.access_token;
+                        const refreshToken = response.data.refresh_token;
+                        commit('REFRESH_ACCESS_TOKEN', {
+                            accessToken,
+                            refreshToken,
+                        });
+                        resolve(accessToken);
+                        
+                    }).catch((error) => {
+                        reject(error);
+                    });
             });
         },
         getToken({commit}, code) {
@@ -58,8 +108,10 @@ export default {
                 })
                     .then((response) => {
                         const accessToken = response.data.access_token;
-                        commit('GET_ACCESS_TOKEN', {
+                        const refreshToken = response.data.refresh_token;
+                        commit('GET_TOKEN', {
                             accessToken,
+                            refreshToken,
                             provider: 'kakao',
                         });
                         resolve(accessToken);
@@ -69,7 +121,7 @@ export default {
                     });
             });
         },
-        login(ignore, {token, provider}) {
+        login({commit}, {token, provider}) {
             return new Promise((resolve, reject) => {
                 axiosAPI({
                     url: `login/${provider}`,
@@ -79,7 +131,9 @@ export default {
                     },
                 })
                     .then((response) => {
-                        console.log(response);
+                        const id = response.data.id;
+                        commit('LOGIN', { id });
+
                         resolve(response);
                         
                     }).catch((error) => {

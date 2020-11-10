@@ -8,7 +8,7 @@
 	</select>
 	
 	<insert id="insertItem" parameterType="item">
-		insert into items(name, price, description, parent_id) values(#{name}, #{price}, #{description}, #{parentId})			
+		insert into items(name, price, description, parent_id, field) values(#{name}, #{price}, #{description}, #{parentId}, #{field})			
 	</insert>
 	
 	<update id="updateItem" parameterType="int">
@@ -20,7 +20,7 @@
 	</select>
 	
 	<delete id="deleteItem" parameterType="int">
-		delete from items where item_no = {itemNo}
+		delete from items where item_no = #{itemNo}
 	</delete>
 	
 	<insert id="addKidItem" parameterType="kidstore">

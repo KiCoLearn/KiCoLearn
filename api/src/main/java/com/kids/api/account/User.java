@@ -2,6 +2,10 @@ package com.kids.api.account;
 
 import java.sql.Timestamp;
 
+import javax.xml.bind.annotation.XmlElement;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +31,12 @@ public class User {
     private String email;
     
     private Boolean enabled;
-    
+
+    @XmlElement(name = "disable-time")
+    @JsonProperty(value = "disable-time")
     private Timestamp disableTime;
+    
+    @XmlElement(name = "messaging-token")
+    @JsonProperty(value = "messaging-token")
+    private String messagingToken;
 }

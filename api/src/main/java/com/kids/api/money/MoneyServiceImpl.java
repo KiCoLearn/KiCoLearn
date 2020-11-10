@@ -27,13 +27,23 @@ public class MoneyServiceImpl implements MoneyService {
     }
 
     @Override
-    public int activity(Budget budget) {        
+    public int activity(Budget budget) {
         return mDao.budgetActivity(budget);
     }
 
     @Override
-    public List<Budget> activityList(int kidId) {        
+    public List<Budget> activityList(int kidId) {
         return mDao.kidActivityList(kidId);
+    }
+
+    @Override
+    public int getTodaySpend(int kidId) {
+        return mDao.getTodaySpend(kidId);
+    }
+
+    @Override
+    public int getWeekSpend(int kidId) {
+        return mDao.getWeekSpend(kidId);
     }
 
 }

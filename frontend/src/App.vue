@@ -14,30 +14,37 @@
                 KidsList
             </router-link>              
         </div>
-        <v-main>
-            <v-container fluid>
-                <router-view />
-            </v-container>
-        </v-main>
+     
+        <v-container
+            fluid
+            style="height: 100%;"
+        >
+            <router-view />
+        </v-container>
     </v-app>
 </template>
 
 <script>
-
 export default {
-    
+   
     mounted() {
+        this.$store.dispatch('fcm/requestPermission')
+            .then(() => {
+                this.$store.dispatch('fcm/getToken');
+            }).catch(() => {
+            });
     },
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
 }
 
 #nav {

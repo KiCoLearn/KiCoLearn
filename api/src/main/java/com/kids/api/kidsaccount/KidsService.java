@@ -10,4 +10,6 @@ public interface KidsService {
     Kids detailKid(int kidId);
 
     List<Kids> getKidsByParentId(int parentId);
+    
+    int updateKid(Kids kid);
 }

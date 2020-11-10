@@ -1,5 +1,6 @@
 package com.kids.api.money;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public class MoneyController {
     @Autowired
     MoneyService mService;
 
+    @Autowired
     Handler resultHandler;
 
     @GetMapping("/{kidId}")
@@ -42,18 +44,28 @@ public class MoneyController {
 
     @PostMapping("/activity")
     @ApiOperation(value = "활동을 기록(용돈기입장)")
-    public ResponseEntity<Map<String, Object>> activity(@RequestBody Map<String, Object> data) {
+    public ResponseEntity<Map<String, Object>> activity(@RequestBody Budget budget) {
         ResponseEntity<Map<String, Object>> result = null;
         try {
-            String contents = (String) data.get("contents");
-            int amount = (int) data.get("amount");  
-            boolean type = (boolean) data.get("type");
-            int kidId = (int) data.get("kidId");
-            int leftMoney = mService.getTotalMoney(kidId) - amount;
-            Money money = new Money(kidId, amount);
-            int totalMoneyUpdate = mService.deposit(money);
-            Budget budget = new Budget(contents, amount, null, type, leftMoney, kidId);
-            result = resultHandler.handleSuccess(mService.activity(budget));
+            String contents = budget.getContents();
+            int amount = budget.getAmount();  
+            Boolean type = budget.getIsDeposit();
+            int kidId = budget.getKidId();
+            Money money = new Money(kidId, amount); 
+            int leftMoney = mService.getTotalMoney(kidId);
+            
+            if(!type) {
+                leftMoney-=amount;
+                mService.withdraw(money);
+            }else {
+                leftMoney+=amount;
+                mService.deposit(money);
+            }
+            
+            Budget budget2 = new Budget(contents, amount, null, type, leftMoney, kidId);
+            mService.activity(budget2);
+            
+            result = resultHandler.handleSuccess(budget2);
         } catch (Exception e) {
             result = resultHandler.handleException(e);
         }
@@ -71,6 +83,24 @@ public class MoneyController {
         }
         return result;
     }
+    
+    @GetMapping("/week/{kidId}")
+    @ApiOperation(value = "아이의 이번주 소비 조회")
+    public ResponseEntity<Map<String, Object>> weekList(@PathVariable int kidId) {
+        ResponseEntity<Map<String, Object>> result = null;
+        try {
+            Map<String, Integer> data = new HashMap<>();
+            data.put("week",mService.getWeekSpend(kidId));
+            data.put("today",mService.getTodaySpend(kidId));
+            
+            result = resultHandler.handleSuccess(data);
+        } catch (Exception e) {
+            result = resultHandler.handleException(e);
+        }
+        return result;
+    }
+   
+    
 
     @PostMapping("/deposit")
     @ApiOperation(value = "입금")
