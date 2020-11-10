@@ -93,24 +93,11 @@ export default {
                 }
             });
         },
-        getToken({commit, rootState, dispatch}) {
+        getToken({ commit }) {
             return new Promise((resolve, reject) => {
                 messaging.getToken(process.env.VUE_APP_PUBLIC_VAPID_KEY)
-                    .then(async (token) => {
-                        //console.log('token', token);
+                    .then((token) => {
                         commit('SET_TOKEN', token);
-                        // console.log(rootState);
-                        // console.log(rootState.auth);
-                        // console.log(rootState.auth.id);
-                        const id = rootState.auth.id;
-                        await dispatch('registToken', {
-                            token: token,
-                            id: id,
-                        })
-                            .catch((error) => {
-                                console.warn(error.response);
-                            });
-                        //console.log(response);
                         resolve(token);
                     }).catch(() => {
                         commit('RESET_TOKEN');
