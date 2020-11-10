@@ -16,7 +16,7 @@
                 <v-row justify="center"> 
                     <v-btn
                         text
-                        class="kidslogin"
+                        class="kidlogin"
                         @click="kidslogin"
                     >
                         아이 로그인
@@ -36,7 +36,7 @@ export default {
     },
     methods: {
         kidslogin(){
-            this.$router.push({name:'Kidslogin'});
+            this.$router.push({name:'KidLogin'});
         },
     },
 };
@@ -47,7 +47,7 @@ export default {
     margin-bottom: 10px;
 }
 
-.kidslogin{
+.kidlogin{
   font-size: 1rem !important;
 }
 

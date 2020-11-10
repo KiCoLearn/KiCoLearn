@@ -26,6 +26,9 @@ module.exports = {
         indent: [
             'warn',
             4,
+            { 
+                ignoredNodes: ["TemplateLiteral"] 
+            }
         ],
         'vue/html-indent': [
             'warn',
@@ -49,7 +52,7 @@ module.exports = {
             'always',
         ],
         quotes: [
-            'error',
+            'warn',
             'single',
             {
                 allowTemplateLiterals: true,
