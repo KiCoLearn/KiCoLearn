@@ -30,9 +30,9 @@ public class OAuthTokenInterceptor implements HandlerInterceptor {
                 throw new InvalidTokenException("cannot find provider", null);
             }
 
-            long uid = oauthService.getUserId(token, provider);
+            boolean isVaild = oauthService.isValid(token, provider);
 
-            return uid != -1;
+            return isVaild;
         }
     }
 }
