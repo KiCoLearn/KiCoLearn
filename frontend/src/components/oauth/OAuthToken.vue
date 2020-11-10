@@ -1,7 +1,5 @@
 <template>
-    <div>
-        로그인중,,,
-    </div>
+    <div />
 </template>
 
 <script>
@@ -17,7 +15,7 @@ export default {
                 })
                     .finally(() => {
                         this.$router.push({
-                            name: 'KidsList'
+                            name: 'ParentsMain'
                         });
                     });
             }).catch(() => {
