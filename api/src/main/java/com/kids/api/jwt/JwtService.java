@@ -24,15 +24,14 @@ public class JwtService {
     @Value("${jwt.expmin}")
     private Long expireMin;
 
-    public String create(final KidsAuth user, final String token) {
+    public String create(final KidsAuth user) {
         final JwtBuilder builder = Jwts.builder();
         
         builder.setHeaderParam("type", "JWT");
 
         builder.setSubject("로그인 토큰") // 토근 제목 설정
         .setExpiration(new Date(System.currentTimeMillis() + 1000*60 *expireMin)) // 유효기간
-        .claim("User", user)
-        .claim("token", token); // 담고 싶은 정보 설정
+        .claim("User", user);
 
         builder.signWith(SignatureAlgorithm.HS256, salt.getBytes());
 
@@ -41,10 +40,11 @@ public class JwtService {
         return jwt; 
     }
 
-    public void checkValid(final String jwt) { 
+    public boolean checkValid(final String jwt) { 
 
         log.trace("토큰 점검 : {}", jwt); 
         Jwts.parser().setSigningKey(salt.getBytes()).parseClaimsJws(jwt); 
+        return true;
     } 
 
     public Map<String, Object>get(final String jwt){ 
