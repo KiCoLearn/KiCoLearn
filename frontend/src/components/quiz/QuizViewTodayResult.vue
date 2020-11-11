@@ -1,37 +1,43 @@
 <template>
-    <div class="quiz-container">
-        오늘의 퀴즈 : 정답 VIEW
-        <div class="quiz-box quiz-question">
-            정답: {{ todayProblem.answer }}
-            <br>
-            설명: {{ todayProblem.description }}
-        </div>
-        <div
-            :class="[
-                {'correct': 'O' === answer && 'O' === todayProblem.answer},
-                {'incorrect': 'O' === answer && 'O' !== todayProblem.answer},
-                'quiz-answer']"
-        >
-            O
-        </div>
-        <div
-            :class="[
-                {'correct': 'X' === answer && 'X' === todayProblem.answer},
-                {'incorrect': 'X' === answer && 'X' !== todayProblem.answer},
-                'quiz-answer']"
-        >
-            X
-        </div>
-        <div
-            :class="[
-                'quiz-box',
-                'quiz-response'
-            ]"
+    <v-layout class="quiz-container">
+        <v-flex>
+            <v-row
+                justify="center"
+                class="quiz-description"
+            >
+                <div class="quiz-main">
+                    <b>{{ todayProblem.description }}</b>
+                </div>
+            </v-row>
+
+            <v-row>
+                <v-col
+                    cols="4"
+                    :class="[
+                        {'correct': 'O' === answer && 'O' === todayProblem.answer},
+                        {'incorrect': 'O' === answer && 'O' !== todayProblem.answer},
+                        'quiz-answer']"
+                >
+                    <b style="color:blue">O</b>
+                </v-col>
+                <v-col
+                    cols="4"
+                    :class="[
+                        {'correct': 'X' === answer && 'X' === todayProblem.answer},
+                        {'incorrect': 'X' === answer && 'X' !== todayProblem.answer},
+                        'quiz-answer']"
+                >
+                    <b style="color:red">X</b>
+                </v-col>
+            </v-row>
+        <!-- <v-row justify="center"
+            class="quiz-response"
             @click="resolve"
         >
-            다시풀기
-        </div>
-    </div>
+            돌아가기
+        </v-row> -->
+        </v-flex>
+    </v-layout>
 </template>
 
 <script>

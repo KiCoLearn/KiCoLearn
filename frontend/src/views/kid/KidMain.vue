@@ -1,8 +1,5 @@
 <template>
     <div class="kidsmain">
-        <div class="header">
-            <KidHeader />
-        </div>
         <div class="point">
             <h3> 오늘 쓴거 내역</h3> 
             <h3> 이번주 쓴거 내역</h3>
@@ -69,12 +66,8 @@
     </div>
 </template> 
 <script>
-import KidHeader from '@/components/kid/KidHeader';
 export default {
     name:'KidMain',
-    components:{
-        KidHeader
-    },
     methods: {
         clickreport(){
             this.$router.push({name:'Report'});
@@ -96,11 +89,9 @@ export default {
 <style scoped>
 .point{
     height: 50 rem;
-    margin-top: 16rem;
 }
 .menu{
     height: 80 rem;
-    margin-top: 2rem;
 }
 .report,.quest,.store,.quiz{
     width: 10rem;

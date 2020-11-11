@@ -22,7 +22,27 @@
 		kids_auth(kid_id, password)
 		values(#{kidId}, #{password})
 	</insert>
-
 	
+	<select id="isDuplicate" parameterType="int" resultType="int">
+		select count(*) from certification
+		where kid_id=#{kidId}
+	</select>
+	
+	<update id="update" parameterType="certification">
+		update certification 
+		set certification_no = #{certificationNo},
+		expired_time = #{expiredTime}
+		where kid_id=#{kidId}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from kids_auth where kid_id=#{kidId}
+	</delete>
+	
+	<select id="isDuplicateKid" parameterType="int" resultType="int">
+		select count(*) from kids_auth
+		where kid_id=#{kidId}
+	</select>
+
 </mapper>
 	

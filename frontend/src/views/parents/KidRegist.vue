@@ -190,17 +190,8 @@
 
                         <v-col
                             cols="12"
-                            style="display:flex; justify-content:center;margin-left:25px"
+                            style="display:flex; justify-content:center"
                         >
-                            <button
-                                class="btn"
-                                @click="cancel"
-                            >
-                                <img
-                                    src="@/assets/list.png"
-                                    width="80px"
-                                >
-                            </button>
                             <button
                                 class="btn"
                                 style="margin-left: 10px;"
@@ -256,14 +247,10 @@ export default {
                     })
                     .then(() => {
                         alert('등록 되었습니다.');
-                        this.$router.push('/kidslist');
+                        this.$router.push({name:'ParentsMain'});
                     });
             }
         },
-        cancel(){
-            this.$router.push({name:'ParentsMain'});
-        },
-
         changeProfile(){
             this.dialog = false;
             this.photo = this.getPhotoPath(this.pick);
@@ -277,7 +264,7 @@ export default {
         isActive(idx){
             if(this.pick==idx) return true;
             return false;
-        }
+        },
     },
 };
 </script>
@@ -317,7 +304,6 @@ export default {
     .box{
         margin: auto;
         width: 342px;
-        margin-top: 50px;
         padding: 20px 20px 5px 20px;
         background-color: white;
         border-radius: 4px;

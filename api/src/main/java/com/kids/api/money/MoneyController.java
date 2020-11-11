@@ -19,7 +19,7 @@ import com.kids.api.global.handler.Handler;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/money")
+@RequestMapping("/api/money")
 public class MoneyController {
     static Logger logger = LoggerFactory.getLogger(MoneyController.class);
 

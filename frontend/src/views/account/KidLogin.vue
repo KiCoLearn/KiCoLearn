@@ -18,6 +18,8 @@
                             ref="input-code-1"
                             v-model="code1"
                             type="number"
+                            min="0"
+                            max="10"
                             outlined
                             @keyup="nextField(1)"
                         />
@@ -130,13 +132,20 @@ export default {
                     this.$router.push({name: 'KidMain'});
                 })
                 .catch((err) => {
-                    alert(err.response.data.msg);
+                    console.log(err.response.data.msg);
+                    alert('인증번호가 잘못 되었거나 인증시간이 만료되었습니다.');
                 });            
         },
         nextField(id){
-            if(id<=5){
-                this.$refs[`input-code-${id+1}`].focus();
+            
+            if(event.target.value<0 || event.target.value>=10 || event.target.value ===''){
+                this.$refs[`input-code-${id}`].reset();
+            }else{
+                if(id<=5){
+                    this.$refs[`input-code-${id+1}`].focus();
+                }
             }
+
         }
     },
     
@@ -182,5 +191,11 @@ export default {
     border-bottom: 2px solid white;
     padding-top: 8px;
     background:rgb(196, 232, 255) ;
+}
+
+::v-deep input::-webkit-outer-spin-button,
+::v-deep input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 </style>
