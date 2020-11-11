@@ -194,13 +194,47 @@
                         >
                             <button
                                 class="btn"
-                                @click="back"
+                                @click="dialog2=true"
                             >
                                 <img
-                                    src="@/assets/close.png"
+                                    src="@/assets/delete.png"
                                     width="80px"
                                 >
                             </button>
+
+                            <v-dialog
+                                v-model="dialog2"
+                                width="300"
+                            >
+                                <v-card>
+                                    <v-card-title style="display:flex;justify-content:center">
+                                        <b>정말 아이 정보를<br>삭제하시겠습니까?</b>
+                                    </v-card-title>
+                                    <v-card-actions>
+                                        <v-spacer />
+
+                                        <v-btn
+                                            color="green darken-1"
+                                            text
+                                            @click="dialog2 = false"
+                                        >
+                                            <b>취소</b>
+                                        </v-btn>
+
+                                        <v-btn
+                                            color="green darken-1"
+                                            text
+                                            @click="deleteKid"
+                                        >
+                                            <b>삭제</b>
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+
+
+
+
                             <button
                                 class="btn"
                                 style="margin-left: 10px;"
@@ -226,6 +260,7 @@ export default {
     data: () => ({
         valid:true,
         dialog:false,
+        dialog2 : false,
         name:'',
         years:['2010','2011','2012','2013','2014','2015','2016'],
         year:'',
@@ -296,7 +331,16 @@ export default {
         isActive(idx){
             if(this.pick==idx) return true;
             return false;
-        }
+        },
+
+        deleteKid(){
+            axios.delete(process.env.VUE_APP_API_URL + '/api/kidsaccount/delete/'+this.kidId)
+                .then(() => {
+                    alert('삭제 완료');
+                    this.dialog2=false;
+                    this.$router.push({name:'ParentsMain'});
+                });
+        },
     },
 };
 </script>
@@ -336,7 +380,6 @@ export default {
     .box{
         margin: auto;
         width: 342px;
-        margin-top: 50px;
         padding: 20px 20px 5px 20px;
         background-color: white;
         border-radius: 4px; 
