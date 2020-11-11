@@ -192,4 +192,10 @@ export default {
     padding-top: 8px;
     background:rgb(196, 232, 255) ;
 }
+
+::v-deep input::-webkit-outer-spin-button,
+::v-deep input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
