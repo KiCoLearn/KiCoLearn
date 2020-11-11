@@ -8,9 +8,10 @@ import ParentsMain from '@/views/parents/ParentsMain';
 import AccountRoutes from '@/router/account';
 import ManageQuizRoutes from '@/router/quiz';
 import ShopRoutes from '@/router/shop';
-
+import ReportRoutes from '@/router/report';
 /* todo : 지울것 */
 import DummyRoutes from '@/router/dummy';
+
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,7 @@ const routes = [
     ...ManageQuizRoutes,
     ...ShopRoutes,
     ...DummyRoutes,
+    ...ReportRoutes,
     
     {
         path: '/kid',

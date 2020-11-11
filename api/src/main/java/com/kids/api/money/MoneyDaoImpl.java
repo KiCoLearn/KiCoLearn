@@ -52,4 +52,10 @@ public class MoneyDaoImpl implements MoneyDao {
         return temp.selectOne(ns + "weekSpend", kidId);
     }
 
+	@Override
+	public List<Budget> reportDeposit(int kidsId) {
+		// TODO Auto-generated method stub
+		return temp.selectList(ns+"reportDeposit",kidsId);
+	}
+
 }
