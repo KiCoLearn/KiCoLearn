@@ -29,7 +29,7 @@ public class CertificationDaoImpl implements CertificationDao {
 
     @Override
     public boolean isDuplicate(int kidId) {
-        if(temp.selectOne(ns+"isDuplicate", kidId)!=null) return true;
+        if((int)temp.selectOne(ns+"isDuplicate", kidId)!=0) return true;
         return false;
     }
 
@@ -45,7 +45,7 @@ public class CertificationDaoImpl implements CertificationDao {
 
     @Override
     public boolean isDuplicateKid(int kidId) {
-        if(temp.selectOne(ns+"isDuplicateKid", kidId)!=null) return true;
+        if((int)temp.selectOne(ns+"isDuplicateKid", kidId)!=0) return true;
         return false;
     }
 
