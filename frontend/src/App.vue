@@ -3,32 +3,39 @@
         id="app"
         style="background-color:cornsilk"
     >
-        <div id="nav">
-            <router-link to="/">
-                Home
-            </router-link>|
-            <router-link to="/store">
-                Store
-            </router-link>
-            <div v-if="role === 'parents' && isAuthorized">
-                <KaKaoLogout />
-            </div>
-        </div>
-     
+        <ParentsHeader
+            v-if="role === 'parents' && isAuthorized"
+            style="margin:20px 0 20px 10px;"
+        />
+        <KidHeader
+            v-if="role === 'kid' && isAuthorized"
+            style="margin:20px 0 20px 10px;"
+        />
+    
         <v-container
             fluid
             style="height: 100%;"
         >
             <router-view />
         </v-container>
+        <div
+            id="nav"
+            style="text-align:right"
+        >
+            <div v-if="role === 'parents' && isAuthorized">
+                <KaKaoLogout />
+            </div>
+        </div> 
     </v-app>
 </template>
 
 <script>
 import KaKaoLogout from '@/components/oauth/OAuthKakaoLogout';
+import ParentsHeader from '@/components/header/ParentsHeader';
+import KidHeader from '@/components/header/KidHeader';
 import { mapGetters } from 'vuex';
 export default {
-    components:{KaKaoLogout},
+    components:{ KaKaoLogout, ParentsHeader, KidHeader},
     computed: {
         ...mapGetters({
             role : 'auth/role',
@@ -47,7 +54,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+ 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -56,20 +64,5 @@ export default {
   color: #2c3e50;
   height: 100%;
 }
-
-#nav {
-  padding: 0px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-
-
 
 </style>
