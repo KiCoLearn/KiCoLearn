@@ -33,9 +33,19 @@
                         @handle="handleAddItem"
                     />                          
                 </div>
+                <div v-if="title === '아이 목록'">
+                    <kids-card 
+                        v-for="kids in kidsList"
+                        :key="kids.kidId"                    
+                        :send-data="kids"
+                    />                    
+                    <add-item 
+                        :dialog="addItem"
+                        @handle="handleAddItem"
+                    />                          
+                </div>
             </v-tab-item>
         </v-tabs-items>
-        <!-- <item-card></item-card>     -->
     </div>
 </template>
 
@@ -43,11 +53,14 @@
 import axios from '@/plugins/axios';
 import ItemCard from '@/components/shop/ItemCard';
 import AddItem from '@/components/shop/AddItem';
+import KidsCard from '@/components/shop/KidsCard';
+
 export default {    
     name:'Store',
     components: {
         ItemCard,
         AddItem,
+        KidsCard
     },
     
     data() {
@@ -64,15 +77,18 @@ export default {
     created() {
         axios.get(process.env.VUE_APP_API_URL + '/api/store/plist/'+this.parentId)
             .then((res) => {
-                //this.kids = res.data.data;
-                //console.log(res.data.data);
                 this.myItems = res.data.data;
             });
+
+        axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentId)
+            .then((res) => {
+                this.kidsList = res.data.data;
+            });
+
     },
     
     methods: {
         handleAddItem(){
-            //console.log('create item!');
             this.addItem = this.addItem ? false : true;
         }
     },
