@@ -66,7 +66,7 @@
 
 <script>
 import AWS from 'aws-sdk';
-import axios from 'axios';
+import axios from '@/plugins/axios';
 
 
 export default {
@@ -91,7 +91,7 @@ export default {
         };
     },
     methods: {
-        async handleAddItem(){
+        handleAddItem(){
             let base = +new Date() + Math.random() + this.parentId + this.name + this.description + this.price;
             base = btoa(unescape(encodeURIComponent(base)));
             //console.log(this.file, '파일이 업로드 되었습니다.');
@@ -121,7 +121,7 @@ export default {
                 }
             });
             
-            await s3.upload({
+            s3.upload({
                 Key:this.photoKey,
                 Body:this.file,
                 ACL:'public-read'
@@ -129,22 +129,23 @@ export default {
                 if(err){
                     console.log('error!!:',err);
                 } else {
+                    axios.post(process.env.VUE_APP_API_URL+'/api/store/item/regist', {
+                        description: this.description,    
+                        name: this.name,
+                        parentId: this.parentId,
+                        price: this.price,
+                        field: process.env.VUE_APP_S3_BASE_URL + '/items/' + this.photoKey
+                    })
+                        .then(()=>{
+                            alert('등록되었습니다!');
+                            this.handleDialog();
+                            window.location.reload();
+                        });
                     console.log('success!!',data);
                 }
             });
             
-            await axios.post(process.env.VUE_APP_API_URL+'/api/store/item/regist', {
-                description: this.description,    
-                name: this.name,
-                parentId: this.parentId,
-                price: this.price,
-                field: process.env.VUE_APP_S3_BASE_URL + '/items/' + this.photoKey
-            })
-                .then(()=>{
-                    alert('등록되었습니다!');
-                    this.handleDialog();
-                    window.location.reload();
-                }); 
+             
         },
         handleDialog(){
             this.$emit('handle');
