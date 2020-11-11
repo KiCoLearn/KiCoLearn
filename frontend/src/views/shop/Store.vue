@@ -1,6 +1,8 @@
 <template>
     <div class="store">
-        <v-tabs v-model="tab">
+        <v-tabs 
+            v-model="tab"            
+        >
             <v-tab 
                 v-for="title in titles" 
                 :key="title"
@@ -54,6 +56,7 @@ import axios from '@/plugins/axios';
 import ItemCard from '@/components/shop/ItemCard';
 import AddItem from '@/components/shop/AddItem';
 import KidsCard from '@/components/shop/KidsCard';
+import { mapGetters } from 'vuex';
 
 export default {    
     name:'Store',
@@ -62,17 +65,22 @@ export default {
         AddItem,
         KidsCard
     },
-    
+
     data() {
         return {
             tab:null,
-            parentId:0,
             titles:['내 아이템', '아이 목록'],
             myItems: new Array(),
             kidsList: new Array(),
             addItem:false,
         };
     },
+
+    computed:{
+        ...mapGetters({
+            parentId:'auth/id'
+        })
+    },   
     
     created() {
         axios.get(process.env.VUE_APP_API_URL + '/api/store/plist/'+this.parentId)
@@ -82,6 +90,7 @@ export default {
 
         axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentId)
             .then((res) => {
+                console.log(res.data);
                 this.kidsList = res.data.data;
             });
 

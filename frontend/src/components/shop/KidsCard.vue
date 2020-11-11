@@ -21,6 +21,7 @@
                                 outlined
                                 rounded
                                 small
+                                @click="handleDisplayItem"
                             >
                                 진열하기
                             </v-btn>
@@ -67,6 +68,9 @@ export default {
             if(idx<10) return require('@/assets/character/00'+idx+'.png');
             return require('@/assets/character/0'+idx+'.png');
         },
+        handleDisplayItem(){
+            
+        }
     }
 };
 </script>
