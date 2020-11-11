@@ -256,7 +256,7 @@ export default {
                     })
                     .then(() => {
                         alert('등록 되었습니다.');
-                        this.$router.push('/kidslist');
+                        this.$router.push({name:'ParentsMain'});
                     });
             }
         },
