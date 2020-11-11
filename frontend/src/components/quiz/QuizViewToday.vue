@@ -1,22 +1,33 @@
 <template>
-    <div class="quiz-container">
-        오늘의 퀴즈 : 퀴즈 VIEW
-        <div class="quiz-box quiz-question">
-            문제: {{ todayProblem.question }}
-        </div>
-        <div
-            class="quiz-answer quiz-response"
-            @click="checkResult"
-        >
-            O
-        </div>
-        <div
-            class="quiz-answer quiz-response"
-            @click="checkResult"
-        >
-            X
-        </div>
-    </div>
+    <v-layout class="quiz-container">
+        <v-flex>
+            <v-row
+                class="quiz-box quiz-question"
+                justify="center"
+            >
+                <div class="quiz-main">
+                    {{ todayProblem.question }}
+                </div>
+            </v-row>
+
+            <v-row>
+                <v-col
+                    cols="4"
+                    class="quiz-answer quiz-response"
+                    @click="checkResult"
+                >
+                    <b style="color:blue">O</b>
+                </v-col>
+                <v-col
+                    cols="4"
+                    class="quiz-answer quiz-response"
+                    @click="checkResult"
+                >
+                    <b style="color:red">X</b>
+                </v-col>
+            </v-row>
+        </v-flex>
+    </v-layout>
 </template>
 
 <script>
