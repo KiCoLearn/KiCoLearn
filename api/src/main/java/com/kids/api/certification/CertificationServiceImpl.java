@@ -24,4 +24,24 @@ public class CertificationServiceImpl implements CertificationService {
         return cDao.createKidsAuth(kidsAuth);
     }
 
+    @Override
+    public boolean isDuplicate(int kidId) {
+        return cDao.isDuplicate(kidId);
+    }
+
+    @Override
+    public int updateCertification(Certification certification) {
+        return cDao.updateCertification(certification);
+    }
+
+    @Override
+    public int deleteKidAuth(int kidId) {
+        return cDao.deleteKidAuth(kidId);
+    }
+
+    @Override
+    public boolean isDuplicateKid(int kidId) {
+        return cDao.isDuplicateKid(kidId);
+    }
+
 }

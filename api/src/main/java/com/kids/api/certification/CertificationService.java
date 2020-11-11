@@ -6,4 +6,12 @@ public interface CertificationService {
     Certification getCertificationByNo(String certificationNo);
 
     int createKidsAuth(KidsAuth kidsAuth);
+    
+    boolean isDuplicate(int kidId);
+    
+    int updateCertification(Certification certification);
+    
+    int deleteKidAuth(int kidId);
+    
+    boolean isDuplicateKid(int kidId);
 }
