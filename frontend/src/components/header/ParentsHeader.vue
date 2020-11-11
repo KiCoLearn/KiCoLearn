@@ -2,25 +2,25 @@
     <div class="nav">
         <router-link :to="{name : 'ParentsMain' }">
             <span
-                :class="{head:true, active: home}"
+                :class="{head:true, active: to==='ParentsMain'}"
                 @click="home=true;quest=false;store=false;quiz=false"
             ><b>홈</b></span>
         </router-link>
         <router-link :to="{name : 'Quest' }">
             <span
-                :class="{head:true, active: quest}"
+                :class="{head:true, active: to==='Quest'}"
                 @click="quest=true;home=false;store=false;quiz=false"
             ><b>퀘스트</b></span>
         </router-link>
-        <router-link :to="{name : 'Quiz' }">
+        <router-link :to="{name : 'QuizTest' }">
             <span
-                :class="{head:true, active: quiz}"
+                :class="{head:true, active: to==='QuizTest'}"
                 @clik="quiz=true;home=false;store=false;quest=false"
             ><b>퀴즈</b></span>
         </router-link>
         <router-link :to="{name : 'Store' }">
             <span
-                :class="{head:true, active: store}"
+                :class="{head:true, active: to==='Store'}"
                 @click="store=true;home=false;quiz=false;quest=false"
             ><b>스토어</b></span>
         </router-link>
@@ -33,11 +33,16 @@ export default {
     name:'ParentsHeader',
     data() {
         return {
-            home: true,
-            store:false,
-            quest:false,
-            quiz:false,
+            to : '',
         };
+    },
+    watch: {
+        '$route' (to) {
+            this.to = to.name;
+        }
+    },
+    created() {
+        this.to = this.$route.name;
     },
 
 };
@@ -45,7 +50,6 @@ export default {
 
 <style scoped>
    .nav{
-    text-align:left;
     font-size: 1.4rem;
     font-family: 'Gaegu';
   }

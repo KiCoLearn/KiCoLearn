@@ -5,11 +5,11 @@
     >
         <ParentsHeader
             v-if="role === 'parents' && isAuthorized"
-            style="margin:20px 0 20px 10px;"
+            style="margin-top:20px;margin-bottom:20px"
         />
         <KidHeader
             v-if="role === 'kid' && isAuthorized"
-            style="margin:20px 0 20px 10px;"
+            style="margin-top:20px;margin-bottom:20px"
         />
     
         <v-container
