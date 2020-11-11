@@ -5,12 +5,6 @@
     >
         <v-layout>
             <v-flex>
-                <!-- <v-row>
-                    <button class="btn" style="display:flex;margin-bottom:10px" @click="back">
-                        <img src="@/assets/back.png" width="50px">
-                    </button>
-                </v-row> -->
-
                 <v-row justify="center">
                     <h2>아이 인증 코드</h2>
                 </v-row>
@@ -102,12 +96,10 @@ export default {
                 parentId : this.parentsId
             })
             .then((response) => {
-                console.log(typeof(response.data.data));
                 const str = String(response.data.data);
                 for (let index = 0; index < 6; index++) {
                     this.code[index] = str.substr(index,1);
                 }
-                console.log(this.code);
                 this.flag=false;
             });           
     },
