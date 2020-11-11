@@ -6,4 +6,12 @@ public interface CertificationDao {
     Certification getCertificationByNo(String certificationNo);
 
     int createKidsAuth(KidsAuth kidsAuth);
+    
+    boolean isDuplicate(int kidId);
+    
+    int updateCertification(Certification certification);
+    
+    boolean isDuplicateKid(int kidId);
+    
+    int deleteKidAuth(int kidId);
 }

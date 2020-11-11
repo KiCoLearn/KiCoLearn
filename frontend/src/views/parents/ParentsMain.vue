@@ -1,9 +1,10 @@
 <template>
     <div>       
         <div
-            v-for="(kid, index) in kids"
+            v-for="kid in kids"
             :key="kid.kidId"
             class="card"
+            @click="goInfo(kid.kidId)"
         >
             <!-- 카드 헤더 --> 
             <div class="card-header">
@@ -15,54 +16,7 @@
                         2 / 5
                     </div> 
                 </div>
-                <div class="card-header-close">
-                    <button
-                        class="btn"
-                        @click="goInfo(kid.kidId)"
-                    >
-                        <img
-                            src="@/assets/information.png"
-                            width="40px"
-                        >
-                    </button>
-
-
-                    <img
-                        src="@/assets/close.png"
-                        width="40px"
-                        @click="dialog=true"
-                    >
-
-                    <v-dialog
-                        v-model="dialog"
-                        width="300"
-                    >
-                        <v-card>
-                            <v-card-title style="display:flex;justify-content:center">
-                                <b>정말 아이 정보를<br>삭제하시겠습니까?</b>
-                            </v-card-title>
-                            <v-card-actions>
-                                <v-spacer />
-
-                                <v-btn
-                                    color="green darken-1"
-                                    text
-                                    @click="dialog = false"
-                                >
-                                    <b>취소</b>
-                                </v-btn>
-
-                                <v-btn
-                                    color="green darken-1"
-                                    text
-                                    @click="deleteKid(kid.kidId, index)"
-                                >
-                                    <b>삭제</b>
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </div>
+                <div class="card-header-close" />
             </div>
             <!--  카드 바디 -->
             <div class="card-body">
@@ -73,14 +27,16 @@
                 
                 <!--  카드 바디 헤더 -->
                 <div class="card-body-header">
-                    <h1>{{ kid.name }}</h1>
+                    <div style="font-size:1.3rem;margin-top:3px">
+                        <b>{{ kid.name }}</b>
+                    </div>
                     
                     <img
                         src="@/assets/wallet.png"
                         width="30px"
                         style="margin-left:10px;"
                     >
-                    <b style="font-size: 1.2rem; color:navy;margin-top:3px;margin-left:5px">{{ format(kid.totalMoney) }}원</b> 
+                    <b style="font-size: 1.2rem; color:black;margin-top:3px;margin-left:5px">{{ format(kid.totalMoney) }}원</b> 
                 </div>
                 
                 <!--  카드 바디 푸터 -->
@@ -114,7 +70,6 @@ export default {
         return {
             parentId:1,
             kids: new Array(),
-            dialog:false
         };
     },
     created() {
@@ -130,14 +85,6 @@ export default {
     methods: {
         addKid(){
             this.$router.push({name: 'KidRegist'});
-        },
-        deleteKid(kidId, index){
-            axios.delete(process.env.VUE_APP_API_URL + '/api/kidsaccount/delete/'+kidId)
-                .then(() => {
-                    this.kids.splice(index,1);
-                    alert('삭제 완료');
-                    this.dialog=false;
-                });
         },
         goInfo(idx){
             this.$router.push({name: 'KidDetail', query: {'id': idx}});
@@ -165,11 +112,14 @@ export default {
     border-radius: 15px;
     display: block;
     margin: auto;
-    margin-top: 30px;
     position: relative;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: hidden;
     background: white;
+}
+
+.card:hover{
+    cursor: pointer;
 }
 
 .card-header-close:hover{

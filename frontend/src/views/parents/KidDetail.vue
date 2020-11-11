@@ -5,19 +5,6 @@
     >
         <v-layout>
             <v-flex>
-                <v-row style="margin:0">
-                    <button
-                        class="btn"
-                        style="margin-left:15px"
-                        @click="goList"
-                    >
-                        <img
-                            src="@/assets/list.png"
-                            width="60px"
-                        >
-                    </button>
-                </v-row>
-    
                 <v-row
                     justify="center"
                     style="margin-left:33px"
@@ -146,6 +133,7 @@
                         rounded
                         class="warning"
                         style="margin-right:15px"
+                        @click="goCertification"
                     >
                         <b>아이 로그인 시키기</b>
                     </v-btn>
@@ -179,7 +167,7 @@ export default {
         }
     },
     created() {
-        axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/detail/'+this.kidId,
+        axios.get('/api/kidsaccount/detail/'+this.kidId,
             {
                 headers: {
                     'jwt-auth-token':''
@@ -187,7 +175,7 @@ export default {
             })
             .then((res) => {
                 this.kid= res.data.data;
-                axios.get(process.env.VUE_APP_API_URL + '/money/week/'+this.kidId)
+                axios.get('/api/money/week/'+this.kidId)
                     .then((res) =>{
                         this.week = res.data.data.week;
                         this.today = res.data.data.today;
@@ -202,11 +190,11 @@ export default {
         formatToPrice(value) {
             return `${value.toFixed(0)}`;
         },
-        goList(){
-            this.$router.push({name:'ParentsMain'});
-        }, 
         goUpdate(){
             this.$router.push({name: 'KidUpdate', query: {'id': this.kidId}});
+        },
+        goCertification(){
+            this.$router.push({name:'Certification'});
         }
     },
 

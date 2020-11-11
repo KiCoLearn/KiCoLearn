@@ -3,7 +3,7 @@ export default [
         path: '/quiz',
         name: 'QuizTest',
         component: () => import(/* webpackChunkName: "about" */ '@/views/quiz/QuizTest'),
-        meta: { authorized: true },
+        meta: { requireAuth: true, kidOnly: true },
     },
     {
         path: '/admin/quiz',
