@@ -1,45 +1,59 @@
 <template>
     <v-layout class="quizbody">
-        <v-flex>
+        <v-flex style="margin-bottom:46px;">
             <v-row style="margin-left:10px; margin-bottom:10px">
                 <h2>{{ date }} 퀴즈</h2>
             </v-row>
         
-            <QuizViewToday
-                v-if="state.progress === 'quiz'"
-                class="quiz"
-                :state.sync="state"
-            />
             <QuizViewTodayResult
-                v-if="state.progress === 'result'"
+                v-if="correct!=null"
                 class="quiz"
-                :state.sync="state"
-                :answer="state.answer"
+                :correct="correct"
             />
+
+            <v-row
+                justify="center"
+                class="advice"
+            >
+                {{ advice }}
+            </v-row>
         </v-flex>
     </v-layout>
 </template>
 
 <script>
-import QuizViewToday from '@/components/quiz/QuizViewToday';
-import QuizViewTodayResult from '@/components/quiz/QuizViewTodayResult';
+import QuizViewTodayResult from '@/components/quiz/QuizViewTodayResultParents';
+import axios from '@/plugins/axios';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'QuizTest',
     components: {
-        QuizViewToday,
         QuizViewTodayResult,
     },
     data: () => ({
-        state: {
-            progress: 'quiz',
-            answer: '',
-        },
+        correct : null,
         date : '',
+        advice:'아직 아이가 퀴즈를 풀지 않았네요!'
     }),
-
+    computed: {
+        ...mapGetters({
+            kidId : 'auth/select',
+        })
+    },
     created() {
         this.date= this.getFormatDate(new Date());
+        axios.get('/api/quiz/today/'+this.kidId)
+            .then((res) => {
+                console.log(res.data.data);
+                if(res.data.data!=null) {
+                    this.correct = res.data.data.correct ? 'correct':'not';
+                    this.advice = res.data.data.correct ? '아이가 정답을 맞췄습니다!' : '아이가 정답을 아쉽게 틀렸습니다!';
+                } else{
+                    this.correct='none';
+                }
+            });
+
     },
     methods: {
         getFormatDate(date){
@@ -91,7 +105,7 @@ export default {
         width: 30%;;
         border: 4px solid rgb(142, 105, 13);
         border-radius: 4px;;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         
     }
 
@@ -108,15 +122,16 @@ export default {
 
     ::v-deep &-question{
         height: 200px;
-        max-width: 230px;
+        max-width: 130px;
         align-items: center;
     }
     ::v-deep &-description{
-        height: 200px;
+        height: 100px;
         max-width: 230px;
         align-items: center;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         margin: auto;
+        margin-bottom: 7.5px;
     }
     ::v-deep &-main{
         overflow-wrap: anywhere;
@@ -129,7 +144,11 @@ export default {
     justify-content: center;
     align-items: center;
     font-family: 'CookieRun-Regular';
-    
+}
+
+.advice{
+    margin-top: 15px;
+    font-size: 1.1rem;
 }
 
 </style>

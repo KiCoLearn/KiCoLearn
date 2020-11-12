@@ -255,6 +255,7 @@
 
 <script>
 import axios from '@/plugins/axios';
+import { mapGetters } from 'vuex';
 export default {
     name:'KidsUpdate',
     data: () => ({
@@ -279,9 +280,9 @@ export default {
         },
     }),
     computed: {
-        kidId(){
-            return this.$route.query.id;
-        }
+        ...mapGetters({
+            kidId : 'auth/select',
+        })
     },
     created() {
         axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/detail/'+this.kidId)
@@ -315,7 +316,7 @@ export default {
             }
         },
         back(){
-            this.$router.push({name: 'KidDetail', query: {'id': this.kidId}});
+            this.$router.push({name: 'KidDetail'});
         },
 
         changeProfile(){

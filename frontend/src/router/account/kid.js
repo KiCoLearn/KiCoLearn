@@ -5,23 +5,23 @@ import KidsUpdate from '@/views/parents/KidUpdate';
 
 export default [
     {
-        path: '/kidlogin',
+        path: '/kid/login',
         name: 'KidLogin',
         component:KidLogin
     },
     {
-        path: '/kidsregist',
+        path: '/parents/regist',
         name: 'KidRegist',
         component:KidsRegist
     },
  
     {
-        path: '/kidinfo',
+        path: '/parents/detail',
         name: 'KidDetail',
         component:KidDetail
     },
     {
-        path: '/kidsupdate',
+        path: '/parents/update',
         name: 'KidUpdate',
         component:KidsUpdate
     },

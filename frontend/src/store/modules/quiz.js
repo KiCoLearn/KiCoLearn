@@ -21,12 +21,17 @@ export default {
             state.todayProblem = todayProblem;
         }
     },
+
     actions: {
-        fetchProblemResult() {
+        fetchProblemResult(ignore, {kidId, correct}) {
             return new Promise((resolve, reject) => {
                 axios({
                     url: '/api/quiz/solve',
                     method: 'post',
+                    data : {
+                        'kidId' : kidId,
+                        'correct': correct
+                    }
                 })
                     .then((response) => {
                         resolve(response);
@@ -45,7 +50,6 @@ export default {
                         commit('SET_TODAY_PROBLEM', {
                             todayProblem: response.data.data,
                         });
-
                         resolve(response);
                         
                     }).catch((error) => {
