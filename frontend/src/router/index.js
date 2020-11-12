@@ -12,6 +12,7 @@ import ReportRoutes from '@/router/report';
 /* todo : 지울것 */
 import DummyRoutes from '@/router/dummy';
 
+import QuestRoutes from '@/router/quest';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,7 @@ const routes = [
     ...ShopRoutes,
     ...DummyRoutes,
     ...ReportRoutes,
+    ...QuestRoutes,
     
     {
         path: '/kid',
