@@ -12,9 +12,9 @@
                 @click="quest=true;home=false;store=false;quiz=false"
             ><b>퀘스트</b></span>
         </router-link>
-        <router-link :to="{name : 'QuizTest' }">
+        <router-link :to="{name : 'KidQuiz' }">
             <span
-                :class="{head:true, active: to==='QuizTest'}"
+                :class="{head:true, active: to==='KidQuiz'}"
                 @clik="quiz=true;home=false;store=false;quest=false"
             ><b>퀴즈</b></span>
         </router-link>

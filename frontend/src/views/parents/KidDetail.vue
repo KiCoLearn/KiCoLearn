@@ -146,6 +146,7 @@
 <script>
 import axios from '@/plugins/axios';  
 import AnimatedNumber from 'animated-number-vue';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'KidDetail',
@@ -162,17 +163,12 @@ export default {
     },
 
     computed: {
-        kidId(){
-            return this.$route.query.id;
-        }
+        ...mapGetters({
+            kidId : 'auth/select',
+        })
     },
     created() {
-        axios.get('/api/kidsaccount/detail/'+this.kidId,
-            {
-                headers: {
-                    'jwt-auth-token':''
-                },
-            })
+        axios.get('/api/kidsaccount/detail/'+this.kidId)
             .then((res) => {
                 this.kid= res.data.data;
                 axios.get('/api/money/week/'+this.kidId)
@@ -191,7 +187,7 @@ export default {
             return `${value.toFixed(0)}`;
         },
         goUpdate(){
-            this.$router.push({name: 'KidUpdate', query: {'id': this.kidId}});
+            this.$router.push({name: 'KidUpdate'});
         },
         goCertification(){
             this.$router.push({name:'Certification'});
