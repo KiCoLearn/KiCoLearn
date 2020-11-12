@@ -4,20 +4,21 @@
         style="background-color:cornsilk"
     >
         <ParentsHeader
-            v-if="role === 'parents' && isAuthorized"
+            v-if="role === 'parents' && isAuthorized && !isMain"
             style="margin-top:20px;margin-bottom:20px"
         />
         <KidHeader
             v-if="role === 'kid' && isAuthorized"
             style="margin-top:20px;margin-bottom:20px"
         />
-    
+        
         <v-container
             fluid
             style="height: 100%;"
         >
             <router-view />
         </v-container>
+
         <div
             id="nav"
             style="text-align:right"
@@ -25,7 +26,7 @@
             <div v-if="role === 'parents' && isAuthorized">
                 <KaKaoLogout />
             </div>
-        </div> 
+        </div>
     </v-app>
 </template>
 
@@ -40,7 +41,11 @@ export default {
         ...mapGetters({
             role : 'auth/role',
             isAuthorized: 'auth/isAuthorized',
-        })
+        }),
+        isMain(){
+            return this.$route.name ==='ParentsMain';
+        }
+
     },
     mounted() {
         this.$store.dispatch('fcm/requestPermission')

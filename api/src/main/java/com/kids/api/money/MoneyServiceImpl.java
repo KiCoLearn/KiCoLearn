@@ -46,10 +46,14 @@ public class MoneyServiceImpl implements MoneyService {
         return mDao.getWeekSpend(kidId);
     }
 
-	@Override
-	public List<Budget> reportDeposit(int kidId) {
-		// TODO Auto-generated method stub
-		return mDao.reportDeposit(kidId);
-	}
+    @Override
+    public List<Budget> todayDeposit(int kidId) {
+        return mDao.todayDeposit(kidId);
+    }
+
+    @Override
+    public List<Budget> weekDeposit(int kidId) {
+        return mDao.weekDeposit(kidId);
+    }
 
 }

@@ -45,7 +45,7 @@ export default {
         this.date= this.getFormatDate(new Date());
         axios.get('/api/quiz/today/'+this.kidId)
             .then((res) => {
-                console.log(res.data.data);
+                //console.log(res.data.data);
                 if(res.data.data!=null) {
                     this.correct = res.data.data.correct ? 'correct':'not';
                     this.advice = res.data.data.correct ? '아이가 정답을 맞췄습니다!' : '아이가 정답을 아쉽게 틀렸습니다!';
@@ -139,6 +139,8 @@ export default {
 
 }
 .quizbody{
+    width: 340px;
+    margin: auto;
     display: flex;
     height: 100%;
     justify-content: center;

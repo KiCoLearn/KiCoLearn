@@ -124,6 +124,8 @@ export default {
 
 }
 .quizbody{
+    width: 340px;
+    margin: auto;
     display: flex;
     height: 100%;
     justify-content: center;

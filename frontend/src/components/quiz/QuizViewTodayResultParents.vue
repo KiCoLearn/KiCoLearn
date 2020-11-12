@@ -39,12 +39,6 @@
                     <b style="color:red">X</b>
                 </v-col>
             </v-row>
-        <!-- <v-row justify="center"
-            class="quiz-response"
-            @click="resolve"
-        >
-            돌아가기
-        </v-row> -->
         </v-flex>
     </v-layout>
 </template>
@@ -56,6 +50,7 @@ export default {
     props: {
         correct: {
             type: String,
+            default:'',
         }, 
     },
     data: () => ({
@@ -67,8 +62,7 @@ export default {
         }),
     },
     created() {
-        if(this.correct === 'none'){
-            
+        if(this.correct === 'none'){    
             this.answer='';
         }
         else if(this.correct=='correct'){
