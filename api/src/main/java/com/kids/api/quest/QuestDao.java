@@ -11,6 +11,8 @@ public interface QuestDao {
 
     int updateQuest(int questNo);
 
+    int deleteQuest(int questNo);
+    
     int setKidsQuest(KidsQuest quest);
 
     int finishKidsQuest(KidsQuest quest);

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.api.global.handler.Handler;
+import com.kids.api.store.Item;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -73,9 +74,9 @@ public class QuestController {
         return entity;
     }
 
-    @PutMapping("/parent/delete")
-    @ApiOperation(value = "부모가 퀘스트 삭제")
-    public ResponseEntity<Map<String, Object>> deleteQuest(@RequestBody Quest quest) {
+    @PutMapping("/parent/update")
+    @ApiOperation(value = "부모가 퀘스트 수정")
+    public ResponseEntity<Map<String, Object>> updateQuest(@RequestBody Quest quest) {
         ResponseEntity<Map<String, Object>> entity = null;
         logger.debug("update quest: " + quest);
         try {
@@ -86,6 +87,22 @@ public class QuestController {
         }
         return entity;
     }
+  
+    
+    @DeleteMapping("/parent/delete/{questNo}")
+    @ApiOperation(value = "부모가 퀘스트 삭제")
+    public ResponseEntity<Map<String, Object>> deleteQuest(@PathVariable int questNo) {
+        ResponseEntity<Map<String, Object>> entity = null;
+        logger.debug("delete quest: " + questNo);
+        try {
+        	qService.deleteQuest(questNo);
+            entity = resultHandler.handleSuccess("success");
+        } catch (RuntimeException e) {
+            entity = resultHandler.handleException(e);
+        }
+        return entity;
+    }
+    
 
     @GetMapping("/kid/list/{kidId}")
     @ApiOperation(value = "아이 번호로 퀘스트 리스트 조회")
