@@ -16,4 +16,6 @@ public interface MoneyDao {
     int getTodaySpend(int kidId);
 
     int getWeekSpend(int kidId);
+    
+    List<Budget> reportDeposit(int kidsId);
 }

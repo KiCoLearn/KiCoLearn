@@ -126,4 +126,15 @@ public class MoneyController {
         return result;
     }
 
+    @GetMapping("/reportdeposit/{kidId}")
+    @ApiOperation(value = "아이의 입금통계")
+    public ResponseEntity<Map<String, Object>> reportDeposit(@PathVariable int kidId) {
+    	ResponseEntity<Map<String, Object>> result = null;
+        try {
+            result = resultHandler.handleSuccess(mService.reportDeposit(kidId));
+        } catch (Exception e) {
+            result = resultHandler.handleException(e);
+        }
+        return result;
+    }
 }
