@@ -79,7 +79,7 @@ public class QuestController {
         ResponseEntity<Map<String, Object>> entity = null;
         logger.debug("update quest: " + quest);
         try {
-            qService.updateQuest(quest.getQusestNo());
+            qService.updateQuest(quest.getQuestNo());
             entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
             entity = resultHandler.handleException(e);
