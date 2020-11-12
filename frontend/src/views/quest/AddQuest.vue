@@ -3,7 +3,6 @@
         <InsertQuest />
     </div>
 </template>
-
 <script>
 import InsertQuest from '@/components/quest/InsertQuest.vue';
 export default {

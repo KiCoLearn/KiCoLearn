@@ -32,6 +32,8 @@
 	</delete>
 	
 	<select id="kidQuestList" parameterType="int" resultType="kidsquest">
-		select * from kids_quest where kid_id = #{kidId}
+		select q.name, q.reward, q.description, k.start_time, k.end_time
+		from quest q, kids_quest k
+		where q.quest_no =k.quest_no and k.kid_id=#{kidId}
 	</select>
 </mapper>

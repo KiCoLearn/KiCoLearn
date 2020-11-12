@@ -13,9 +13,9 @@
                         <v-card class="questlist">
                             <v-layout>
                                 <v-layout column>
-                                    <v-card-title><h5>{{ quest.name }}</h5></v-card-title>
-                                    <v-card-text>{{ `${quest.reword}원` }}</v-card-text>
-                                    <v-card-text>{{ quest.description} }</v-card-text>
+                                    <v-card-text><h5>{{ quest.name }}</h5></v-card-text>
+                                    <v-card-text>시작 시간 : {{ quest.start_time }}</v-card-text>
+                                    <v-card-text>끝난 기한 :{{ quest.end_time} }</v-card-text>
                                 </v-layout>
                             </v-layout>
                         </v-card>
@@ -47,19 +47,29 @@ export default {
         };
     },
     created() {
-        axios.get('/api/quest/kid/list/'+this.kidId)
+        axios.get('/api/quset/kid/list/'+this.kidId)
             .then((res) => {
+                console.log(res.data.data);
                 this.quests = res.data.data;
             });
-        
+  
     },
-    
         
 };
 </script>
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Gochi+Hand);
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    height: 90%;
+}
 .container {
   position: relative;
   width: 100%;
@@ -70,7 +80,7 @@ export default {
 }
 .container .list-board {
   position: absolute;
-  width: 80%;
+  width: 100%;
   height: 100%;
   top: 50%;
   left: 50%;
