@@ -36,7 +36,7 @@
 <script >
 import History from '@/components/report/History.vue';
 import UseReport from '@/components/report/UseReport.vue';
-
+import axios from 'axios';
 
 export default {
     name:'Report',
@@ -50,6 +50,13 @@ export default {
             activetab:1,
         };
     },  
+    created() {
+        axios.post(process.env.VUE_APP_API_URL + '/api/money/activity')
+            .then((res) => {
+                //this.kids = res.data.data;
+                console.log(res.data.data);
+            });
+    },
         
 };
 </script>
