@@ -6,6 +6,15 @@
                 class="quiz-description"
             >
                 <div class="quiz-main">
+                    문제 : {{ todayProblem.question }}
+                </div>
+            </v-row>
+
+            <v-row
+                justify="center"
+                class="quiz-description"
+            >
+                <div class="quiz-main">
                     해설 : {{ todayProblem.description }}
                 </div>
             </v-row>
@@ -45,36 +54,29 @@ import { mapGetters } from 'vuex';
 
 export default {
     props: {
-        answer: {
+        correct: {
             type: String,
-            default: '',
-        } 
+        }, 
     },
     data: () => ({
-
+        answer : ''
     }),
     computed: {
         ...mapGetters({
             todayProblem: 'quiz/todayProblem',
-            kidId : 'auth/id'
         }),
     },
     created() {
-        this.$store.dispatch('quiz/fetchProblemResult',
-            {'kidId' : this.kidId, 'correct': ('X' === this.answer && 'X' === this.todayProblem.answer)})
-            .then((response) => {
-                console.debug(response);
-            }).catch((error) => {
-                console.debug(error);
-            });
-    },
-    methods: {
-        resolve() {
-            this.$emit('update:state', {
-                progress: 'quiz',
-                answer: '',
-            });
+        if(this.correct === 'none'){
+            
+            this.answer='';
         }
-    }
+        else if(this.correct=='correct'){
+            this.answer = this.todayProblem.answer;
+        }
+        else {
+            this.answer = this.todayProblem.answer=='O'?'X':'O';    
+        }
+    },
 };
 </script>

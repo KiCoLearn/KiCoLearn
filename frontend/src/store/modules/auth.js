@@ -9,6 +9,7 @@ export default {
         provider: null,
         id: null,
         role : null,
+        select : 1,
     },
     getters: {
         isAdmin() {
@@ -44,6 +45,9 @@ export default {
         role(state){
             return state.role;
         },
+        select(state){
+            return state.select;
+        },
         GET_ROLE(state, {provider}) {
             switch(provider) {
             case 'kakao':
@@ -78,6 +82,9 @@ export default {
             state.id = null;
             state.role = null;
         },
+        SET_SELECT(state, {select}){
+            state.select = select;
+        }
     },
     actions: {
         auth() {

@@ -20,4 +20,8 @@ public interface QuizDao {
     int createTodayQuiz(TodayQuiz newQuiz);
 
     int countQuiz();
+    
+    QuizSolved getTodayQuizSolved(int kidId);
+    
+    int solve(QuizSolved quizSolved);
 }

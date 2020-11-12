@@ -62,8 +62,14 @@ public class CertificationController {
             Certification certification = new Certification(digit + "", kid.getParentId(), kid.getKidId(),
                                                             Timestamp.valueOf(now.toLocalDateTime()));
             // DB 인증번호 등록
-            cService.addCertification(certification);
-
+       
+            if(cService.isDuplicate(kid.getKidId())) {
+                cService.updateCertification(certification);
+            }else {
+                cService.addCertification(certification);
+            }
+            
+            
             entity = resultHandler.handleSuccess(digit);
         } catch (NoSuchAlgorithmException | RuntimeException e) {
             entity = resultHandler.handleException(e);
@@ -108,6 +114,10 @@ public class CertificationController {
                 }
 
                 KidsAuth auth = new KidsAuth(temCertification.getKidId(), temp.toString());
+                
+                if(cService.isDuplicateKid(temCertification.getKidId())) {
+                    cService.deleteKidAuth(temCertification.getKidId());
+                }
                 cService.createKidsAuth(auth);
                 String token = jwtService.create(auth);
                 response.setHeader("Authorization", token);

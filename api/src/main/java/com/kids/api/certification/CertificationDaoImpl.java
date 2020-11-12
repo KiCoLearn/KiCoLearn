@@ -27,4 +27,26 @@ public class CertificationDaoImpl implements CertificationDao {
         return temp.insert(ns + "password", kidsAuth);
     }
 
+    @Override
+    public boolean isDuplicate(int kidId) {
+        if((int)temp.selectOne(ns+"isDuplicate", kidId)!=0) return true;
+        return false;
+    }
+
+    @Override
+    public int updateCertification(Certification certification) {
+        return temp.update(ns+"update", certification);
+    }
+
+    @Override
+    public int deleteKidAuth(int kidId) {
+        return temp.delete(ns+"delete",kidId);
+    }
+
+    @Override
+    public boolean isDuplicateKid(int kidId) {
+        if((int)temp.selectOne(ns+"isDuplicateKid", kidId)!=0) return true;
+        return false;
+    }
+
 }

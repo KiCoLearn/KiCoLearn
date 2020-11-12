@@ -1,2 +1,3 @@
 *.test.js
 service-worker.js
+vue.config.js

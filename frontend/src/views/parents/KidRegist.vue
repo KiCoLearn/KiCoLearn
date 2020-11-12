@@ -190,17 +190,8 @@
 
                         <v-col
                             cols="12"
-                            style="display:flex; justify-content:center;margin-left:25px"
+                            style="display:flex; justify-content:center"
                         >
-                            <button
-                                class="btn"
-                                @click="cancel"
-                            >
-                                <img
-                                    src="@/assets/list.png"
-                                    width="80px"
-                                >
-                            </button>
                             <button
                                 class="btn"
                                 style="margin-left: 10px;"
@@ -221,6 +212,7 @@
 
 <script>
 import axios from '@/plugins/axios';
+import { mapGetters } from 'vuex';
 export default {
     name:'KidsRegist',
     data: () => ({
@@ -243,6 +235,12 @@ export default {
             genderRequired: (value) => (value===0 || value===1),
         },
     }),
+
+    computed: {
+        ...mapGetters({
+            parentsId : 'auth/id',
+        })
+    },
     methods: {
         regist(){
             if (this.$refs.form.validate()) {
@@ -250,7 +248,7 @@ export default {
                     {
                         'birth': new Date(this.year, this.month-1, this.day),
                         'name': this.name,
-                        'parentId': 1,
+                        'parentId': this.parentsId, 
                         'gender' : this.gender,
                         'characterIdx': this.pick
                     })
@@ -260,10 +258,6 @@ export default {
                     });
             }
         },
-        cancel(){
-            this.$router.push({name:'ParentsMain'});
-        },
-
         changeProfile(){
             this.dialog = false;
             this.photo = this.getPhotoPath(this.pick);
@@ -277,7 +271,7 @@ export default {
         isActive(idx){
             if(this.pick==idx) return true;
             return false;
-        }
+        },
     },
 };
 </script>
@@ -317,7 +311,6 @@ export default {
     .box{
         margin: auto;
         width: 342px;
-        margin-top: 50px;
         padding: 20px 20px 5px 20px;
         background-color: white;
         border-radius: 4px;
