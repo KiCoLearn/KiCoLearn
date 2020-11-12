@@ -149,7 +149,7 @@
                             <v-icon
                                 small
                                 class="mr-2"
-                                @click="editItem(item)"
+                                @click="deleteKidsItem(item)"
                             >
                                 mdi-close-thick
                             </v-icon>                            
@@ -265,7 +265,8 @@ export default {
             console.log(kids);
             axios.get(process.env.VUE_APP_API_URL + '/api/store/klist/'+ kids.value)
                 .then((res) => {
-                    console.log(res.data);
+                    //console.log(res.data);
+                    this.kidsItems = res.data.data;
                 });
         },
         handleStoreManager(){
@@ -280,6 +281,22 @@ export default {
         },
         getKidsInfo(callback){
             callback(this.select);
+        },
+        deleteKidsItem(item){
+            axios.post(process.env.VUE_APP_API_URL + '/api/store/kidsitem/delete',{
+                itemNo:item.itemNo,
+                kidId:this.select.value
+            })
+                .then(()=>{
+                    this.kidsItems.forEach((data,index)=>{
+                        if(data.itemNo===item.itemNo){
+                            this.kidsItems.splice(index, 1);
+                        }
+                    });
+                })
+                .catch(()=>{
+                    alert('이미 등록된 아이템입니다.');
+                });
         }
     },
 };
