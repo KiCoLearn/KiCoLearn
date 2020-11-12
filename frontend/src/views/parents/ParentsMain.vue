@@ -223,4 +223,19 @@ h1 {
     margin:0;
     padding: 0;
 }
+
+.nav{
+    font-size: 1.2rem;
+    font-family: 'Gaegu';
+    color: white;
+  }
+
+
+  .head{
+    background:#fb8c00;
+    border-radius: 40px;
+    padding:5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
 </style>

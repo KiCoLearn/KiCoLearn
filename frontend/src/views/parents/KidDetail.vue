@@ -91,52 +91,19 @@
                         2020/11/06
                     </v-col>
                 </v-row>
-                
-
+            
                 <v-row
-                    justify="center"
-                    style="margin-top:25px;"
+                    justify="end"
+                    class="nav"
+                    style="margin-bottom:0"
                 >
-                    <v-col cols="6">
-                        <button class="btn2">
-                            <img
-                                src="@/assets/list2.png"
-                                width="80px"
-                            >
-                        </button>
-                    </v-col>
-                    <v-col cols="6">
-                        <button class="btn2">
-                            <img
-                                src="@/assets/store.png"
-                                width="80px"
-                            >
-                        </button>
-                    </v-col>
-
-                    <v-col
-                        cols="6"
-                        style="margin-top:10px"
-                    >
-                        용돈 기입장
-                    </v-col>
-                    <v-col
-                        cols="6"
-                        style="margin-top:10px"
-                    >
-                        스토어관리
-                    </v-col>
-                </v-row>
-
-                <v-row justify="end">
-                    <v-btn
+                    <button
                         rounded
-                        class="warning"
-                        style="margin-right:15px"
+                        class="head"
                         @click="goCertification"
                     >
                         <b>아이 로그인 시키기</b>
-                    </v-btn>
+                    </button>
                 </v-row>
             </v-flex>
         </v-layout>
@@ -229,5 +196,19 @@ export default {
     margin: auto;
     
 }
+
+.nav{
+    font-size: 1.2rem;
+    font-family: 'Gaegu';
+    color: white;
+  }
+
+
+  .head{
+    background:#fb8c00;
+    border-radius: 40px;
+    padding:6px;
+    margin-right: 15px;
+  }
 
 </style>
