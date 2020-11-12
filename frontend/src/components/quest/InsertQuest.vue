@@ -67,7 +67,7 @@ export default {
             name:'',
             reward:'',
             description:'',
-            parentId:3,
+            parentId:0,
             dialog: true,
         };
     },

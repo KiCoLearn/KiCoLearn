@@ -41,7 +41,7 @@ export default {
     name : 'KidQuest',
     data() {
         return {
-            kidId:1,
+            kidId:0,
             quests: new Array(),
         };
     },
