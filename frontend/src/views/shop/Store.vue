@@ -66,7 +66,7 @@
                             </v-icon>
                             <v-icon
                                 small
-                                @click="deleteItem(item)"
+                                @click="deleteParentItem(item)"
                             >
                                 mdi-delete
                             </v-icon>
@@ -260,6 +260,20 @@ export default {
     methods: {
         handleAddItem(){
             this.addItem = this.addItem ? false : true;
+        },
+        deleteParentItem(item){
+            if(item.parentId===0){
+                alert('기본 아이템은 삭제할 수 없습니다.');
+                return;
+            }
+            axios.delete(process.env.VUE_APP_API_URL + '/api/store/item/delete/'+ item.itemNo)
+                .then(() => {
+                    this.myItems.forEach((data,index)=>{
+                        if(data.itemNo===item.itemNo){
+                            this.myItems.splice(index, 1);
+                        }
+                    });
+                });
         },
         handleSelect(kids){
             console.log(kids);
