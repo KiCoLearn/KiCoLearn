@@ -70,6 +70,9 @@
                             >
                                 mdi-delete
                             </v-icon>
+                        </template>
+                        <template v-slot:no-data>
+                            생성된 아이템이 존재하지 않습니다.
                         </template>      
                     </v-data-table>
                     <v-pagination
@@ -163,7 +166,12 @@
                     <add-item 
                         :dialog="addItem"
                         @handle="handleAddItem"
-                    />                           -->
+                    />-->
+                    <store-manager 
+                        :dialog="manager"
+                        :send-data="myItems"
+                        @handle="handleStoreManager"
+                    />
                 </div>
             </v-tab-item>
         </v-tabs-items>
@@ -175,6 +183,7 @@ import axios from '@/plugins/axios';
 //import ItemCard from '@/components/shop/ItemCard';
 import AddItem from '@/components/shop/AddItem';
 //import KidsCard from '@/components/shop/KidsCard';
+import StoreManager from '@/components/shop/StoreManager';
 import { mapGetters } from 'vuex';
 
 export default {    
@@ -183,6 +192,7 @@ export default {
         //ItemCard,
         AddItem,
         //KidsCard
+        StoreManager
     },
 
     data() {
