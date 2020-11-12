@@ -5,24 +5,23 @@
                 id="app"
                 class="paper"
             >
-                <v-container>
+                <div class="quest-list">
                     <ul
                         v-for="quest in quests"
                         :key="quest.kidId"
                     >
                         <v-card class="questlist">
-                            <v-layout>
+                            <v-layout column>
                                 <v-layout column>
-                                    <v-card-text><h5>{{ quest.name }}</h5></v-card-text>
-                                    <v-card-text>시작 시간 : {{ quest.start_time }}</v-card-text>
-                                    <v-card-text>끝난 기한 :{{ quest.end_time} }</v-card-text>
+                                    <v-card-title><h5>{{ quest.name }}</h5></v-card-title>
+                                    <v-card-text>{{ quest.reward }}</v-card-text>
+                                    <v-card-text>{{ quest.description }}</v-card-text>
                                 </v-layout>
                             </v-layout>
                         </v-card>
                         <br>
                     </ul>
-                </v-container>
-          
+                </div>
                 <div class="buttons">
                     <div class="delete" />
                 </div>
@@ -47,12 +46,16 @@ export default {
         };
     },
     created() {
-        axios.get('/api/quset/kid/list/'+this.kidId)
+        axios.get(process.env.VUE_APP_API_URL + '/api/quest/kid/list/'+this.kidId)
             .then((res) => {
+                console.log(res);
                 console.log(res.data.data);
                 this.quests = res.data.data;
+            })
+            .catch(err => {
+                console.log(err);
             });
-  
+
     },
         
 };
@@ -73,7 +76,7 @@ export default {
 .container {
   position: relative;
   width: 100%;
-  height: 40rem;
+  height: 600px;
   top: 23rem;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -217,52 +220,10 @@ export default {
   top: 20%;
   left: 4%;
 }
-
-.toggle {
-  cursor: pointer;
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  left: 10px;
-  border: 2.5px solid #dfa35a;
-  transition: .3s;
-}
-.toggle i {
-  position: absolute;
-  font-size: 1em;
-  color: #dfa35a;
-  top: -4px;
-}
-
-.todo-text {
-  color: #50140d;
-  font-size: 1.2em;
-  transition: .3s;
-}
-
-.todo-item, .done-item {
-  transition: .5s;
-  display: flex;
-  align-items: center;
-  height: 22px;
-}
-.todo-item:hover .delete-icon, .done-item:hover .delete-icon {
-  opacity: 1;
-}
-
-.delete-icon {
-  position: absolute;
-  right: 10px;
-  opacity: 0;
-  transition: .3s;
-}
-.delete-icon i {
-  position: absolute;
-  font-size: 1.3em;
-  color: #d28070;
-  right: 5px;
-  top: -7px;
+.quest-list{
+  padding-top: 10px;
+  text-align: center;
+  width: 90%;
 }
 
 </style>

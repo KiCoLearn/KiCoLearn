@@ -7,6 +7,7 @@ export default[
         name: 'KidQuest',
         component:KidQuest
     },
+    
     {
         path: '/addquest',
         name: 'AddQuest',

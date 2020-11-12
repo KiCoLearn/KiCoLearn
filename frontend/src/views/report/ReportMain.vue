@@ -22,13 +22,11 @@
                 >
                     <v-card class="recentlist">
                         <v-layout column>
-                            <v-flex>
-                                <v-layout column>
-                                    <v-card-title><h5>{{ recent.contents }}</h5></v-card-title>
-                                    <v-card-text>{{ recent.amount }}</v-card-text>
-                                    <v-card-text>{{ recent.date }}</v-card-text>
-                                </v-layout>
-                            </v-flex>
+                            <v-layout column>
+                                <v-card-title><h5>{{ recent.contents }}</h5></v-card-title>
+                                <v-card-text>{{ recent.amount }}</v-card-text>
+                                <v-card-text>{{ recent.date }}</v-card-text>
+                            </v-layout>
                         </v-layout>
                     </v-card>
                     <br>
