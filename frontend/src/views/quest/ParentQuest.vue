@@ -34,19 +34,6 @@
                                         alt="deletequest"
                                     >
                                 </button>
-                    &nbsp;
-                    &nbsp;
-
-                                <button
-                                    class="btn"
-                                    @click="successquest"
-                                >
-                                    <img 
-                                        src="@/assets/success.png"
-                                        width="30px"
-                                        alt="successquest"
-                                    >
-                                </button>
                             </div>
                         </li>
                     </ul>
@@ -379,24 +366,23 @@ export default {
             }
         },
         addkidquest(){
-            this.$refs.form.validate().then(success =>{
-                if (success){
-                    axios.post(process.env.VUE_APP_API_URL+'/api/quest/kid/regist', {
-                        kidId: this.kidId,    
-                        questNo : this.questNo,
-                        'start': new Date(this.year, this.month-1, this.day),
-                        'end' : new Date(this.endyear, this.endmonth-1, this.endday),
+            if (this.$refs.form.validate()) {
+                axios.post(process.env.VUE_APP_API_URL+'/api/quest/kid/regist', {
+                    kidId: this.kidId,    
+                    questNo : this.questNo,
+                    'start': new Date(this.year, this.month-1, this.day),
+                    'end' : new Date(this.endyear, this.endmonth-1, this.endday),
   
-                    })
-                        .then(()=>{
-                            alert('등록되었습니다!');
-                            this.back();
-                            window.location.reload();
-                        });
-                    console.log('success!!');
-                }
+                })
+                    .then(()=>{
+                        alert('등록되었습니다!');
+                        this.back();
+                        window.location.reload();
+                    });
+                console.log('success!!');
+            }
 
-            });
+            
 
         },
     }
