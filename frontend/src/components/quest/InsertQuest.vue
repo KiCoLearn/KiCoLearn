@@ -68,12 +68,13 @@ export default {
             reward:'',
             description:'',
             parentId:3,
+            dialog: true,
         };
     },
     methods: {
         handleAddItem(){        
             if (this.$refs.form.validate()){
-                axios.post(process.env.VUE_APP_API_URL+'/api/quest/kid/regist', {
+                axios.post(process.env.VUE_APP_API_URL+'/api/quest/parent/regist', {
                     description: this.description,    
                     name: this.name,
                     parentId: this.parentId,
@@ -86,11 +87,10 @@ export default {
                     });
                 console.log('success!!');
             }
-        }
-       
-    },
-    handleDialog(){
-        this.$emit('handle');
+        },
+        handleDialog(){
+            this.$emit('handle');
+        },
     },
     
 };

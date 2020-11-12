@@ -60,8 +60,12 @@ export default {
         }),
     },
     created() {
+        if(this.answer === this.todayProblem.answer){
+            this.bonus();
+        }
+
         this.$store.dispatch('quiz/fetchProblemResult',
-            {'kidId' : this.kidId, 'correct': ('X' === this.answer && 'X' === this.todayProblem.answer)})
+            {'kidId' : this.kidId, 'correct': this.answer === this.todayProblem.answer})
             .then((response) => {
                 console.debug(response);
             }).catch((error) => {
@@ -74,7 +78,17 @@ export default {
                 progress: 'quiz',
                 answer: '',
             });
+        },
+        bonus(){
+            this.$store.dispatch('quiz/fetchBonusMoney',
+                {'kidId' : this.kidId})
+                .then((response) => {
+                    console.debug(response);
+                }).catch((error) => {
+                    console.debug(error);
+                });
         }
+
     }
 };
 </script>

@@ -21,8 +21,8 @@ const routes = [
     ...ManageQuizRoutes,
     ...ShopRoutes,
     ...DummyRoutes,
-    ...ReportRoutes,
     ...QuestRoutes,
+    ...ReportRoutes,
     
     {
         path: '/kid',
