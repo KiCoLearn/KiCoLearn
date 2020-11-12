@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="returnInstanceForEmptyRow" value="true"/>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+	
+	<typeAliases>
+		<!-- 사용할 DTO들을 예약어로 등록 -->
+		<typeAlias type="com.kids.api.kidsaccount.Kids" alias="kids" />
+		<typeAlias type="com.kids.api.certification.Certification" alias="certification" />
+		<typeAlias type="com.kids.api.certification.Parent" alias="parent" />
+		<typeAlias type="com.kids.api.certification.KidsAuth" alias="kidsauth" />
+		<typeAlias type="com.kids.api.quest.Quest" alias="quest" />
+		<typeAlias type="com.kids.api.quest.KidsQuest" alias="kidsquest" />
+		<typeAlias type="com.kids.api.money.Money" alias="money" />
+		<typeAlias type="com.kids.api.money.Budget" alias="budget" />
+		<typeAlias type="com.kids.api.store.Item" alias="item" />
+		<typeAlias type="com.kids.api.store.KidsStore" alias="kidstore" />
+		<typeAlias type="com.kids.api.quiz.Quiz" alias="quiz" />
+		<typeAlias type="com.kids.api.quiz.TodayQuiz" alias="today" />
+		<typeAlias type="com.kids.api.account.parents.Parents" alias="parents" />
+	</typeAliases>
+
+	<mappers>
+		<!-- 사용할 mapper 등록 -->
+		<mapper resource="mybatis/mapper/MoneyMapper.xml" />
+		<mapper resource="mybatis/mapper/KidsMapper.xml" />
+		<mapper resource="mybatis/mapper/CertificationMapper.xml" />
+		<mapper resource="mybatis/mapper/QuizMapper.xml" />
+		<mapper resource="mybatis/mapper/QuestMapper.xml" />
+		<mapper resource="mybatis/mapper/ParentsMapper.xml" />
+		<mapper resource="mybatis/mapper/StoreMapper.xml" />
+	</mappers>
+</configuration>

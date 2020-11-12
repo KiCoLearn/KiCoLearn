@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kids.api.mapper.Certification">
+
+	<select id="search" parameterType="string"
+		resultType="certification">
+		select *
+		from certification 
+		where certification_no = #{certificationNo}
+	</select>
+
+	<insert id="insert" parameterType="certification">
+		insert into
+		certification(certification_no, parent_id, kid_id, expired_time)
+		values(#{certificationNo}, #{parentId}, #{kidId}, #{expiredTime})
+	</insert>
+	
+	<insert id="password" parameterType="kidsauth">
+		insert into
+		kids_auth(kid_id, password)
+		values(#{kidId}, #{password})
+	</insert>
+	
+	<select id="isDuplicate" parameterType="int" resultType="int">
+		select count(*) from certification
+		where kid_id=#{kidId}
+	</select>
+	
+	<update id="update" parameterType="certification">
+		update certification 
+		set certification_no = #{certificationNo},
+		expired_time = #{expiredTime}
+		where kid_id=#{kidId}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from kids_auth where kid_id=#{kidId}
+	</delete>
+	
+	<select id="isDuplicateKid" parameterType="int" resultType="int">
+		select count(*) from kids_auth
+		where kid_id=#{kidId}
+	</select>
+
+</mapper>
+	

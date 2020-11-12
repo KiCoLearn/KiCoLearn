@@ -1,15 +1,26 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+import createPersistedState from 'vuex-persistedstate';
+
+import auth from '@/store/modules/auth';
+import quiz from '@/store/modules/quiz';
+import fcm from '@/store/modules/fcm';
+
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+    modules: {
+        auth,
+        quiz,
+        fcm,
+    },
+    plugins: [createPersistedState({
+        storage: window.sessionStorage,
+        paths: [
+            'auth',
+            'quiz',
+            'fcm',
+        ],
+    })],
+});
