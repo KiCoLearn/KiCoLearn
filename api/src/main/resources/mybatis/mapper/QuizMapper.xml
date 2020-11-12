@@ -52,4 +52,12 @@
 		select count(*) from quiz
 	</select>
 	
+	<select id="getSolved" parameterType="int" resultType="solved">
+		select * from quiz_solve where date = (date(now())) and kid_id=#{kidId}
+	</select>
+	
+	<insert id="solve" parameterType="solved">
+		insert into quiz_solve values((date(now())), #{kidId}, #{correct})
+	</insert>
+	
 </mapper>

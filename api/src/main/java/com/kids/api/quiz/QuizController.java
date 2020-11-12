@@ -123,10 +123,30 @@ public class QuizController {
         return result;
     }
 
-    // private ResponseEntity<Map<String, Object>> template() {
-    // ResponseEntity<Map<String, Object>> result = null;
-    // return null;
-    // }
-
+    @GetMapping("/today/{kidId}")
+    @ApiOperation(value = "오늘의 퀴즈 풀었는지 확인")
+    private Object todayKidQuiz(@PathVariable int kidId) {
+        ResponseEntity<Map<String, Object>> result = null;
+        try {
+            QuizSolved q = qService.getTodayQuizSolved(kidId);
+            System.out.println(q);
+            result = resultHandler.handleSuccess(q);
+        } catch (Exception e) {
+            result = resultHandler.handleException(e);
+        }
+        return result;
+    }
+    
+    @PostMapping("/solve")
+    @ApiOperation(value = "아이가 퀴즈를 품")
+    private ResponseEntity<Map<String, Object>> updateQuiz(@RequestBody QuizSolved quiz) {
+        ResponseEntity<Map<String, Object>> result = null;
+        try {
+            result = resultHandler.handleSuccess(qService.solve(quiz));
+        } catch (Exception e) {
+            result = resultHandler.handleException(e);
+        }
+        return null;
+    }
 
 }

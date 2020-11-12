@@ -23,6 +23,7 @@
 		<typeAlias type="com.kids.api.store.KidsStore" alias="kidstore" />
 		<typeAlias type="com.kids.api.quiz.Quiz" alias="quiz" />
 		<typeAlias type="com.kids.api.quiz.TodayQuiz" alias="today" />
+		<typeAlias type="com.kids.api.quiz.QuizSolved" alias="solved" />
 		<typeAlias type="com.kids.api.account.parents.Parents" alias="parents" />
 	</typeAliases>
 

@@ -59,4 +59,14 @@ public class QuizDaoImpl implements QuizDao {
         return temp.selectOne(ns + "getNext");
     }
 
+    @Override
+    public QuizSolved getTodayQuizSolved(int kidId) {
+        return temp.selectOne(ns+"getSolved", kidId);
+    }
+
+    @Override
+    public int solve(QuizSolved quizSolved) {
+        return temp.insert(ns+"solve", quizSolved);
+    }
+
 }
