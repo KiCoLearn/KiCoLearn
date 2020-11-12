@@ -1,5 +1,5 @@
 import ReportMain from '@/views/report/ReportMain';
-import Test from '@/views/report/Test';
+
 export default[
     {
         path: '/report',
@@ -7,11 +7,4 @@ export default[
         component: ReportMain,
 
     },
-    {
-        path: '/test',
-        name: 'Test',
-        component: Test,
-
-    },
-
 ];
