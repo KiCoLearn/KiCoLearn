@@ -6,7 +6,7 @@
                 justify="center"
             >
                 <div class="quiz-main">
-                    {{ todayProblem.question }}
+                    문제 : {{ todayProblem.question }}
                 </div>
             </v-row>
 

@@ -29,17 +29,30 @@
 		date, is_deposit, left_money, kid_id from budget where kid_id = #{kidId}
 	</select>
 
-
+	
 	<select id="todaySpend" parameterType="int" resultType="int">
-		select sum(case when is_deposit then amount else -amount end) from budget where kid_id=#{kidId}
+		select sum(case when is_deposit then 0 else amount end) from budget where kid_id=#{kidId}
 		and date(date) = curdate()
 	</select>
 
 	
 	<select id="weekSpend" parameterType="int" resultType="int">
-		select sum(case when is_deposit then amount else -amount end) from budget where kid_id=#{kidId} 
+		select sum(case when is_deposit then 0 else amount end) from budget where kid_id=#{kidId} 
 		and date_format(date, "%Y-%m-%d") between adddate(curdate(),-weekday(curdate())+0) and adddate(curdate(),-weekday(curdate())+6)
 	</select>
+	
+	<select id="todayDeposit" resultType="budget">
+		select contents, sum(amount) as amount from budget where kid_id=#{kidId} and is_deposit=false 
+		and date(date) = curdate()
+		group by contents
+	</select>
+	
+	<select id="weekDeposit" resultType="budget">
+		select contents, sum(amount) as amount from budget where kid_id=#{kidId} and is_deposit=false 
+		and date_format(date, "%Y-%m-%d") between adddate(curdate(),-weekday(curdate())+0) and adddate(curdate(),-weekday(curdate())+6)
+		group by contents
+	</select>
+	
 
 	
 </mapper>

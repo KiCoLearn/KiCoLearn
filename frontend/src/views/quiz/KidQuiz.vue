@@ -1,6 +1,6 @@
 <template>
     <v-layout class="quizbody">
-        <v-flex>
+        <v-flex style="margin-bottom:46px;">
             <v-row style="margin-left:10px; margin-bottom:10px">
                 <h2>{{ date }} 퀴즈</h2>
             </v-row>
@@ -91,7 +91,7 @@ export default {
         width: 30%;;
         border: 4px solid rgb(142, 105, 13);
         border-radius: 4px;;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         
     }
 
@@ -124,12 +124,13 @@ export default {
 
 }
 .quizbody{
+    width: 340px;
+    margin: auto;
     display: flex;
     height: 100%;
     justify-content: center;
     align-items: center;
     font-family: 'CookieRun-Regular';
-    
 }
 
 </style>

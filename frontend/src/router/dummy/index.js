@@ -3,7 +3,7 @@ import Quest from '@/views/kid/Quest';
 
 export default[
     {
-        path: '/report',
+        path: '/reporta',
         name: 'Report',
         component:Report
     },

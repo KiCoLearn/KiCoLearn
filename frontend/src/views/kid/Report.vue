@@ -69,33 +69,32 @@ export default {
 }
 .container {  
     max-width: 100%; 
-    min-width: 20rem;
+    min-width: 220px;
     margin: 2.5rem auto;
     font-family: Arial, Helvetica, sans-serif;
-    color: #888;
+    color: rgb(250, 114, 104);
 }
 .tabs {
     overflow: hidden;
-  margin-left: 1rem;
-    margin-bottom: -0.1rem; 
+    margin-bottom: 3px; 
 }
 .tabs ul {
     list-style-type: none;
-    margin-left: 1rem;
 }
 .tabs a{
     float: initial;
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: 3px 3px;
+    margin: 2px;
     transition: background-color 0.2s;
     border: 1px solid #ccc;
     border-right: none;
-    background-color: #f1f1f1;
+    background-color: #f5edd4;
     border-radius: 1rem 1rem 0 0;
     font-weight: bold;
 }
 .tabs a:last-child { 
-    border-right: 0.1rem solid #ccc;
+    border-right: 0.1rem solid rgb(126, 103, 103);
 }
 
 /* Change background color of tabs on hover */
@@ -106,8 +105,8 @@ export default {
 
 /* Styling for active tab */
 .tabs a.active {
-    background-color: #fff;
-    color: #484848;
+    background-color: rgb(252, 167, 70);
+    color: #fdfdfd;
     border-bottom: 0.1rem solid #fff;
     cursor: default;
 }

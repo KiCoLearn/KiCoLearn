@@ -53,6 +53,20 @@
                     <v-col cols="6">
                         이번주 소비
                     </v-col>
+
+                    <v-col 
+                        v-if="todayData!=null"
+                        cols="6"
+                        style="border-right: 2px solid #ffdd93;"
+                    >
+                        <Chart :chart-data="todayData" />
+                    </v-col>
+                    <v-col
+                        v-if="weekData!=null"
+                        cols="6"
+                    >
+                        <Chart :chart-data="weekData" />
+                    </v-col>
   
                     <v-col
                         cols="6"
@@ -76,67 +90,36 @@
     
 
                 <v-row
-                    v-for="idx in 3"  
-                    :key="idx"
+                    v-for="q in quest.slice(0, 3)"
+                    :key="q.questNo"  
+                    :v-if="quest.length>0"
                     class="quest"
                     justify="center"
                 >
-                    <v-col cols="1">
-                        {{ idx }}
+                    <v-col cols="3">
+                        {{ q.name }}
                     </v-col>
                     <v-col cols="6">
-                        퀘스트 내용
+                        {{ q.description }}
                     </v-col>
                     <v-col cols="3">
-                        2020/11/06
+                        {{ q.reward }}원
                     </v-col>
                 </v-row>
-                
 
+               
                 <v-row
-                    justify="center"
-                    style="margin-top:25px;"
+                    justify="end"
+                    class="nav"
+                    style="margin-bottom:0"
                 >
-                    <v-col cols="6">
-                        <button class="btn2">
-                            <img
-                                src="@/assets/list2.png"
-                                width="80px"
-                            >
-                        </button>
-                    </v-col>
-                    <v-col cols="6">
-                        <button class="btn2">
-                            <img
-                                src="@/assets/store.png"
-                                width="80px"
-                            >
-                        </button>
-                    </v-col>
-
-                    <v-col
-                        cols="6"
-                        style="margin-top:10px"
-                    >
-                        용돈 기입장
-                    </v-col>
-                    <v-col
-                        cols="6"
-                        style="margin-top:10px"
-                    >
-                        스토어관리
-                    </v-col>
-                </v-row>
-
-                <v-row justify="end">
-                    <v-btn
+                    <button
                         rounded
-                        class="warning"
-                        style="margin-right:15px"
+                        class="head"
                         @click="goCertification"
                     >
                         <b>아이 로그인 시키기</b>
-                    </v-btn>
+                    </button>
                 </v-row>
             </v-flex>
         </v-layout>
@@ -146,11 +129,14 @@
 <script>
 import axios from '@/plugins/axios';  
 import AnimatedNumber from 'animated-number-vue';
+import Chart from '@/views/report/Chart';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'KidDetail',
     components: {
-        AnimatedNumber
+        AnimatedNumber,
+        Chart
     },
     data() {
         return {
@@ -158,21 +144,20 @@ export default {
             value: 1000,
             week:0,
             today:0,
+            todayData:null,
+            weekData:null,
+            quest : new Array(),
         };
     },
 
     computed: {
-        kidId(){
-            return this.$route.query.id;
-        }
+        ...mapGetters({
+            kidId : 'auth/select',
+        })
     },
     created() {
-        axios.get('/api/kidsaccount/detail/'+this.kidId,
-            {
-                headers: {
-                    'jwt-auth-token':''
-                },
-            })
+        this.fillChartData();
+        axios.get('/api/kidsaccount/detail/'+this.kidId)
             .then((res) => {
                 this.kid= res.data.data;
                 axios.get('/api/money/week/'+this.kidId)
@@ -180,6 +165,12 @@ export default {
                         this.week = res.data.data.week;
                         this.today = res.data.data.today;
                     });
+            });
+        
+        axios.get('/api/quest/kid/list/'+this.kidId)
+            .then((res) => {
+                //console.log(res.data.data);
+                this.quest = res.data.data;
             });
     },
     methods: {
@@ -191,10 +182,70 @@ export default {
             return `${value.toFixed(0)}`;
         },
         goUpdate(){
-            this.$router.push({name: 'KidUpdate', query: {'id': this.kidId}});
+            this.$router.push({name: 'KidUpdate'});
         },
         goCertification(){
             this.$router.push({name:'Certification'});
+        },
+        fillChartData(){
+            axios.get('/api/money/deposit/today/'+this.kidId)
+                .then((res) => {
+                    const data = res.data.data;
+
+                    if(data.length>0){
+                        let arr = new Array();
+                        let label = new Array();
+                        data.forEach((item,index) => {
+                            arr[index] = item.amount;
+                            label[index] = item.contents;
+                        });
+                        this.todayData = {
+                            labels : label,
+                            hoverBackgroundColor: 'red',
+                            hoverBorderWidth: 10,
+                            datasets: [ 
+                                {           
+                                    backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
+                                    data:arr,
+                                }
+                            ],
+                        };
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });  
+                
+            axios.get('/api/money/deposit/week/'+this.kidId)
+                .then((res) => {
+                   
+                    if(res.data.data.length>0){
+                        const data = res.data.data;
+
+                        let arr = new Array();
+                        let label = new Array();
+                        data.forEach((item,index) => {
+                            arr[index] = item.amount;
+                            label[index] = item.contents;
+                        });
+                        this.weekData = {
+                            labels:label,
+                            hoverBackgroundColor: 'red',
+                            hoverBorderWidth: 10,
+                            datasets: [ 
+                                {           
+                                    backgroundColor: ['gray', '#E46651', '#00D8FF'],
+                                    data:arr
+                                }
+                            ],
+                        };
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err);
+                });  
+            
         }
     },
 
@@ -234,4 +285,24 @@ export default {
     
 }
 
+.nav{
+    font-size: 1.2rem;
+    font-family: 'Gaegu';
+    color: white;
+  }
+
+
+  .head{
+    background:#fb8c00;
+    border-radius: 40px;
+    padding:6px;
+    margin-right: 15px;
+  }
+
+  ::v-deep .chartjs-render-monitor{
+    width: 150px!important;
+    height: 150px !important;
+    margin: auto;
+    margin-bottom: 10px;
+  }  
 </style>

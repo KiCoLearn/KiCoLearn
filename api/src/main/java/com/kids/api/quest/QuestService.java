@@ -17,5 +17,5 @@ public interface QuestService {
 
     int deleteKidQuest(KidsQuest quest);
 
-    List<KidsQuest> getKidQuestListByKidId(int kidId);
+    List<Quest> getKidQuestListByKidId(int kidId);
 }

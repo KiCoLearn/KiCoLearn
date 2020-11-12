@@ -212,6 +212,7 @@
 
 <script>
 import axios from '@/plugins/axios';
+import { mapGetters } from 'vuex';
 export default {
     name:'KidsRegist',
     data: () => ({
@@ -234,6 +235,12 @@ export default {
             genderRequired: (value) => (value===0 || value===1),
         },
     }),
+
+    computed: {
+        ...mapGetters({
+            parentsId : 'auth/id',
+        })
+    },
     methods: {
         regist(){
             if (this.$refs.form.validate()) {
@@ -241,7 +248,7 @@ export default {
                     {
                         'birth': new Date(this.year, this.month-1, this.day),
                         'name': this.name,
-                        'parentId': 1,
+                        'parentId': this.parentsId, 
                         'gender' : this.gender,
                         'characterIdx': this.pick
                     })

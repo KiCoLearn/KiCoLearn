@@ -47,8 +47,7 @@
                 </div>
             </div>
         </div>
-     
-        <br>
+    
         <button 
             class="btn" 
             @click="addKid"
@@ -58,22 +57,37 @@
                 width="80px"
             >
         </button>
+
+        <div v-if="isAdmin">
+            <v-btn
+                class="warning"
+                @click="quizManage"
+            >
+                퀴즈관리
+            </v-btn>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from '@/plugins/axios';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
     name : 'KidsList',
     data() {
         return {
-            parentId:1,
             kids: new Array(),
         };
     },
+    computed: {
+        ...mapGetters({
+            parentsId : 'auth/id',
+            isAdmin : 'auth/isAdmin'
+        })
+    },
     created() {
-        axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentId,
+        axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentsId,
             {
             })
             .then((res) => {
@@ -83,11 +97,18 @@ export default {
             });
     },
     methods: {
+        ...mapMutations({
+            setSelect :'auth/SET_SELECT'
+        }),
+
         addKid(){
             this.$router.push({name: 'KidRegist'});
         },
         goInfo(idx){
-            this.$router.push({name: 'KidDetail', query: {'id': idx}});
+            this.setSelect({
+                select : idx
+            });
+            this.$router.push({name: 'KidDetail'});
         },
         photo(idx){
             if(idx<10) return require('@/assets/character/00'+idx+'.png');
@@ -95,6 +116,9 @@ export default {
         },
         format(x){
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        },
+        quizManage(){
+            this.$router.push({name:'QuizManage'});
         }
     },
 };
@@ -112,6 +136,7 @@ export default {
     border-radius: 15px;
     display: block;
     margin: auto;
+    margin-bottom: 20px;
     position: relative;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: hidden;
@@ -211,4 +236,19 @@ h1 {
     margin:0;
     padding: 0;
 }
+
+.nav{
+    font-size: 1.2rem;
+    font-family: 'Gaegu';
+    color: white;
+  }
+
+
+  .head{
+    background:#fb8c00;
+    border-radius: 40px;
+    padding:5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
 </style>

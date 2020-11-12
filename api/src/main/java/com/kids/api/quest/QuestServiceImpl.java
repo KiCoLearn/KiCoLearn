@@ -47,7 +47,7 @@ public class QuestServiceImpl implements QuestService {
     }
 
     @Override
-    public List<KidsQuest> getKidQuestListByKidId(int kidId) {
+    public List<Quest> getKidQuestListByKidId(int kidId) {
         return qDao.getKidQuestListByKidId(kidId);
     }
 

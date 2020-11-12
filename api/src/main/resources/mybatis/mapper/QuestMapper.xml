@@ -31,9 +31,9 @@
 		delete from kids_quest where quest_no= #{questNo} and kid_id = #{kidId} 
 	</delete>
 	
-	<select id="kidQuestList" parameterType="int" resultType="kidsquest">
-		select q.name, q.reward, q.description, k.start_time, k.end_time
-		from quest q, kids_quest k
-		where q.quest_no =k.quest_no and k.kid_id=#{kidId}
+	<select id="kidQuestList" parameterType="int" resultType="quest">
+		select * from quest 
+		where quest_no in
+		(select quest_no from kids_quest where kid_id = #{kidId})
 	</select>
 </mapper>

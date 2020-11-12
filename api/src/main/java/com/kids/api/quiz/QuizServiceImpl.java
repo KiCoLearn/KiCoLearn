@@ -56,4 +56,14 @@ public class QuizServiceImpl implements QuizService {
         return qDao.getNextQuiz();
     }
 
+    @Override
+    public QuizSolved getTodayQuizSolved(int kidId) {
+        return qDao.getTodayQuizSolved(kidId);
+    }
+
+    @Override
+    public int solve(QuizSolved quizSolved) {
+        return qDao.solve(quizSolved);
+    }
+
 }
