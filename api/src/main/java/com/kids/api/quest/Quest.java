@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Quest {
-    private int qusestNo;
+    private int questNo;
     private String name;
     private int reward;
     private String description;
