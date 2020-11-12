@@ -1,10 +1,11 @@
 <template>
-    <div>
+    <div class="nav">
         <button
+            class="head"
             text="LOGOUT"
             @click="logout"
         >
-            로그아웃
+            <b>로그아웃</b>
         </button>
     </div>
 </template>
@@ -25,6 +26,24 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+ .nav{
+    font-size: 1.2rem;
+    font-family: 'Gaegu';
+    color: white;
+  }
+
+
+  .head{
+    background:#fb8c00;
+    border-radius: 40px;
+    padding:6px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+
+  .active{
+    background: #9ad3bc;
+  }
 
 </style>

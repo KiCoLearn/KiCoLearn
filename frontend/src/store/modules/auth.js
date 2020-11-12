@@ -9,7 +9,7 @@ export default {
         provider: null,
         id: null,
         role : null,
-        select : 1,
+        select : null,
     },
     getters: {
         isAdmin() {
@@ -81,6 +81,7 @@ export default {
             state.provider = null;
             state.id = null;
             state.role = null;
+            state.select = null;
         },
         SET_SELECT(state, {select}){
             state.select = select;
