@@ -57,6 +57,15 @@
                 width="80px"
             >
         </button>
+
+        <div v-if="isAdmin">
+            <v-btn
+                class="warning"
+                @click="quizManage"
+            >
+                퀴즈관리
+            </v-btn>
+        </div>
     </div>
 </template>
 
@@ -74,6 +83,7 @@ export default {
     computed: {
         ...mapGetters({
             parentsId : 'auth/id',
+            isAdmin : 'auth/isAdmin'
         })
     },
     created() {
@@ -106,6 +116,9 @@ export default {
         },
         format(x){
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        },
+        quizManage(){
+            this.$router.push({name:'QuizManage'});
         }
     },
 };

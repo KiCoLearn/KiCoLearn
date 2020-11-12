@@ -90,7 +90,7 @@
     
 
                 <v-row
-                    v-for="q in quest"
+                    v-for="q in quest.slice(0, 3)"
                     :key="q.questNo"  
                     :v-if="quest.length>0"
                     class="quest"
@@ -169,7 +169,7 @@ export default {
         
         axios.get('/api/quest/kid/list/'+this.kidId)
             .then((res) => {
-                console.log(res.data.data);
+                //console.log(res.data.data);
                 this.quest = res.data.data;
             });
     },

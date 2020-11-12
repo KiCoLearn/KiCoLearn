@@ -42,6 +42,8 @@ export default {
         })
     },
     created() {
+        this.$store.dispatch('quiz/fetchTodayProblem');
+
         this.date= this.getFormatDate(new Date());
         axios.get('/api/quiz/today/'+this.kidId)
             .then((res) => {
