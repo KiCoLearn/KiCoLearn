@@ -170,7 +170,10 @@
                     <store-manager 
                         :dialog="manager"
                         :send-data="myItems"
-                        @handle="handleStoreManager"
+                        :kids="select"
+                        @handleStoreManager="handleStoreManager"
+                        @handleStoreItem="handleStoreItem"
+                        @getKidsInfo="getKidsInfo"
                     />
                 </div>
             </v-tab-item>
@@ -266,7 +269,17 @@ export default {
                 });
         },
         handleStoreManager(){
+            if(this.select===null){
+                alert('아이를 선택해주세요!');
+                return;
+            }
             this.manager = this.manager ? false : true;
+        },
+        handleStoreItem(item){
+            this.kidsItems.push(item);
+        },
+        getKidsInfo(callback){
+            callback(this.select);
         }
     },
 };

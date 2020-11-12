@@ -69,6 +69,8 @@
 </template>
 
 <script>
+import axios from '@/plugins/axios';
+
 export default {
     name:'StoreManager',
     props:{
@@ -78,7 +80,11 @@ export default {
         sendData:{
             type:Array,
             required:true
-        }
+        },
+        // kids:{
+        //     type:Object,
+        //     required:true
+        // },        
     },
     data(){
         return {
@@ -92,7 +98,23 @@ export default {
     },
     methods:{
         handleDialog(){
-            this.$emit('handle');
+            this.$emit('handleStoreManager');
+        },
+        insertItem(item){            
+            let kids;
+            this.$emit('getKidsInfo', (res)=>kids=res);
+            console.log(item);
+            console.log(kids);
+            axios.post(process.env.VUE_APP_API_URL + '/api/store/kidsitem/add',{
+                itemNo:item.itemNo,
+                kidId:kids.value
+            })
+                .then(()=>{
+                    this.$emit('handleStoreItem', item);
+                })
+                .catch(()=>{
+                    alert('이미 등록된 아이템입니다.');
+                });
         },
     }
 };
