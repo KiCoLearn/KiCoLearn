@@ -17,5 +17,7 @@ public interface MoneyService {
 
     int getWeekSpend(int kidId);
     
-    List<Budget> reportDeposit(int kidId);
+    List<Budget> todayDeposit(int kidId);
+    
+    List<Budget> weekDeposit(int kidId);
 }

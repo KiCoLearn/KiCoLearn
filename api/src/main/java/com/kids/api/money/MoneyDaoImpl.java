@@ -42,20 +42,26 @@ public class MoneyDaoImpl implements MoneyDao {
 
     @Override
     public int getTodaySpend(int kidId) {
-        if(temp.selectOne(ns + "todaySpend", kidId)==null) return 0;
+        if (temp.selectOne(ns + "todaySpend", kidId) == null)
+            return 0;
         return temp.selectOne(ns + "todaySpend", kidId);
     }
 
     @Override
     public int getWeekSpend(int kidId) {
-        if(temp.selectOne(ns + "weekSpend", kidId)==null) return 0;
+        if (temp.selectOne(ns + "weekSpend", kidId) == null)
+            return 0;
         return temp.selectOne(ns + "weekSpend", kidId);
     }
 
-	@Override
-	public List<Budget> reportDeposit(int kidsId) {
-		// TODO Auto-generated method stub
-		return temp.selectList(ns+"reportDeposit",kidsId);
-	}
+    @Override
+    public List<Budget> todayDeposit(int kidsId) {
+        return temp.selectList(ns + "todayDeposit", kidsId);
+    }
+
+    @Override
+    public List<Budget> weekDeposit(int kidsId) {
+        return temp.selectList(ns + "weekDeposit", kidsId);
+    }
 
 }
