@@ -17,5 +17,5 @@ public interface QuestDao {
 
     int deleteKidQuest(KidsQuest quest);
 
-    List<KidsQuest> getKidQuestListByKidId(int kidId);
+    List<Quest> getKidQuestListByKidId(int kidId);
 }
