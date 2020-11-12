@@ -92,7 +92,7 @@ public class QuestController {
     public ResponseEntity<Map<String, Object>> getKidsQuestListByKidId(@PathVariable int kidId) {
         ResponseEntity<Map<String, Object>> entity = null;
         try {
-            List<KidsQuest> list = qService.getKidQuestListByKidId(kidId);
+            List<Quest> list = qService.getKidQuestListByKidId(kidId);
             logger.debug("kid_quest: " + list);
             entity = resultHandler.handleSuccess(list);
         } catch (RuntimeException e) {
