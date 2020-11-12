@@ -60,7 +60,7 @@
                             <v-icon
                                 small
                                 class="mr-2"
-                                @click="editItem(item)"
+                                @click="editParentItem(item)"
                             >
                                 mdi-pencil
                             </v-icon>
@@ -97,7 +97,11 @@
                     <add-item 
                         :dialog="addItem"
                         @handle="handleAddItem"
-                    />                          
+                    />
+                    <modify-item 
+                        :dialog="edit"
+                        @handle="editParentItem"
+                    />                       
                 </div>
                 <div v-if="title === '스토어 관리'">
                     <v-container fluid>
@@ -183,19 +187,17 @@
 
 <script>
 import axios from '@/plugins/axios';
-//import ItemCard from '@/components/shop/ItemCard';
 import AddItem from '@/components/shop/AddItem';
-//import KidsCard from '@/components/shop/KidsCard';
+import ModifyItem from '@/components/shop/ModifyItem';
 import StoreManager from '@/components/shop/StoreManager';
 import { mapGetters } from 'vuex';
 
 export default {    
     name:'Store',
     components: {
-        //ItemCard,
         AddItem,
-        //KidsCard
-        StoreManager
+        StoreManager,
+        ModifyItem
     },
 
     data() {
@@ -206,7 +208,8 @@ export default {
             kidsList: new Array(),
             listName: new Array(),
             addItem:false,
-            manager:false,          
+            manager:false,
+            edit:false,          
             parentItems:[],
             kidsItems:[],
             page: 1,
@@ -250,8 +253,7 @@ export default {
                     this.listName[index] = {
                         text:element.name,
                         value:element.kidId,
-                    };
-                    
+                    };                    
                 }
             });
 
@@ -260,6 +262,10 @@ export default {
     methods: {
         handleAddItem(){
             this.addItem = this.addItem ? false : true;
+        },
+        editParentItem(item){
+            console.log(item);
+            this.edit = this.edit ? false : true;
         },
         deleteParentItem(item){
             if(item.parentId===0){

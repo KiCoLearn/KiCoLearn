@@ -7,7 +7,7 @@
         >            
             <v-card>
                 <v-card-title class="headline">                    
-                    아이템 등록
+                    아이템 수정
                 </v-card-title>
                 <template>                    
                     <v-form
@@ -26,19 +26,19 @@
                             id="text"
                             v-model="name"
                             label="이름"
-                            required                            
+                            required                                                       
                         />
                         <v-text-field
                             id="text"
                             v-model="price"
                             label="가격"
-                            required                            
+                            required                        
                         />
                         <v-text-field
                             id="text"
                             v-model="description"
                             label="설명"
-                            required                            
+                            required                         
                         />                        
                     </v-form>
                 </template>
@@ -67,7 +67,7 @@
 <script>
 import AWS from 'aws-sdk';
 import axios from '@/plugins/axios';
-import { mapGetters } from 'vuex';
+
 
 export default {
     name:'AddItem',
@@ -75,34 +75,33 @@ export default {
         dialog:{
             type:Boolean
         },
+        // eslint-disable-next-line vue/require-default-prop
+        target:{
+            type:Object,
+        }
     },
     
     data(){
         return {
             file:null,
-            name:null,
-            price:null,
-            description:null,
+            name:this.target.name,
+            price:this.target.price,
+            description:this.target.description,
             rules: [
                 value => !value || value.size < 2000000 || '사진의 크기가 2MB보다 작아야 합니다.',
             ],
             photoKey:null             
         };
     },
-    computed:{
-        ...mapGetters({
-            parentId:'auth/id'
-        })
-    },
     methods: {
         handleAddItem(){
-            let base = +new Date() + Math.random() + this.parentId + this.name + this.description + this.price;
+            let base = +new Date() + Math.random() + this.target.itemNo + this.name + this.description + this.price;
             base = btoa(unescape(encodeURIComponent(base)));
             //console.log(this.file, '파일이 업로드 되었습니다.');
             if(base.length>20){
-                base = this.parentId + base.substr(0,20);
+                base = this.target.itemNo + base.substr(0,20);
             } else {
-                base = this.parentId + base;
+                base = this.target.itemNo + base;
             }
             if(this.file.type==='image/jpeg'){
                 this.photoKey = base + '.jpg';
@@ -129,11 +128,11 @@ export default {
                 Key:this.photoKey,
                 Body:this.file,
                 ACL:'public-read'
-            }, (err,data) =>{
+            }, (err) =>{
                 if(err){
                     console.log('error!!:',err);
                 } else {
-                    axios.post(process.env.VUE_APP_API_URL+'/api/store/item/regist', {
+                    axios.put(process.env.VUE_APP_API_URL+'/api/store/item/update', {
                         description: this.description,    
                         name: this.name,
                         parentId: this.parentId,
@@ -145,11 +144,9 @@ export default {
                             this.handleDialog();
                             window.location.reload();
                         });
-                    console.log('success!!',data);
+                    //console.log('success!!',data);
                 }
-            });
-            
-             
+            });   
         },
         handleDialog(){
             this.$emit('handle');
