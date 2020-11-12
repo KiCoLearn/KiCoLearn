@@ -12,6 +12,8 @@ import ShopRoutes from '@/router/shop';
 /* todo : 지울것 */
 import DummyRoutes from '@/router/dummy';
 
+import QuestRoutes from '@/router/quest';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -19,6 +21,7 @@ const routes = [
     ...ManageQuizRoutes,
     ...ShopRoutes,
     ...DummyRoutes,
+    ...QuestRoutes,
     
     {
         path: '/kid',
