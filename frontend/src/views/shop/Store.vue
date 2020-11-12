@@ -111,6 +111,50 @@
                             </v-col>
                         </v-row>
                     </v-container>
+                    <v-data-table
+                        :headers="kheaders"
+                        :items="kidsItems"                        
+                        mobile-breakpoint="0"
+                        sort-by="name"
+                        class="elevation-1"
+                        hide-default-footer
+                    >
+                        <template v-slot:top>
+                            <v-toolbar
+                                flat
+                            > 
+                                <v-btn
+                                    class="warning"
+                                    @click="handleStoreManager"           
+                                >
+                                    스토어 관리
+                                </v-btn>                                
+                            </v-toolbar>
+                        </template>
+                        <template v-slot:[`item.field`]="{ item }">
+                            <div class="p-2">
+                                <v-img
+                                    class="img"
+                                    :src="item.field"
+                                    :alt="item.field" 
+                                    height="50px" 
+                                    width="50px" 
+                                />
+                            </div>
+                        </template>
+                        <template v-slot:[`item.actions`]="{ item }">        
+                            <v-icon
+                                small
+                                class="mr-2"
+                                @click="editItem(item)"
+                            >
+                                mdi-close-thick
+                            </v-icon>                            
+                        </template>
+                        <template v-slot:no-data>
+                            현재 스토어에 아이템이 존재하지 않습니다.
+                        </template>    
+                    </v-data-table>
                     <!-- <kids-card 
                         v-for="kids in kidsList"
                         :key="kids.kidId"                    
@@ -148,7 +192,8 @@ export default {
             myItems: new Array(),
             kidsList: new Array(),
             listName: new Array(),
-            addItem:false,            
+            addItem:false,
+            manager:false,          
             parentItems:[],
             kidsItems:[],
             page: 1,
@@ -160,6 +205,12 @@ export default {
                 { text: '아이템명', value: 'name' },
                 { text: '가격', value: 'price' },
                 { text: '수정/삭제', value: 'actions', sortable: false },
+            ],
+            kheaders: [
+                { value: 'field', sortable:false},
+                { text: '아이템명', value: 'name' },
+                { text: '가격', value: 'price' },
+                { text: '삭제', value: 'actions', sortable: false },
             ],
         };
     },
@@ -203,6 +254,9 @@ export default {
                 .then((res) => {
                     console.log(res.data);
                 });
+        },
+        handleStoreManager(){
+            this.manager = this.manager ? false : true;
         }
     },
 };
