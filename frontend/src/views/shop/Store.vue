@@ -16,7 +16,68 @@
                 :key="title"
             >
                 <div v-if="title === '내 아이템'">
-                    <item-card 
+                    <v-data-table
+                        :headers="headers"
+                        :items="myItems"
+                        :page.sync="page"
+                        :items-per-page="itemsPerPage"
+                        sort-by="name"
+                        class="elevation-1"
+                        hide-default-footer
+                        @page-count="pageCount = $event"
+                    >
+                        <template v-slot:top>
+                            <v-toolbar
+                                flat
+                            >
+                                <!-- <v-toolbar-title>My CRUD</v-toolbar-title>
+                                <v-divider
+                                    class="mx-4"
+                                    inset
+                                    vertical
+                                /> -->
+                                <v-spacer />
+                                <v-btn
+                                    class="warning"
+                                    @click="handleAddItem"           
+                                >
+                                    아이템 추가
+                                </v-btn>                                
+                            </v-toolbar>
+                        </template>
+                        <template v-slot:[`item.field`]="{ item }">
+                            <div class="p-2">
+                                <v-img
+                                    class="img"
+                                    :src="item.field"
+                                    :alt="item.field" 
+                                    height="150px" 
+                                    width="150px" 
+                                />
+                            </div>
+                        </template>
+                        <template v-slot:[`item.actions`]="{ item }">        
+                            <v-icon
+                                small
+                                class="mr-2"
+                                @click="editItem(item)"
+                            >
+                                mdi-pencil
+                            </v-icon>
+                            <v-icon
+                                small
+                                @click="deleteItem(item)"
+                            >
+                                mdi-delete
+                            </v-icon>
+                        </template>      
+                    </v-data-table>
+                    <v-pagination
+                        v-model="page"
+                        :length="pageCount"
+                        color="#fb8c00"
+                    />
+                    <!-- <item-card 
                         v-for="myItem in myItems"
                         :key="myItem.itemNo"                    
                         :send-data="myItem"
@@ -29,14 +90,72 @@
                             src="@/assets/add.png"
                             width="100px"
                         >
-                    </button>
+                    </button> -->
                     <add-item 
                         :dialog="addItem"
                         @handle="handleAddItem"
                     />                          
                 </div>
-                <div v-if="title === '아이 목록'">
-                    <kids-card 
+                <div v-if="title === '스토어 관리'">
+                    <v-container fluid>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-combobox
+                                    v-model="select"
+                                    :items="listName"
+                                    label="아이 선택"                                    
+                                    outlined
+                                    dense
+                                    @change="handleSelect(select)"
+                                />
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                    <v-data-table
+                        :headers="kheaders"
+                        :items="kidsItems"                        
+                        mobile-breakpoint="0"
+                        sort-by="name"
+                        class="elevation-1"
+                        hide-default-footer
+                    >
+                        <template v-slot:top>
+                            <v-toolbar
+                                flat
+                            > 
+                                <v-btn
+                                    class="warning"
+                                    @click="handleStoreManager"           
+                                >
+                                    스토어 관리
+                                </v-btn>                                
+                            </v-toolbar>
+                        </template>
+                        <template v-slot:[`item.field`]="{ item }">
+                            <div class="p-2">
+                                <v-img
+                                    class="img"
+                                    :src="item.field"
+                                    :alt="item.field" 
+                                    height="50px" 
+                                    width="50px" 
+                                />
+                            </div>
+                        </template>
+                        <template v-slot:[`item.actions`]="{ item }">        
+                            <v-icon
+                                small
+                                class="mr-2"
+                                @click="editItem(item)"
+                            >
+                                mdi-close-thick
+                            </v-icon>                            
+                        </template>
+                        <template v-slot:no-data>
+                            현재 스토어에 아이템이 존재하지 않습니다.
+                        </template>    
+                    </v-data-table>
+                    <!-- <kids-card 
                         v-for="kids in kidsList"
                         :key="kids.kidId"                    
                         :send-data="kids"
@@ -44,7 +163,7 @@
                     <add-item 
                         :dialog="addItem"
                         @handle="handleAddItem"
-                    />                          
+                    />                           -->
                 </div>
             </v-tab-item>
         </v-tabs-items>
@@ -53,26 +172,46 @@
 
 <script>
 import axios from '@/plugins/axios';
-import ItemCard from '@/components/shop/ItemCard';
+//import ItemCard from '@/components/shop/ItemCard';
 import AddItem from '@/components/shop/AddItem';
-import KidsCard from '@/components/shop/KidsCard';
+//import KidsCard from '@/components/shop/KidsCard';
 import { mapGetters } from 'vuex';
 
 export default {    
     name:'Store',
     components: {
-        ItemCard,
+        //ItemCard,
         AddItem,
-        KidsCard
+        //KidsCard
     },
 
     data() {
         return {
             tab:null,
-            titles:['내 아이템', '아이 목록'],
+            titles:['내 아이템', '스토어 관리'],
             myItems: new Array(),
             kidsList: new Array(),
+            listName: new Array(),
             addItem:false,
+            manager:false,          
+            parentItems:[],
+            kidsItems:[],
+            page: 1,
+            pageCount: 0,
+            itemsPerPage: 3,
+            select:null,
+            headers: [
+                { value: 'field', sortable:false},
+                { text: '아이템명', value: 'name' },
+                { text: '가격', value: 'price' },
+                { text: '수정/삭제', value: 'actions', sortable: false },
+            ],
+            kheaders: [
+                { value: 'field', sortable:false},
+                { text: '아이템명', value: 'name' },
+                { text: '가격', value: 'price' },
+                { text: '삭제', value: 'actions', sortable: false },
+            ],
         };
     },
 
@@ -87,11 +226,20 @@ export default {
             .then((res) => {
                 this.myItems = res.data.data;
             });
-
+        
         axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentId)
             .then((res) => {
                 console.log(res.data);
                 this.kidsList = res.data.data;
+                this.listName = new Array(this.kidsList.length);
+                for (let index = 0; index < this.kidsList.length; index++) {
+                    const element = this.kidsList[index];
+                    this.listName[index] = {
+                        text:element.name,
+                        value:element.kidId,
+                    };
+                    
+                }
             });
 
     },
@@ -99,7 +247,28 @@ export default {
     methods: {
         handleAddItem(){
             this.addItem = this.addItem ? false : true;
+        },
+        handleSelect(kids){
+            console.log(kids);
+            axios.get(process.env.VUE_APP_API_URL + '/api/store/klist/'+ kids.value)
+                .then((res) => {
+                    console.log(res.data);
+                });
+        },
+        handleStoreManager(){
+            this.manager = this.manager ? false : true;
         }
     },
 };
 </script>
+
+<style scoped>
+::v-deep .v-data-table__mobile-table-row > td:first-child{
+    display: flex;
+    justify-content: center;
+}
+
+::v-deep .v-image__image--cover {
+    background-size: contain;
+}
+</style>
