@@ -41,8 +41,12 @@ public class KidsDaoImpl implements KidsDao {
 
     @Override
     public Kids getParentsByKidId(int kidId) {
-        // TODO Auto-generated method stub
         return temp.selectOne(ns + "getParentsByKidId", kidId);
+
+    @Override
+    public int updateProfileKid(Kids kid) {
+        return temp.update(ns+"updateProfile", kid);
+
     }
 
 }

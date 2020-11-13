@@ -38,8 +38,12 @@ public class KidsServiceImpl implements KidsService {
 
     @Override
     public Kids getParentsByKidId(int kidId) {
-        // TODO Auto-generated method stub
         return kDao.getParentsByKidId(kidId);
+    }
+    
+    @Override
+    public int updateProfileKid(Kids kid) {
+        return kDao.updateProfileKid(kid);
     }
 
 }

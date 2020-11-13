@@ -50,6 +50,12 @@ export default {
 </script>
 
 <style>
+@font-face {
+    font-family: 'CookieRun-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
  
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -58,6 +64,19 @@ export default {
   text-align: center;
   color: #2c3e50;
   height: 100%;
+}
+
+.btn{
+    border: none;
+    background: none;
+}
+
+.btn:focus{
+    outline:none;
+}
+
+.btn:hover{
+    cursor: pointer;
 }
 
 </style>

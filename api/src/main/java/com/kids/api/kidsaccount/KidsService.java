@@ -12,6 +12,8 @@ public interface KidsService {
     List<Kids> getKidsByParentId(int parentId);
     
     int updateKid(Kids kid);
-    
+
     Kids getParentsByKidId(int kidId);
+
+    int updateProfileKid(Kids kid);
 }

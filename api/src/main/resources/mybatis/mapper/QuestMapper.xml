@@ -12,7 +12,7 @@
 	</insert>
 	
 	<update id="update" parameterType="int">
-		update quest set deleted=true  where quest_no = #{questNo}
+		update quest set where quest_no = #{questNo}
 	</update>
 	
 	<select id="list" parameterType="int" resultType="quest">
@@ -39,5 +39,6 @@
 		select * from quest 
 		where quest_no in
 		(select quest_no from kids_quest where kid_id = #{kidId})
+		order by quest_no desc;
 	</select>
 </mapper>
