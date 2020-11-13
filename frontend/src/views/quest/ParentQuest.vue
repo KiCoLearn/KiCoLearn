@@ -109,6 +109,7 @@
                                         <template>
                                             <div>                   
                                                 <v-form
+                                                    id="form"
                                                     ref="form"
                                                     v-model="valid"
                                                     lazy-validation
@@ -146,7 +147,7 @@
                                                         >
                                                             <v-col
                                                                 cols="5"
-                                                                class="start"
+                                                                class="startTime"
                                                             >
                                                                 <v-select
                                                                     ref="year"
@@ -160,7 +161,7 @@
                                                             </v-col>    
                                                             <v-col
                                                                 cols="2"
-                                                                class="start"
+                                                                class="startTime"
                                                             >
                                                                 <v-text-field
                                                                     v-model="month"
@@ -172,7 +173,7 @@
                                                             </v-col>
                                                             <v-col
                                                                 cols="2"
-                                                                class="start"
+                                                                class="startTime"
                                                             >
                                                                 <v-text-field
                                                                     v-model="day"
@@ -195,7 +196,7 @@
                                                         >
                                                             <v-col
                                                                 cols="5"
-                                                                class="end"
+                                                                class="endTime"
                                                             >
                                                                 <v-select
                                                                     ref="year"
@@ -209,7 +210,7 @@
                                                             </v-col>    
                                                             <v-col
                                                                 cols="2"
-                                                                class="end"
+                                                                class="endTime"
                                                             >
                                                                 <v-text-field
                                                                     v-model="endmonth"
@@ -221,7 +222,7 @@
                                                             </v-col>
                                                             <v-col
                                                                 cols="2"
-                                                                class="end"
+                                                                class="endTime"
                                                             >
                                                                 <v-text-field
                                                                     v-model="endday"
@@ -276,6 +277,7 @@
                     /> 
                     <detail-quest
                         :dialog="detailQuest"
+                        :send-data="quests"
                         @handle="detailquest"
                     />
                 </div>
@@ -288,9 +290,15 @@
 import axios from '@/plugins/axios';
 import InsertQuest from '@/components/quest/InsertQuest.vue';
 import DetailQuest from '@/components/quest/DetailQuest.vue';
-
+import { mapGetters } from 'vuex';
 export default {
     components: { InsertQuest,DetailQuest, },
+    computed:{
+        ...mapGetters({
+            parentId:'auth/id',
+            kidId:'auth/id'
+        })
+    },
     data() {
         return {
             valid:true,
@@ -366,24 +374,24 @@ export default {
             }
         },
         addkidquest(){
-            if (this.$refs.form.validate()) {
-                axios.post(process.env.VUE_APP_API_URL+'/api/quest/kid/regist', {
-                    kidId: this.kidId,    
-                    questNo : this.questNo,
-                    'start': new Date(this.year, this.month-1, this.day),
-                    'end' : new Date(this.endyear, this.endmonth-1, this.endday),
+      
+            axios.post(process.env.VUE_APP_API_URL+'/api/quest/kid/regist', {
+                kidId: this.kidId,    
+                questNo : this.questNo,
+                'startTime': new Date(this.year, this.month-1, this.day),
+                'endTime' : new Date(this.endyear, this.endmonth-1, this.endday),
   
-                })
-                    .then(()=>{
-                        alert('등록되었습니다!');
-                        this.back();
-                        window.location.reload();
-                    });
-                console.log('success!!');
-            }
+            })
+                .then(()=>{
+                    alert('등록되었습니다!');
+                    this.handleDialog();
+                    window.location.reload();
+                });
+            console.log('success!!');
 
-            
-
+        },
+        handleDialog(){
+            this.$emit('handle');
         },
     }
 };

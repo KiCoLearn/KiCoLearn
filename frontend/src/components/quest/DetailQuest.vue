@@ -15,6 +15,7 @@
                         ref="form"
                         v-model="valid"
                         lazy-validation
+                        :items="sendData"
                     >
                         <v-col
                             cols="12"
@@ -62,7 +63,7 @@
                             cols="12"
                             style="display:flex; justify-content:center"
                         >
-                            <label><b>보상 포인트</b></label>
+                            <label><b>설명</b></label>
                             <v-col cols="1" />
                             <v-col
                                 cols="8"
@@ -117,7 +118,7 @@ export default {
         return {
             valid:true,
             parentId:0,
-            questNo:1,
+            questNo:this.questNo,
             name:'',
             reward:'',
             description:'',
