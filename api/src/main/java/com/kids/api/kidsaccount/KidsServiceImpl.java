@@ -36,4 +36,10 @@ public class KidsServiceImpl implements KidsService {
         return kDao.updateKid(kid);
     }
 
+    @Override
+    public Kids getParentsByKidId(int kidId) {
+        // TODO Auto-generated method stub
+        return kDao.getParentsByKidId(kidId);
+    }
+
 }

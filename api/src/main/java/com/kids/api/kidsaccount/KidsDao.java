@@ -13,4 +13,6 @@ public interface KidsDao {
 
     int updateKid(Kids kid);
 
+    Kids getParentsByKidId(int kidId);
+
 }

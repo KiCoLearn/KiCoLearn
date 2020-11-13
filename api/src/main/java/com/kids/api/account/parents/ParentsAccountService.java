@@ -110,5 +110,14 @@ public class ParentsAccountService<T extends User> implements AccountService<T> 
         int count = parentsRepository.updateToken(parents);
         return count == 1;
     }
+    
+    @Override
+    public String getTokenById(int id) {
+        Parents parents = Parents.builder()
+                        .id(id)
+                        .build();
+        String token = parentsRepository.getTokenById(parents);
+        return token;
+    }
 
 }

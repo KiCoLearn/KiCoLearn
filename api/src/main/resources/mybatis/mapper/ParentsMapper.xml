@@ -31,4 +31,7 @@
 		messaging_token =
 		#{messagingToken} where id = #{id}
 	</update>
+	<select id="getTokenById" parameterType="parents" resultType="string">
+		select messaging_token from  parents where id = #{id}
+	</select>
 </mapper>
