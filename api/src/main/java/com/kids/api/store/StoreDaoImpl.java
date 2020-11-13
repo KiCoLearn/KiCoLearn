@@ -48,4 +48,9 @@ public class StoreDaoImpl implements StoreDao {
         return temp.selectList(ns+"kidsStore", kidId);
     }
 
+    @Override
+    public int deleteKidItem(KidsStore kidItem) {
+        return temp.delete(ns+"deleteKidItem", kidItem);
+    }
+
 }
