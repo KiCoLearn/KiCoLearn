@@ -20,6 +20,7 @@ public class OAuthConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/parents/**")
                 .excludePathPatterns("/api/parents/login/**")
                 .addPathPatterns("/api/quest/**")
+                .excludePathPatterns("/api/quest/**/request")
                 .addPathPatterns("/api/quiz/**")
                 .addPathPatterns("/api/store/**");
     }

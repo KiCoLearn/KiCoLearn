@@ -19,7 +19,7 @@ public interface QuizDao {
 
     int createTodayQuiz(TodayQuiz newQuiz);
 
-    int countQuiz();
+    int getFirstQuiz();
     
     QuizSolved getTodayQuizSolved(int kidId);
     

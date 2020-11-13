@@ -39,4 +39,15 @@ public class KidsDaoImpl implements KidsDao {
         return temp.update(ns+"update", kid);
     }
 
+    @Override
+    public Kids getParentsByKidId(int kidId) {
+        return temp.selectOne(ns + "getParentsByKidId", kidId);
+    }
+
+    @Override
+    public int updateProfileKid(Kids kid) {
+        return temp.update(ns+"updateProfile", kid);
+
+    }
+
 }

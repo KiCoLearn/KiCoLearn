@@ -15,4 +15,6 @@ public interface ParentsRepository {
     int enable(Parents parents);
 
     int updateToken(Parents parents);
+    
+    String getTokenById(Parents parents);
 }

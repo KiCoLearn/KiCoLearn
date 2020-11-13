@@ -32,7 +32,7 @@
                         <b>{{ kid.name }}</b> 어린이의 현재 잔액
                         <br>
                        
-                        <b><animated-number
+                        <b style="font-size:1.3rem"><animated-number
                             :value="kid.totalMoney"
                             :format-value="formatToPrice"
                             :duration="600"
@@ -85,7 +85,7 @@
                     <v-col
                         v-else
                         cols="6"
-                        style="border-right: 2px solid #ffdd93;margin:auto"
+                        style="margin:auto"
                     >
                         <img
                             src="@/assets/empty.png"
@@ -316,9 +316,12 @@ export default {
                     if(data.length>0){
                         let arr = new Array();
                         let label = new Array();
+                        let color = new Array();
                         data.forEach((item,index) => {
                             arr[index] = item.amount;
                             label[index] = item.contents;
+                            color[index] = `hsl(${Math.floor(Math.random()*360)}, ${Math.floor(Math.random()*30)+70}%, 80%)`;
+                        
                         });
                         this.todayDepositData = {
                             labels : label,
@@ -326,7 +329,7 @@ export default {
                             hoverBorderWidth: 10,
                             datasets: [ 
                                 {           
-                                    backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
+                                    backgroundColor: color,
                                     data:arr,
                                 }
                             ],
@@ -345,20 +348,24 @@ export default {
 
                         let arr = new Array();
                         let label = new Array();
+                        let color = new Array();
                         data.forEach((item,index) => {
                             arr[index] = item.amount;
                             label[index] = item.contents;
+                            color[index] = `hsl(${Math.floor(Math.random()*360)}, ${Math.floor(Math.random()*30)+70}%, 80%)`;
                         });
+                    
                         this.weekDepositData = {
                             labels:label,
                             hoverBackgroundColor: 'red',
                             hoverBorderWidth: 10,
                             datasets: [ 
                                 {           
-                                    backgroundColor: ['gray', '#E46651', '#00D8FF'],
+                                    backgroundColor: color,
                                     data:arr
                                 }
                             ],
+                            
                         };
                     }
 
@@ -375,9 +382,12 @@ export default {
 
                         let arr = new Array();
                         let label = new Array();
+                        let color = new Array();
                         data.forEach((item,index) => {
                             arr[index] = item.amount;
                             label[index] = item.contents;
+                            color[index] = `hsl(${Math.floor(Math.random()*360)}, ${Math.floor(Math.random()*30)+70}%, 80%)`;
+                        
                         });
                         this.todaySpendData = {
                             labels:label,
@@ -385,7 +395,7 @@ export default {
                             hoverBorderWidth: 10,
                             datasets: [ 
                                 {           
-                                    backgroundColor: ['gray', '#E46651', '#00D8FF'],
+                                    backgroundColor: color,
                                     data:arr
                                 }
                             ],
@@ -405,9 +415,12 @@ export default {
 
                         let arr = new Array();
                         let label = new Array();
+                        let color = new Array();
                         data.forEach((item,index) => {
                             arr[index] = item.amount;
                             label[index] = item.contents;
+                            color[index] = `hsl(${Math.floor(Math.random()*360)}, ${Math.floor(Math.random()*30)+70}%, 80%)`;
+                        
                         });
                         this.weekSpendData = {
                             labels:label,
@@ -415,7 +428,7 @@ export default {
                             hoverBorderWidth: 10,
                             datasets: [ 
                                 {           
-                                    backgroundColor: ['gray', '#E46651', '#00D8FF'],
+                                    backgroundColor: color,
                                     data:arr
                                 }
                             ],

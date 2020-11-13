@@ -206,7 +206,7 @@ export default {
                 })
                     .then((response) => {
                         commit('LOGOUT');
-
+                           
                         resolve(response.data.id);
                     }).catch((error) => {
                         console.warn(error.response);

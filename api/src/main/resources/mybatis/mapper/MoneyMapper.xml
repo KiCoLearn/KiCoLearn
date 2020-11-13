@@ -57,24 +57,28 @@
 		select contents, sum(amount) as amount from budget where kid_id=#{kidId} and is_deposit=false 
 		and date(date) = curdate()
 		group by contents
+		order by 2 desc
 	</select>
 	
 	<select id="weekSpendContents" resultType="budget">
 		select contents, sum(amount) as amount from budget where kid_id=#{kidId} and is_deposit=false 
 		and date_format(date, "%Y-%m-%d") between adddate(curdate(),-weekday(curdate())+0) and adddate(curdate(),-weekday(curdate())+6)
 		group by contents
+		order by 2 desc
 	</select>
 	
 	<select id="todayDepositContents" resultType="budget">
 		select contents, sum(amount) as amount from budget where kid_id=#{kidId} and is_deposit=true 
 		and date(date) = curdate()
 		group by contents
+		order by 2 desc
 	</select>
 	
 	<select id="weekDepositContents" resultType="budget">
 		select contents, sum(amount) as amount from budget where kid_id=#{kidId} and is_deposit=true 
 		and date_format(date, "%Y-%m-%d") between adddate(curdate(),-weekday(curdate())+0) and adddate(curdate(),-weekday(curdate())+6)
 		group by contents
+		order by 2 desc
 	</select>
 
 	

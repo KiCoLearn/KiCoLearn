@@ -6,7 +6,7 @@
         >
             <button
                 v-if="isAdmin"
-                class="head primary"
+                class="head primary btn"
                 @click="quizManage"
             >
                 <b>퀴즈관리</b>
@@ -14,14 +14,14 @@
 
             <button
                 v-if="role === 'parents' && isAuthorized"
-                class="head error"
+                class="head error btn"
             >
                 <b>회원탈퇴</b>
             </button>
 
             <button
                 v-if="role === 'parents' && isAuthorized"
-                class="head"
+                class="head btn"
                 @click="logout"
             >
                 <b>로그아웃</b>
@@ -146,7 +146,7 @@ export default {
         logout() {
             this.$store.dispatch('auth/logout')
                 .then(() => {
-                    this.$router.go();
+                    this.$router.push({name:'Main'});
                 }).catch(() => {
 
                 }).finally(() => {
