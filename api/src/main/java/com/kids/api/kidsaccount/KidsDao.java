@@ -12,5 +12,7 @@ public interface KidsDao {
     List<Kids> getKidsByParentId(int parentId);
 
     int updateKid(Kids kid);
+    
+    int updateProfileKid(Kids kid);
 
 }
