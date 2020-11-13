@@ -146,7 +146,7 @@ export default {
         logout() {
             this.$store.dispatch('auth/logout')
                 .then(() => {
-                    this.$router.go();
+                    this.$router.push({name:'Main'});
                 }).catch(() => {
 
                 }).finally(() => {
