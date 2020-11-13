@@ -48,8 +48,8 @@
 			limit 1
 	</select>
 	
-	<select id="count" resultType="int">
-		select count(*) from quiz
+	<select id="getFirstQuiz" resultType="int">
+		select quiz_no from quiz order by quiz_no asc limit 1
 	</select>
 	
 	<select id="getSolved" parameterType="int" resultType="solved">
