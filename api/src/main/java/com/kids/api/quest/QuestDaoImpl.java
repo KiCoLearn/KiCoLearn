@@ -56,7 +56,7 @@ public class QuestDaoImpl implements QuestDao {
 	@Override
 	public int deleteQuest(int questNo) {
 		// TODO Auto-generated method stub
-		return temp.delete(ns+"deletQuest",questNo);
+		return temp.delete(ns+"deleteQuest",questNo);
 	}
 
 }
