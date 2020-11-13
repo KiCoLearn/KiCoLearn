@@ -45,12 +45,18 @@ public class QuestDaoImpl implements QuestDao {
 
     @Override
     public int deleteKidQuest(KidsQuest quest) {
-        return temp.delete(ns + "deleteQuest", quest);
+        return temp.delete(ns + "deletekidsQuest", quest);
     }
 
     @Override
     public List<Quest> getKidQuestListByKidId(int kidId) {
         return temp.selectList(ns + "kidQuestList", kidId);
     }
+
+	@Override
+	public int deleteQuest(int questNo) {
+		// TODO Auto-generated method stub
+		return temp.delete(ns+"deletQuest",questNo);
+	}
 
 }

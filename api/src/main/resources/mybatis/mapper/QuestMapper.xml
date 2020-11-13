@@ -27,8 +27,12 @@
 		update kids_quest set finish=true  where quest_no = #{questNo} and kid_id = #{kidId}
 	</update>
 	
-	<delete id="deleteQuest" parameterType="kidsquest">
+	<delete id="deletekidsQuest" parameterType="kidsquest">
 		delete from kids_quest where quest_no= #{questNo} and kid_id = #{kidId} 
+	</delete>
+	
+	<delete id="deleteQuest" parameterType="kidsquest">
+		delete from quest where quest_no= #{questNo}
 	</delete>
 	
 	<select id="kidQuestList" parameterType="int" resultType="quest">

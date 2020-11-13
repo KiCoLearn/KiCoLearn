@@ -62,13 +62,17 @@ import axios from '@/plugins/axios';
 
 export default {
     name:'InsertQuest',
+    props:{
+        dialog:{
+            type:Boolean
+        },
+    },
     data(){
         return {
             name:'',
             reward:'',
             description:'',
-            parentId:3,
-            dialog: true,
+            parentId:4,
         };
     },
     methods: {

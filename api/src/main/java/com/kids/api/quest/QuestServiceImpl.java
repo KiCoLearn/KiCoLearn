@@ -51,4 +51,10 @@ public class QuestServiceImpl implements QuestService {
         return qDao.getKidQuestListByKidId(kidId);
     }
 
+	@Override
+	public int deleteQuest(int questNo) {
+		// TODO Auto-generated method stub
+		return qDao.deleteQuest(questNo);
+	}
+
 }
