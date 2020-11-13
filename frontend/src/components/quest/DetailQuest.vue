@@ -15,7 +15,6 @@
                         ref="form"
                         v-model="valid"
                         lazy-validation
-                        :items="sendData"
                     >
                         <v-col
                             cols="12"
@@ -125,23 +124,20 @@ export default {
         };
     },
     created() {
-        axios.get(process.env.VUE_APP_API_URL + '/api/quest/detail/'+this.questNo)
-            .then((res) => {
-                this.name = res.data.data.name;
-                this.reward = res.data.data.reward;
-                this.description = res.data.data.description;
-                this.questNo = res.data.data.questNo;
-             
-            });
+        this.name = this.item.name;
+        this.description = this.item.description;
+        this.reward = this.item.reward;
+        this.parentId = this.item.parentId;
     },
+    
     methods: {
         update(){        
             if (this.$refs.form.validate()){
                 axios.put(process.env.VUE_APP_API_URL+'/api/quest/update', {
-                    'description' : this.description,    
-                    'name': this.name,
-                    'parentId': this.parentId,
-                    'reward': this.reward,
+                    'description' : this.item.description,    
+                    'name':this.item.name,
+                    'parentId': this.item.parentId,
+                    'reward':this.item.reward,
                 })
                     .then(()=>{
                         alert('수정되었습니다!');

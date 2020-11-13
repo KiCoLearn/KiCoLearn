@@ -80,7 +80,7 @@
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="detailquest"
+                                    @click="detailquest(quest.questNo)"
                                 >
                                     {{ quest.name }}
                                 </div>
@@ -291,7 +291,6 @@
                     /> 
                     <detail-quest
                         :dialog="detailQuest"
-                        :send-data="quests"
                         @handle="detailquest"
                     />
                 </div>
@@ -377,7 +376,6 @@ export default {
                 console.log('체크1');
                 console.log(res.data);
                 console.log('체크2');
-                
                 console.log(res.data.data);
                 this.kidquests = res.data;
             })
@@ -405,7 +403,6 @@ export default {
             }
         },
         addkidquest(){
-      
             axios.post(process.env.VUE_APP_API_URL+'/api/quest/kid/regist', {
                          
                 kidId: this.kidId,    
