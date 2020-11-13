@@ -373,8 +373,13 @@ export default {
             .then((res) => {
                 console.log('아이 퀘스트 리스트');
                 console.log(res);
+                console.log('아이 번호'+this.kidId);
+                console.log('체크1');
+                console.log(res.data);
+                console.log('체크2');
+                
                 console.log(res.data.data);
-                this.kidquests = res.data.data;
+                this.kidquests = res.data;
             })
             .catch(err => {
                 console.log(err);
