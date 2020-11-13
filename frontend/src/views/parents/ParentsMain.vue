@@ -1,5 +1,33 @@
 <template>
-    <div>       
+    <div>
+        <div
+            id="nav"
+            class="nav"
+        >
+            <button
+                v-if="isAdmin"
+                class="head primary"
+                @click="quizManage"
+            >
+                <b>퀴즈관리</b>
+            </button>
+
+            <button
+                v-if="role === 'parents' && isAuthorized"
+                class="head error"
+            >
+                <b>회원탈퇴</b>
+            </button>
+
+            <button
+                v-if="role === 'parents' && isAuthorized"
+                class="head"
+                @click="logout"
+            >
+                <b>로그아웃</b>
+            </button>
+        </div>
+
         <div
             v-for="kid in kids"
             :key="kid.kidId"
@@ -57,24 +85,17 @@
                 width="80px"
             >
         </button>
-
-        <div v-if="isAdmin">
-            <v-btn
-                class="warning"
-                @click="quizManage"
-            >
-                퀴즈관리
-            </v-btn>
-        </div>
     </div>
 </template>
 
 <script>
 import axios from '@/plugins/axios';
+//import KaKaoLogout from '@/components/oauth/OAuthKakaoLogout';
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {
     name : 'KidsList',
+    //components:{KaKaoLogout},
     data() {
         return {
             kids: new Array(),
@@ -83,8 +104,10 @@ export default {
     computed: {
         ...mapGetters({
             parentsId : 'auth/id',
-            isAdmin : 'auth/isAdmin'
-        })
+            isAdmin : 'auth/isAdmin',
+            role : 'auth/role',
+            isAuthorized: 'auth/isAuthorized',
+        }),
     },
     created() {
         axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentsId,
@@ -119,7 +142,16 @@ export default {
         },
         quizManage(){
             this.$router.push({name:'QuizManage'});
-        }
+        },
+        logout() {
+            this.$store.dispatch('auth/logout')
+                .then(() => {
+                    this.$router.go();
+                }).catch(() => {
+
+                }).finally(() => {
+                });
+        },
     },
 };
 </script>
@@ -241,14 +273,17 @@ h1 {
     font-size: 1.2rem;
     font-family: 'Gaegu';
     color: white;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
   }
 
 
   .head{
     background:#fb8c00;
-    border-radius: 40px;
-    padding:5px;
+    border-radius: 20px;
+    padding:6px;
     margin-right: 10px;
-    margin-bottom: 10px;
   }
+  
 </style>

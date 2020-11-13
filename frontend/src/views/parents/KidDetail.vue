@@ -26,62 +26,169 @@
                 </v-row>
                 <v-row
                     justify="center"
-                    style="font-size:1.2rem"
+                    style="font-size:1.2rem;margin-bottom:5px"
                 >
                     <div>
                         <b>{{ kid.name }}</b> 어린이의 현재 잔액
                         <br>
                        
-                        <animated-number
+                        <b><animated-number
                             :value="kid.totalMoney"
                             :format-value="formatToPrice"
                             :duration="600"
-                        />원
+                        />원</b>
                     </div>
                 </v-row>
+                <v-row
+                    justify="center"
+                    style="font-size:1.2rem;"
+                >
+                    <v-col
+                        cols="6"
+                        style="background:rgb(255, 221, 147)"
+                    >
+                        오늘 소비
+                    </v-col>
+                    
+                    <v-col
+                        cols="6"
+                        style="background:rgb(255, 221, 147)"
+                    >
+                        이번주 소비
+                    </v-col>
+
+                    <v-col 
+                        v-if="todaySpendData!=null"
+                        cols="6"
+                        style="border-right: 2px solid #ffdd93;"
+                    >
+                        <Chart :chart-data="todaySpendData" />
+                    </v-col>
+                    <v-col
+                        v-else
+                        cols="6"
+                        style="border-right: 2px solid #ffdd93;margin:auto"
+                    >
+                        <img
+                            src="@/assets/empty.png"
+                            width="140px"
+                        >   
+                    </v-col>
+
+                    <v-col
+                        v-if="weekSpendData!=null"
+                        cols="6"
+                    >
+                        <Chart :chart-data="weekSpendData" />
+                    </v-col>
+
+                    <v-col
+                        v-else
+                        cols="6"
+                        style="border-right: 2px solid #ffdd93;margin:auto"
+                    >
+                        <img
+                            src="@/assets/empty.png"
+                            width="140px"
+                        >   
+                    </v-col>
+  
+                    <v-col
+                        cols="6"
+                        style="background:lightgray"
+                    >
+                        <animated-number
+                            :value="todaySpend"
+                            :format-value="formatToPrice"
+                            :duration="600"
+                        />원
+                    </v-col>
+                    
+                    <v-col
+                        cols="6"
+                        style="background:lightgray"
+                    >
+                        <animated-number
+                            :value="weekSpend"
+                            :format-value="formatToPrice"
+                            :duration="600"
+                        />원
+                    </v-col>
+                </v-row>
+
+
+
                 <v-row
                     justify="center"
                     style="font-size:1.2rem"
                 >
                     <v-col
                         cols="6"
-                        style="border-right: 2px solid #ffdd93;"
+                        style="background:rgb(255, 221, 147)"
                     >
-                        오늘 소비
+                        오늘 수입
                     </v-col>
                     
-                    <v-col cols="6">
-                        이번주 소비
+                    <v-col
+                        cols="6"
+                        style="background:rgb(255, 221, 147)"
+                    >
+                        이번주 수입
                     </v-col>
 
                     <v-col 
-                        v-if="todayData!=null"
+                        v-if="todayDepositData!=null"
                         cols="6"
                         style="border-right: 2px solid #ffdd93;"
                     >
-                        <Chart :chart-data="todayData" />
+                        <Chart :chart-data="todayDepositData" />
                     </v-col>
                     <v-col
-                        v-if="weekData!=null"
+                        v-else
+                        cols="6"
+                        style="border-right: 2px solid #ffdd93;margin:auto"
+                    >
+                        <img
+                            src="@/assets/empty.png"
+                            width="140px"
+                        >   
+                    </v-col>
+
+                    <v-col
+                        v-if="weekDepositData!=null"
                         cols="6"
                     >
-                        <Chart :chart-data="weekData" />
+                        <Chart :chart-data="weekDepositData" />
+                    </v-col>
+
+                    <v-col
+                        v-else
+                        cols="6"
+                        style="border-right: 2px solid #ffdd93;margin:auto"
+                    >
+                        <img
+                            src="@/assets/empty.png"
+                            width="140px"
+                        >   
                     </v-col>
   
                     <v-col
                         cols="6"
-                        style="border-right: 2px solid #ffdd93;"
+                        style="background:lightgray"
                     >
                         <animated-number
-                            :value="today"
+                            :value="todayDeposit"
                             :format-value="formatToPrice"
                             :duration="600"
                         />원
                     </v-col>
                     
-                    <v-col cols="6">
+                    <v-col
+                        cols="6"
+                        style="background:lightgray"
+                    >
                         <animated-number
-                            :value="week"
+                            :value="weekDeposit"
                             :format-value="formatToPrice"
                             :duration="600"
                         />원
@@ -89,7 +196,7 @@
                 </v-row>
     
 
-                <v-row
+                <!-- <v-row
                     v-for="q in quest.slice(0, 3)"
                     :key="q.questNo"  
                     :v-if="quest.length>0"
@@ -105,7 +212,7 @@
                     <v-col cols="3">
                         {{ q.reward }}원
                     </v-col>
-                </v-row>
+                </v-row> -->
 
                
                 <v-row
@@ -142,10 +249,14 @@ export default {
         return {
             kid: Object,
             value: 1000,
-            week:0,
-            today:0,
-            todayData:null,
-            weekData:null,
+            weekSpend:0,
+            todaySpend:0,
+            weekDeposit:0,
+            todayDeposit:0,
+            todayDepositData:null,
+            weekDepositData:null,
+            todaySpendData:null,
+            weekSpendData:null,
             quest : new Array(),
         };
     },
@@ -160,12 +271,22 @@ export default {
         axios.get('/api/kidsaccount/detail/'+this.kidId)
             .then((res) => {
                 this.kid= res.data.data;
-                axios.get('/api/money/week/'+this.kidId)
+                axios.get('/api/money/spend/total/'+this.kidId)
                     .then((res) =>{
-                        this.week = res.data.data.week;
-                        this.today = res.data.data.today;
+                        this.weekSpend = res.data.data.week;
+                        this.todaySpend = res.data.data.today;
                     });
             });
+
+        axios.get('/api/kidsaccount/detail/'+this.kidId)
+            .then((res) => {
+                this.kid= res.data.data;
+                axios.get('/api/money/deposit/total/'+this.kidId)
+                    .then((res) =>{
+                        this.weekDeposit = res.data.data.week;
+                        this.todayDeposit = res.data.data.today;
+                    });
+            });    
         
         axios.get('/api/quest/kid/list/'+this.kidId)
             .then((res) => {
@@ -199,7 +320,7 @@ export default {
                             arr[index] = item.amount;
                             label[index] = item.contents;
                         });
-                        this.todayData = {
+                        this.todayDepositData = {
                             labels : label,
                             hoverBackgroundColor: 'red',
                             hoverBorderWidth: 10,
@@ -228,7 +349,67 @@ export default {
                             arr[index] = item.amount;
                             label[index] = item.contents;
                         });
-                        this.weekData = {
+                        this.weekDepositData = {
+                            labels:label,
+                            hoverBackgroundColor: 'red',
+                            hoverBorderWidth: 10,
+                            datasets: [ 
+                                {           
+                                    backgroundColor: ['gray', '#E46651', '#00D8FF'],
+                                    data:arr
+                                }
+                            ],
+                        };
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err);
+                });  
+
+            axios.get('/api/money/spend/today/'+this.kidId)
+                .then((res) => {
+                   
+                    if(res.data.data.length>0){
+                        const data = res.data.data;
+
+                        let arr = new Array();
+                        let label = new Array();
+                        data.forEach((item,index) => {
+                            arr[index] = item.amount;
+                            label[index] = item.contents;
+                        });
+                        this.todaySpendData = {
+                            labels:label,
+                            hoverBackgroundColor: 'red',
+                            hoverBorderWidth: 10,
+                            datasets: [ 
+                                {           
+                                    backgroundColor: ['gray', '#E46651', '#00D8FF'],
+                                    data:arr
+                                }
+                            ],
+                        };
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err);
+                });  
+
+            axios.get('/api/money/spend/week/'+this.kidId)
+                .then((res) => {
+                   
+                    if(res.data.data.length>0){
+                        const data = res.data.data;
+
+                        let arr = new Array();
+                        let label = new Array();
+                        data.forEach((item,index) => {
+                            arr[index] = item.amount;
+                            label[index] = item.contents;
+                        });
+                        this.weekSpendData = {
                             labels:label,
                             hoverBackgroundColor: 'red',
                             hoverBorderWidth: 10,
@@ -296,13 +477,13 @@ export default {
     background:#fb8c00;
     border-radius: 40px;
     padding:6px;
-    margin-right: 15px;
+    margin-right: 10px;
   }
 
   ::v-deep .chartjs-render-monitor{
     width: 150px!important;
     height: 150px !important;
     margin: auto;
-    margin-bottom: 10px;
+    padding: 8px;
   }  
 </style>

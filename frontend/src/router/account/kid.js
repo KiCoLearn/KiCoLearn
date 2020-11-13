@@ -12,17 +12,20 @@ export default [
     {
         path: '/parents/regist',
         name: 'KidRegist',
-        component:KidsRegist
+        component:KidsRegist,
+        meta: { requireAuth: true, parentsOnly: true },
     },
  
     {
         path: '/parents/detail',
         name: 'KidDetail',
-        component:KidDetail
+        component:KidDetail,
+        meta: { requireAuth: true, parentsOnly: true },
     },
     {
         path: '/parents/update',
         name: 'KidUpdate',
-        component:KidsUpdate
+        component:KidsUpdate,
+        meta: { requireAuth: true, parentsOnly: true },
     },
 ];

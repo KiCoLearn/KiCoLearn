@@ -1,106 +1,153 @@
 <template>
-    <div class="kidsmain">
-        <div class="point">
-            <h3> 오늘 쓴거 내역</h3> 
-            <h3> 이번주 쓴거 내역</h3>
-            <h5> 참고: 1.용돈기입장 2.퀘스트 3.스토어 4.퀴즈 - 이건 지울거</h5>
-        </div>
-        <div class="menu">
-            <p>
-                <button
-                    id="reportbtn"
-                    class="report"
-                    type="button"
-                    @click="clickreport"
+    <div
+        v-if="kid.characterIdx!=undefined"
+        class="detail"
+    >
+        <v-layout>
+            <v-flex>
+                <v-row
+                    justify="center"
+                    style="margin-left:33px"
                 >
                     <img
-                        class="btn-report"
-                        src="@/assets/report.png"
-                        alt="용돈 기입장"
-                    > 
-                </button>
-            &nbsp;
-            &nbsp;
-                <button
-                    id="questbtn"
-                    class="quest"
-                    type="button"
-                    @click="clickquest"
-                >
-                    <img
-                        class="btn-quest"
-                        src="@/assets/quest.png"
-                        alt="오늘의 퀘스트"
+                        :src="photo(kid.characterIdx)"
+                        width="140px"
                     >
-                </button>
-            </p>
-            <p>
-                <button
-                    id="storebtn"
-                    class="store"
-                    type="button"
-                    @click="clickstore"
-                >
-                    <img
-                        class="btn-store"
-                        src="@/assets/report.png"
-                        alt="용돈 기입장"
+                    <button
+                        class="btn"
+                        style="display:flex;align-items:flex-end"
                     >
-                </button>
-              &nbsp;
-               &nbsp;
-                <button
-                    id="quizbtn"
-                    class="quiz"
-                    type="button"
-                    @click="clickquiz"
+                        <img
+                            src="@/assets/gallery.png"
+                            width="45px"
+                        >
+                    </button>
+                </v-row>
+                <v-row
+                    justify="center"
+                    style="font-size:1.2rem"
                 >
-                    <img
-                        class="btn-quiz"
-                        src="@/assets/report.png"
-                        alt="용돈 기입장"
+                    <div>
+                        <b>{{ kid.name }}</b> 어린이의 현재 잔액
+                        <br>
+                       
+                        <animated-number
+                            :value="kid.totalMoney"
+                            :format-value="formatToPrice"
+                            :duration="600"
+                        />원
+                    </div>
+                </v-row>
+               
+                <v-row
+                    justify="end"
+                    class="nav"
+                    style="margin-bottom:0"
+                >
+                    <button
+                        rounded
+                        class="head"
                     >
-                </button>
-            </p>
-        </div>
+                        <b>로그아웃</b>
+                    </button>
+                </v-row>
+            </v-flex>
+        </v-layout>
     </div>
-</template> 
+</template>
+
 <script>
+import axios from '@/plugins/axios';  
+import AnimatedNumber from 'animated-number-vue';
+import { mapGetters } from 'vuex';
+
 export default {
-    name:'KidMain',
+    name: 'KidMain',
+    components: {
+        AnimatedNumber,
+    },
+    data() {
+        return {
+            kid: Object,
+            quest : new Array(),
+        };
+    },
+
+    computed: {
+        ...mapGetters({
+            kidId : 'auth/id',
+        })
+    },
+    created() {
+        axios.get('/api/kidsaccount/detail/'+this.kidId)
+            .then((res) => {
+                this.kid= res.data.data;
+            });
+    },
     methods: {
-        clickreport(){
-            this.$router.push({name:'Report'});
+        photo(idx){
+            if(idx<10) return require('@/assets/character/00'+idx+'.png');
+            return require('@/assets/character/0'+idx+'.png');
         },
-        clickquest(){
-            this.$router.push({name:'Quest'});
-        },
-        clickstore(){
-            this.$router.push({name:'Store'});
-        },
-        clickquiz(){
-            this.$router.push({name:'Quiz'});
+        formatToPrice(value) {
+            return `${value.toFixed(0)}`;
         },
     },
-    
+
 };
 </script>
 
 <style scoped>
-.point{
-    height: 50 rem;
+  .row{
+    margin-bottom:15px;
+  }
+
+  .col{
+    padding:0;
+    margin: 0;
+  }
+
+  .btn2{
+    padding:10px 15px 5px 15px;
+    border:2px solid #ffdd93;
+    border-radius: 6px;
+    background-color: white;
+    outline:none;
+  }
+
+  .quest{
+    padding:5px;
+    border-radius: 15px;
+    background-color: #ffdd93;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15), 0 4px 8px 0 rgba(0, 0, 0, 0.15);
+  }
+
+.detail{
+    width: 336px;
+    margin: auto;
+    
 }
-.menu{
-    height: 80 rem;
-}
-.report,.quest,.store,.quiz{
-    width: 10rem;
-    height: 10rem;
-    border-radius: 20%;
-    background-color: #d5e4a1;
-}
-.btn-report,.btn-quest,.btn-store,.btn-quiz{
-    height: 8rem;
-    width: 8rem;
-}
-</style>>
+
+.nav{
+    font-size: 1.2rem;
+    font-family: 'Gaegu';
+    color: white;
+  }
+
+
+  .head{
+    background:#fb8c00;
+    border-radius: 40px;
+    padding:6px;
+    margin-right: 15px;
+  }
+
+  ::v-deep .chartjs-render-monitor{
+    width: 150px!important;
+    height: 150px !important;
+    margin: auto;
+    margin-bottom: 10px;
+  }  
+</style>
