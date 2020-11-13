@@ -27,6 +27,10 @@
 		insert into kids_store values(#{kidId}, #{itemNo})
 	</insert>
 	
+	<delete id="deleteKidItem" parameterType="kidstore">
+		delete from kids_store where kid_id = #{kidId} and item_no = #{itemNo}
+	</delete>
+	
 	<select id="kidsStore" parameterType="int" resultType="item">
 		select * from items where item_no in (
 		select item_no from kids_store where kid_id = #{kidId})
