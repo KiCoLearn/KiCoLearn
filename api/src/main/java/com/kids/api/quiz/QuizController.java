@@ -108,8 +108,8 @@ public class QuizController {
             String comp = format.format(today.getDate());
             if (!day.equals(comp)) { // 최근 퀴즈의 날짜와 오늘 날짜 비교 후 다르면 퀴즈 갱신
                 Integer next = qService.getNextQuiz();
-                if (next > qService.countQuiz()) {
-                    next = 1;
+                if (next == null) {
+                    next = qService.getFirstQuiz();
                 }
                 TodayQuiz newQuiz = new TodayQuiz(next);
                 int ans = qService.createTodayQuiz(newQuiz);

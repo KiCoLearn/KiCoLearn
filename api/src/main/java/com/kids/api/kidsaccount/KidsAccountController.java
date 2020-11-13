@@ -90,6 +90,21 @@ public class KidsAccountController {
         }
         return entity;
     }
+    
+    @PutMapping("/updateProfile")
+    @ApiOperation(value = "아이 프로필 변경")
+    public ResponseEntity<Map<String, Object>> updateProfileKid(@RequestBody Kids kid) {
+        ResponseEntity<Map<String, Object>> entity = null;
+        logger.debug("update profile kid: " + kid);
+        System.out.println(kid);
+        try {
+            kService.updateProfileKid(kid);
+            entity = resultHandler.handleSuccess("success");
+        } catch (RuntimeException e) {
+            entity = resultHandler.handleException(e);
+        }
+        return entity;
+    }
 
     @DeleteMapping("/delete/{kidId}")
     @ApiOperation(value = "아이 정보 삭제")

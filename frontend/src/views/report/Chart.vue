@@ -2,7 +2,8 @@
     <div>
         <pie-chart
             ref="PieChart"
-            :chart-data="chartData"            
+            :chart-data="chartData"
+            :options="chartOptions"            
         />
     </div>
 </template>
@@ -25,7 +26,12 @@ export default {
     data() {
         return {
             chartOptions: {
+                
                 hoverBorderWidth: 20,
+                legend: {
+                    display: false,
+                },
+               
             },
         };
     },

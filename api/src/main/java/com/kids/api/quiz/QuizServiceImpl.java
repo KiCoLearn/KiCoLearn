@@ -47,8 +47,8 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public int countQuiz() {
-        return qDao.countQuiz();
+    public int getFirstQuiz() {
+        return qDao.getFirstQuiz();
     }
 
     @Override
