@@ -18,25 +18,15 @@
         >
             <router-view />
         </v-container>
-
-        <div
-            id="nav"
-            style="text-align:right"
-        >
-            <div v-if="role === 'parents' && isAuthorized">
-                <KaKaoLogout />
-            </div>
-        </div>
     </v-app>
 </template>
 
 <script>
-import KaKaoLogout from '@/components/oauth/OAuthKakaoLogout';
 import ParentsHeader from '@/components/header/ParentsHeader';
 import KidHeader from '@/components/header/KidHeader';
 import { mapGetters } from 'vuex';
 export default {
-    components:{ KaKaoLogout, ParentsHeader, KidHeader},
+    components:{ ParentsHeader, KidHeader},
     computed: {
         ...mapGetters({
             role : 'auth/role',
