@@ -112,6 +112,7 @@ export default {
         dialog:{
             type:Boolean
         },
+      
     },
     data(){
         return {
@@ -121,13 +122,15 @@ export default {
             name:'',
             reward:'',
             description:'',
+            //kid: Object,
+            quests : new Array(),
         };
     },
     created() {
-        this.name = this.item.name;
-        this.description = this.item.description;
-        this.reward = this.item.reward;
-        this.parentId = this.item.parentId;
+        this.name = this.quest.name;
+        this.description = this.quest.description;
+        this.reward = this.quest.reward;
+        //this.parentId = this.quest.parentId;
     },
     
     methods: {
