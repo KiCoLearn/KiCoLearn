@@ -27,6 +27,27 @@ public class MoneyServiceImpl implements MoneyService {
     }
 
     @Override
+    public int makeActivity(Budget budget) {
+        String contents = budget.getContents();
+        int amount = budget.getAmount();
+        Boolean type = budget.getIsDeposit();
+        int kidId = budget.getKidId();
+        Money money = new Money(kidId, amount);
+        int leftMoney = this.getTotalMoney(kidId);
+
+        if (!type) {
+            leftMoney -= amount;
+            this.withdraw(money);
+        } else {
+            leftMoney += amount;
+            this.deposit(money);
+        }
+
+        Budget budget2 = new Budget(contents, amount, null, type, leftMoney, kidId);
+        return this.activity(budget2);
+    }
+    
+    @Override
     public int activity(Budget budget) {
         return mDao.budgetActivity(budget);
     }

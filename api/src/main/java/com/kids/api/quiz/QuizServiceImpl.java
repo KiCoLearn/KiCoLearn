@@ -3,7 +3,11 @@ package com.kids.api.quiz;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+
+import com.kids.api.money.Budget;
+import com.kids.api.money.MoneyService;
 
 @Service
 public class QuizServiceImpl implements QuizService {
@@ -11,6 +15,9 @@ public class QuizServiceImpl implements QuizService {
     @Autowired
     QuizDao qDao;
 
+    @Autowired
+    MoneyService mService;
+    
     @Override
     public List<Quiz> quizList() {
         return qDao.getQuizList();
@@ -63,7 +70,20 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public int solve(QuizSolved quizSolved) {
-        return qDao.solve(quizSolved);
+        try {
+            int count = qDao.solve(quizSolved);
+            
+            int count2 = mService.makeActivity(Budget.builder()
+                                  .amount(300)
+                                  .contents("퀴즈")
+                                  .isDeposit(true)
+                                  .kidId(quizSolved.getKidId())
+                                  .build());
+            
+            return (count == 1 && count2 == 1) ? 1 : 0;
+        } catch (DuplicateKeyException ignored) {
+            return 0;
+        }
     }
 
 }
