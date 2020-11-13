@@ -39,5 +39,6 @@
 		select * from quest 
 		where quest_no in
 		(select quest_no from kids_quest where kid_id = #{kidId})
+		order by quest_no desc;
 	</select>
 </mapper>
