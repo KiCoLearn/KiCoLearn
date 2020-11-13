@@ -60,10 +60,6 @@ export default {
         }),
     },
     created() {
-        if(this.answer === this.todayProblem.answer){
-            this.bonus();
-        }
-
         this.$store.dispatch('quiz/fetchProblemResult',
             {'kidId' : this.kidId, 'correct': this.answer === this.todayProblem.answer})
             .then((response) => {
@@ -79,15 +75,6 @@ export default {
                 answer: '',
             });
         },
-        bonus(){
-            this.$store.dispatch('quiz/fetchBonusMoney',
-                {'kidId' : this.kidId})
-                .then((response) => {
-                    console.debug(response);
-                }).catch((error) => {
-                    console.debug(error);
-                });
-        }
 
     }
 };
