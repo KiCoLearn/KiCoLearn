@@ -98,7 +98,8 @@
                         :dialog="addItem"
                         @handle="handleAddItem"
                     />
-                    <modify-item 
+                    <modify-item
+                        :target="target"
                         :dialog="edit"
                         @handle="editParentItem"
                     />                       
@@ -216,6 +217,13 @@ export default {
             pageCount: 0,
             itemsPerPage: 3,
             select:null,
+            target:{
+                description:null,
+                field:null,
+                itemNo:null,
+                parentId:null,
+                price:null
+            },
             headers: [
                 { value: 'field', sortable:false},
                 { text: '아이템명', value: 'name' },
@@ -264,7 +272,11 @@ export default {
             this.addItem = this.addItem ? false : true;
         },
         editParentItem(item){
-            console.log(item);
+            //console.log(item);
+            this.target={
+                ...item,
+            };
+            console.log(this.target);
             this.edit = this.edit ? false : true;
         },
         deleteParentItem(item){
