@@ -18,27 +18,27 @@
             <div class="tab1">
                 <div>
                     <ul
-                        v-for="(kidquest,idx) in kidquests" 
+                        v-for="kidquest in kidquests" 
                         id="notebook_ul" 
-                        :key="idx"
+                        :key="kidquest.kidId"
                     >
                         <li>
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="detailquest"
+                                    @click="detailquest(quest)" 
                                 >
                                     {{ kidquest.name }}
                                 </div>
                                 <div class="right top">
                                     <button
                                         class="btn"
-                                        @click="deletequest(kidquest.questNo)"
+                                        @click="kidquestdelete"      
                                     >
                                         <img 
                                             src="@/assets/delete.png"
                                             width="30px"
-                                            alt="deletequest"
+                                            alt="kidquestdelete"
                                         >
                                     </button>
                                 </div>
@@ -62,6 +62,7 @@
                         @handle="addquest"
                     /> 
                     <detail-quest
+                        :target="target"
                         :dialog="detailQuest"
                         @handle="detailquest"
                     />
@@ -72,15 +73,15 @@
             <div class="tab2">
                 <div>
                     <ul
-                        v-for="(quest,idx) in quests" 
+                        v-for="quest in quests" 
                         id="notebook_ul" 
-                        :key="idx"
+                        :key="quest.parentId"
                     >
                         <li>
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="detailquest(quest.questNo)"
+                                    @click="detailquest(quest)"
                                 >
                                     {{ quest.name }}
                                 </div>
@@ -262,7 +263,7 @@
                                                 <v-btn
                                                     color="green darken-1"
                                                     text
-                                                    @click="addkidquest"
+                                                    @click="addkidquest(quest.questNo)"
                                                 >
                                                     <b>등록</b>
                                                 </v-btn>
@@ -290,6 +291,7 @@
                         @handle="addquest"
                     /> 
                     <detail-quest
+                        :target="target"
                         :dialog="detailQuest"
                         @handle="detailquest"
                     />
@@ -333,11 +335,17 @@ export default {
             endday:'',
             items:48,
             selectkid:null,
-            questNo:this.questNo,
             rules:{
                 required: (value) => !!value,
                 month : (value) => (value>=1 && value<=12),
                 day : (value) => (value>=1 && value<=31),
+            },
+            target:{
+                description:null,
+                questNo:null,
+                parentId:null,
+                reward:null,
+                name:null,
             },
 
         };
@@ -370,14 +378,9 @@ export default {
         //아이 퀘스트 리스트
         axios.get(process.env.VUE_APP_API_URL + '/api/quest/kid/list/'+this.kidId)
             .then((res) => {
-                console.log('아이 퀘스트 리스트');
                 console.log(res);
-                console.log('아이 번호'+this.kidId);
-                console.log('체크1');
-                console.log(res.data);
-                console.log('체크2');
                 console.log(res.data.data);
-                this.kidquests = res.data;
+                this.kidquests = res.data.data;
             })
             .catch(err => {
                 console.log(err);
@@ -385,7 +388,10 @@ export default {
 
     },
     methods: {
-        detailquest(){
+        detailquest(quest){
+            this.target={
+                ...quest,
+            };
             this.detailQuest = this.detailQuest ? false : true;
         },
         addquest(){
@@ -406,13 +412,13 @@ export default {
             axios.post(process.env.VUE_APP_API_URL+'/api/quest/kid/regist', {
                          
                 kidId: this.kidId,    
-                questNo : this.questNo,
+                questNo : this.target.questNo,
                 'startTime': new Date(this.year, this.month-1, this.day),
                 'endTime' : new Date(this.endyear, this.endmonth-1, this.endday),
   
             })
                 .then(()=>{
-                    console.log('퀘스트 번호');
+                    console.log('퀘스트 번호'+ this.target.questNo);
                     console.log(this.qusestNo);
                     alert('등록되었습니다!');
                     this.handleDialog();
@@ -492,7 +498,7 @@ export default {
 
 ul {
   margin: 0;
-  padding: 0, 10;
+  padding: 0, 10px;
   max-height: 390px;
   overflow-y: auto;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -513,7 +519,7 @@ li {
       #EEE 10px,
       #EEE 11px,
       transparent 11px);
-  padding: 10px 15px 10px 25px;
+  padding: 10px 15px 10px 5px;
   border: 1px solid #CCC;
   box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.5);
   margin-bottom: 5px;

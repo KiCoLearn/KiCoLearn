@@ -12,7 +12,7 @@
 	</insert>
 	
 	<update id="update" parameterType="int">
-		update quest set where quest_no = #{questNo}
+		update quest set name=#{name}, reward=#{reward}, description=#{description} where quest_no = #{questNo}
 	</update>
 	
 	<select id="list" parameterType="int" resultType="quest">
