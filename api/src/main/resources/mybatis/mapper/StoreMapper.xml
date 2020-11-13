@@ -11,8 +11,8 @@
 		insert into items(name, price, description, parent_id, field) values(#{name}, #{price}, #{description}, #{parentId}, #{field})			
 	</insert>
 	
-	<update id="updateItem" parameterType="int">
-		update items set name=#{name}, price=#{price}, description=#{description} where item_no = #{itemNo}
+	<update id="updateItem" parameterType="item">
+		update items set field=#{field}, name=#{name}, price=#{price}, description=#{description} where item_no = #{itemNo}
 	</update>
 	
 	<select id="parentItem" parameterType="int" resultType="item">

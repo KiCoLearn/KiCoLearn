@@ -13,6 +13,8 @@ public interface KidsService {
     
     int updateKid(Kids kid);
 
+    int updateLike(Kids kid);
+
     Kids getParentsByKidId(int kidId);
 
     int updateProfileKid(Kids kid);
