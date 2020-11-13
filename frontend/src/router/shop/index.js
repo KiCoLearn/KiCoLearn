@@ -1,16 +1,18 @@
-import Store from '@/views/shop/Store';
-import AddItem from '@/components/shop/AddItem';
+import ParentStore from '@/views/shop/ParentStore';
+import KidStore from '@/views/shop/KidStore';
 
 export default[
     {
-        path: '/store',
-        name: 'Store',
-        component:Store
+        path: '/parentstore',
+        name: 'ParentStore',
+        component:ParentStore,
+        meta: { requireAuth: true, parentsOnly: true },
     },
     {
-        path: '/additem',
-        name: 'AddItem',
-        component:AddItem
+        path: '/kidstore',
+        name: 'KidStore',
+        component:KidStore,
+        meta: { requireAuth: true, kidOnly: true },
     },
 
 ];
