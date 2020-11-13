@@ -104,5 +104,20 @@ public class KidsAccountController {
         }
         return entity;
     }
+    
+    @PostMapping("/update/like")
+    @ApiOperation(value = "아이의 찜 아이템 수정")
+    public ResponseEntity<Map<String, Object>> updateLike(@RequestBody Kids kid) {
+        ResponseEntity<Map<String, Object>> entity = null;
+        logger.debug("update like: " + kid);
+        System.out.println(kid);
+        try {
+            kService.updateLike(kid);
+            entity = resultHandler.handleSuccess("success");
+        } catch (RuntimeException e) {
+            entity = resultHandler.handleException(e);
+        }
+        return entity;
+    }
 
 }
