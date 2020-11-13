@@ -22,4 +22,8 @@
 	<update id="update" parameterType="kids">
 		update kids set name= #{name}, birth= #{birth}, gender=#{gender}, character_idx=#{characterIdx} where kid_id= #{kidId}		
 	</update>
+	
+	<update id="updateProfile" parameterType="kids">
+		update kids set character_idx=#{characterIdx} where kid_id= #{kidId}		
+	</update>
 </mapper>
