@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.api.global.handler.Handler;
+import com.kids.api.notification.NotificationService;
 import com.kids.api.store.Item;
 
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,9 @@ public class QuestController {
 
     @Autowired
     QuestService qService;
+    
+    @Autowired
+    NotificationService notificationService;
 
     @Autowired
     Handler resultHandler;
@@ -139,11 +143,25 @@ public class QuestController {
         logger.debug("finish kid_quest: " + kidQuest);
         try {
             qService.finishKidsQuest(kidQuest);
+            int kidId = kidQuest.getKidId();
             entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
             entity = resultHandler.handleException(e);
         }
         return entity;
+    }
+    
+    @PostMapping("/{id}/request")
+    @ApiOperation(value = "아이 퀘스트 완료")
+    public ResponseEntity<Object> finishQuest(@PathVariable int id) {
+        try {
+            notificationService.completeQuestFromKidId(id);
+
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/kid/delete/{questNo}/{kidId}")

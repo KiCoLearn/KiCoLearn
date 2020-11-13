@@ -13,18 +13,22 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class FCMNotification {
     private String to;
-    private JSONObject data;
+    private NotificationData data;
     private Notification notification;
     
     public JSONObject toJSON() {
-        if (this.notification == null) {
-            throw new NotificationNotFoundException(this, "cannot found notification");
-        }
+//        if (this.notification == null) {
+//            throw new NotificationNotFoundException(this, "cannot found notification");
+//        }
         JSONObject body = new JSONObject();
-        
+
         body.put("to", this.to);
-        body.put("notification", this.notification.toJSON());
-            
+        if (this.data != null) {
+            body.put("data", this.data.toJSON());
+        }
+        if (this.notification != null) {
+            body.put("notification", this.notification.toJSON());
+        }
         return body;
     }
     

@@ -7,19 +7,39 @@
             >
                 <div class="quest-list">
                     <ul
-                        v-for="quest in quests"
-                        :key="quest.kidId"
+                        v-for="(quests,idx) in quests" 
+                        id="notebook_ul" 
+                        :key="idx"
                     >
-                        <v-card class="questlist">
-                            <v-layout column>
-                                <v-layout column>
-                                    <v-card-title><h5>{{ quest.name }}</h5></v-card-title>
-                                    <v-card-text>{{ quest.reward }}</v-card-text>
-                                    <v-card-text>{{ quest.description }}</v-card-text>
-                                </v-layout>
-                            </v-layout>
-                        </v-card>
-                        <br>
+                        <li>
+                            <v-row>
+                                <div
+                                    class="detail"
+                                    @click="detailquest"
+                                >
+                                    퀘스트 : {{ quests.name }}
+                                </div>
+                                  &nbsp;
+                                <div
+                                    class="detail"
+                                    @click="detailquest"
+                                >
+                                    보상 포인트 :{{ quests.reward }}
+                                </div>
+                                <div class="right top">
+                                    <button
+                                        class="btn"
+                                        @click="success"
+                                    >
+                                        <img 
+                                            src="@/assets/questsucc.png"
+                                            width="30px"
+                                            alt="success"
+                                        >
+                                    </button>
+                                </div>
+                            </v-row>
+                        </li>
                     </ul>
                 </div>
                 <div class="buttons">
@@ -37,13 +57,18 @@
 
 <script>
 import axios from '@/plugins/axios';
+import { mapGetters } from 'vuex';
 export default {
     name : 'KidQuest',
     data() {
         return {
-            kidId:0,
             quests: new Array(),
         };
+    },
+    computed:{
+        ...mapGetters({    
+            kidId:'auth/id'
+        })
     },
     created() {
         axios.get(process.env.VUE_APP_API_URL + '/api/quest/kid/list/'+this.kidId)
@@ -56,6 +81,17 @@ export default {
                 console.log(err);
             });
 
+    },
+    methods: {
+        success(){
+            let answer = confirm('퀘스트를 완료하겠습니까?');
+            if(answer){
+                window.location.reload();
+            } else {
+                return;
+            }
+
+        }
     },
         
 };
@@ -225,5 +261,46 @@ export default {
   text-align: center;
   width: 90%;
 }
+ul {
+  margin: 0;
+  padding: 0, 10;
+  max-height: 390px;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 5px 5px 0 5px;
+  border-left: none;
+  border-right: none;
+padding-inline-start: 0px;
 
+}
+
+li {
+  list-style: none;
+  background-color: rgba(0, 0, 0, 0.05);
+  background-image: 
+    linear-gradient(
+      90deg,
+      #FFD32E 10px,
+      #EEE 10px,
+      #EEE 11px,
+      transparent 11px);
+  padding: 10px 15px 10px 25px;
+  border: 1px solid #CCC;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.5);
+  margin-bottom: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.detail{
+  width: 70%;
+  margin-top: 5px;
+}
+.right {
+  float: right;
+  position: relative;
+  top: -15px;
+  margin-left: 20px;
+}
 </style>

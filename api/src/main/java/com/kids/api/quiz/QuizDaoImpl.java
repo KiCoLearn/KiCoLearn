@@ -50,8 +50,8 @@ public class QuizDaoImpl implements QuizDao {
     }
 
     @Override
-    public int countQuiz() {
-        return temp.selectOne(ns + "count");
+    public int getFirstQuiz() {
+        return temp.selectOne(ns + "getFirstQuiz");
     }
 
     @Override
