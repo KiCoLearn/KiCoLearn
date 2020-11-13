@@ -47,13 +47,34 @@ public class MoneyServiceImpl implements MoneyService {
     }
 
     @Override
-    public List<Budget> todayDeposit(int kidId) {
-        return mDao.todayDeposit(kidId);
+    public int getTodayDeposit(int kidId) {
+        return mDao.getTodayDeposit(kidId);
     }
 
     @Override
-    public List<Budget> weekDeposit(int kidId) {
-        return mDao.weekDeposit(kidId);
+    public int getWeekDeposit(int kidId) {
+        return mDao.getWeekDeposit(kidId);
     }
 
+    @Override
+    public List<Budget> todaySpendContents(int kidsId) {
+        return mDao.todaySpendContents(kidsId);
+    }
+
+    @Override
+    public List<Budget> weekSpendContents(int kidsId) {
+        return mDao.weekSpendContents(kidsId);
+    }
+
+    @Override
+    public List<Budget> todayDepositContents(int kidsId) {
+        return mDao.todayDepositContents(kidsId);
+    }
+
+    @Override
+    public List<Budget> weekDepositContents(int kidsId) {
+        return mDao.weekDepositContents(kidsId);
+    }
+
+   
 }
