@@ -140,13 +140,8 @@ public class QuizController {
     @PostMapping("/solve")
     @ApiOperation(value = "아이가 퀴즈를 품")
     private ResponseEntity<Map<String, Object>> updateQuiz(@RequestBody QuizSolved quiz) {
-        ResponseEntity<Map<String, Object>> result = null;
-        try {
-            result = resultHandler.handleSuccess(qService.solve(quiz));
-        } catch (Exception e) {
-            result = resultHandler.handleException(e);
-        }
-        return null;
+        ResponseEntity<Map<String, Object>> result = resultHandler.handleSuccess(qService.solve(quiz));
+        return result;
     }
 
 }

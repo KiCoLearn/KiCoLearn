@@ -8,6 +8,8 @@ public interface MoneyService {
     int deposit(Money money);
 
     int withdraw(Money money);
+    
+    int makeActivity(Budget budget);
 
     int activity(Budget budget);
 

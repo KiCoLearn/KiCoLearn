@@ -17,4 +17,5 @@ public class Kids {
     private int parentId;
     private boolean gender;
     private int characterIdx;
+    private int likeItem;
 }

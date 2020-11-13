@@ -15,9 +15,9 @@
                 :class="{head:true, active: to==='ParentsQuiz'}"
             ><b>퀴즈</b></span>
         </router-link>
-        <router-link :to="{name : 'Store' }">
+        <router-link :to="{name : 'ParentStore' }">
             <span
-                :class="{head:true, active: to==='Store'}"
+                :class="{head:true, active: to==='ParentStore'}"
             ><b>스토어</b></span>
         </router-link>
     </div>

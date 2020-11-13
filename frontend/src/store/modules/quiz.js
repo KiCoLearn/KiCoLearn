@@ -57,35 +57,5 @@ export default {
                     });
             });
         },
-        fetchBonusMoney(ignore, {kidId}) {
-            return new Promise((resolve, reject) => {
-                axios({
-                    url: '/api/quiz/today/'+kidId,
-                    method: 'get'
-                })
-                    .then((res) => {
-                        if(res.data.data==null){
-                            console.log(res.data.data);
-                            axios({
-                                url: '/api/money/activity',
-                                method: 'post',
-                                data : {
-                                    'amount': 300,
-                                    'contents': '퀴즈',
-                                    'isDeposit': true,
-                                    'kidId': kidId,
-                                }
-                            })
-                                .then((response) => {
-                                    resolve(response);
-                                }).catch((error) => {
-                                    reject(error);
-                                });
-                        }
-
-                       
-                    });                
-            });
-        },
     },
 };
