@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <h2>아이 정보 수정</h2>
+        <h2>아이 정보 등록</h2>
         <v-layout justify-center>
             <div class="character">
                 <img
@@ -68,9 +68,8 @@
                             v-model="valid"
                             lazy-validation
                         >
-                            <v-col
-                                cols="12"
-                                style="display:flex; justify-content:center"
+                            <v-row
+                                justify="center"
                             >
                                 <label><b>이름</b></label>
                                 <v-col
@@ -91,21 +90,21 @@
                                         :rules="[rules.required]"
                                     />
                                 </v-col>
-                            </v-col>
+                            </v-row>
 
-                            <v-col
-                                cols="12"
-                                style="display:flex; justify-content:center"
+                            <v-row
+                                justify="center"
                             >
                                 <label><b>출생</b></label>
                                 <v-col
-                                    cols="9"
-                                    style="display:flex;justify-content:center;"
+                                    cols="1"
+                                />
+                                <v-col
+                                    cols="8" 
+                                    style="display:flex; justify-content:flex-start"                                    
                                 >
                                     <v-col
-                                        cols="5"
-                                       
-                                        class="birth"
+                                        cols="5"                                     
                                     >
                                         <v-select
                                             ref="year"
@@ -118,7 +117,7 @@
                                         />
                                     </v-col>    
                                     <v-col
-                                        cols="2"
+                                        cols="3"
                                      
                                         class="birth"
                                     >
@@ -131,7 +130,7 @@
                                         />
                                     </v-col>
                                     <v-col
-                                        cols="2"
+                                        cols="3"
                                         class="birth"
                                     >
                                         <v-text-field
@@ -143,21 +142,24 @@
                                         />
                                     </v-col>
                                 </v-col>
-                            </v-col>
+                            </v-row>
                        
-                            <v-col
-                                cols="12"
-                                style="display:flex; justify-content:center"
+                            <v-row
+                                justify="center"
                             >
                                 <label class="label1"><b>성별</b></label>
                                 <v-col
-                                    cols="9"
+                                    cols="1"
+                                />
+                                
+                                <v-col
+                                    cols="8"
                                 >
                                     <v-radio-group
                                         v-model="gender"
                                         :rules="[rules.genderRequired]"
                                         row
-                                        style="display:flex;justify-content:space-between;margin-left:67px"
+                                        style="display:flex;justify-content:space-between;margin-left:42px"
                                     >
                                         <v-radio
                                             :value="0"
@@ -185,7 +187,7 @@
                                         </v-radio>
                                     </v-radio-group>
                                 </v-col>
-                            </v-col>
+                            </v-row>
                         </v-form>
 
                         <v-col
@@ -380,7 +382,7 @@ export default {
 
     .box{
         margin: auto;
-        width: 342px;
+        width: 330px;
         padding: 20px 20px 5px 20px;
         background-color: white;
         border-radius: 4px; 
@@ -393,11 +395,6 @@ export default {
     }
 
     .birth{
-        margin-left: 10px;
-    }
-
-    .name{
-        max-width: 93% !important;
         margin-left: 10px;
     }
     

@@ -5,9 +5,9 @@
                 :class="{head:true, active: to==='KidMain'}"
             ><b>홈</b></span>
         </router-link>
-        <router-link :to="{name : 'Quest' }">
+        <router-link :to="{name : 'KidQuest' }">
             <span
-                :class="{head:true, active: to==='Quest'}"
+                :class="{head:true, active: to==='KidQuest'}"
             ><b>퀘스트</b></span>
         </router-link>
         <router-link :to="{name : 'KidQuiz' }">
