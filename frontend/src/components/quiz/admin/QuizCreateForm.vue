@@ -13,7 +13,7 @@
             >
                 <v-text-field
                     v-model="question"
-                    :counter="20"
+                    :counter="50"
                     :rules="rules.question"
                     label="문제"
                     required
@@ -21,7 +21,7 @@
 
                 <v-text-field
                     v-model="description"
-                    :counter="50"
+                    :counter="100"
                     :rules="rules.description"
                     label="설명"
                     required
@@ -106,7 +106,7 @@ export default {
                 category: this.category,
             };
             
-            for (let index = 0; index < 15; index++) {
+            for (let index = 0; index < 1; index++) {
                 this.$store.dispatch('quiz/admin/post', quiz)
                     .then(() => {
                         this.$emit('update:dialog', false);
