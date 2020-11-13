@@ -114,5 +114,33 @@ public class StoreController {
         }
         return entity;
     }
+    
+    @PostMapping("/kidsitem/add")
+    @ApiOperation(value = "아이스토어에 아이템 추가")
+    public ResponseEntity<Map<String, Object>> kidsStoreAddItem(@RequestBody KidsStore kidItem) {
+        ResponseEntity<Map<String, Object>> entity = null;
+        logger.debug("kids store add item: " + kidItem);
+        try {
+            sService.addKidItem(kidItem);
+            entity = resultHandler.handleSuccess("success");
+        } catch (RuntimeException e) {
+            entity = resultHandler.handleException(e);
+        }
+        return entity;
+    }
+    
+    @PostMapping("/kidsitem/delete")
+    @ApiOperation(value = "아이스토어에 아이템 제거")
+    public ResponseEntity<Map<String, Object>> kidsStoreDeleteItem(@RequestBody KidsStore kidItem) {
+        ResponseEntity<Map<String, Object>> entity = null;
+        logger.debug("kids store delete item: " + kidItem);
+        try {
+            sService.deleteKidItem(kidItem);
+            entity = resultHandler.handleSuccess("success");
+        } catch (RuntimeException e) {
+            entity = resultHandler.handleException(e);
+        }
+        return entity;
+    }
 
 }

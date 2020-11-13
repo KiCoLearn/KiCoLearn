@@ -15,5 +15,7 @@ public interface StoreService {
     
     int addKidItem(KidsStore kidItem);
     
+    int deleteKidItem(KidsStore kidItem);
+    
     List<Item> getKidsStore(int kidId);
 }

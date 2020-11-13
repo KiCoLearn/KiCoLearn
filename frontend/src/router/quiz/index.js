@@ -15,6 +15,6 @@ export default [
         path: '/admin/quiz',
         name: 'QuizManage',
         component: () => import(/* webpackChunkName: "about" */ '@/views/quiz/QuizManage'),
-        meta: { admin: true },
+        meta: { adminOnly: true },
     },
 ];
