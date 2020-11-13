@@ -1,5 +1,5 @@
 <template>
-    <div class="store">
+    <div class="parentstore">
         <v-tabs 
             v-model="tab"            
         >
@@ -30,12 +30,6 @@
                             <v-toolbar
                                 flat
                             >
-                                <!-- <v-toolbar-title>My CRUD</v-toolbar-title>
-                                <v-divider
-                                    class="mx-4"
-                                    inset
-                                    vertical
-                                /> -->
                                 <v-spacer />
                                 <v-btn
                                     class="warning"
@@ -80,20 +74,6 @@
                         :length="pageCount"
                         color="#fb8c00"
                     />
-                    <!-- <item-card 
-                        v-for="myItem in myItems"
-                        :key="myItem.itemNo"                    
-                        :send-data="myItem"
-                    />
-                    <button 
-                        class="btn" 
-                        @click="handleAddItem"
-                    >
-                        <img 
-                            src="@/assets/add.png"
-                            width="100px"
-                        >
-                    </button> -->
                     <add-item 
                         :dialog="addItem"
                         @handle="handleAddItem"
@@ -162,16 +142,7 @@
                         <template v-slot:no-data>
                             현재 스토어에 아이템이 존재하지 않습니다.
                         </template>    
-                    </v-data-table>
-                    <!-- <kids-card 
-                        v-for="kids in kidsList"
-                        :key="kids.kidId"                    
-                        :send-data="kids"
-                    />                    
-                    <add-item 
-                        :dialog="addItem"
-                        @handle="handleAddItem"
-                    />-->
+                    </v-data-table>                    
                     <store-manager 
                         :dialog="manager"
                         :send-data="myItems"
@@ -194,7 +165,7 @@ import StoreManager from '@/components/shop/StoreManager';
 import { mapGetters } from 'vuex';
 
 export default {    
-    name:'Store',
+    name:'ParentStore',
     components: {
         AddItem,
         StoreManager,
@@ -272,11 +243,9 @@ export default {
             this.addItem = this.addItem ? false : true;
         },
         editParentItem(item){
-            //console.log(item);
             this.target={
                 ...item,
             };
-            console.log(this.target);
             this.edit = this.edit ? false : true;
         },
         deleteParentItem(item){
@@ -297,7 +266,6 @@ export default {
             console.log(kids);
             axios.get(process.env.VUE_APP_API_URL + '/api/store/klist/'+ kids.value)
                 .then((res) => {
-                    //console.log(res.data);
                     this.kidsItems = res.data.data;
                 });
         },

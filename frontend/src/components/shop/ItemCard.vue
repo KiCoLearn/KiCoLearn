@@ -28,7 +28,7 @@
                         />
 
                         <v-card-actions class="text-right">
-                            <v-btn                                
+                            <!-- <v-btn                                
                                 class="ml-1 mt-3"
                                 fab
                                 icon
@@ -48,32 +48,13 @@
                                 @click="handleItemDelete"
                             >
                                 <v-icon>mdi-delete</v-icon>
-                            </v-btn>                                        
+                            </v-btn> -->
                         </v-card-actions>
                     </div>
                 </div>  
             </v-card>
         </v-col>
     </v-row>
-
-    <!-- <v-card
-        id="card"
-    >
-        <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-            height="200px"            
-        />
-        <v-card-title class="headline">
-            {{ sendData.name }}
-        </v-card-title>
-
-        <v-card-subtitle>
-            1,000 miles of wonder
-        </v-card-subtitle>
-    </v-card> -->
-    <!-- <div>
-        {{ sendData.itemNo }} {{ sendData.name }} {{ sendData.price }} {{ sendData.description }}
-    </div> -->
 </template>
 
 <script>
