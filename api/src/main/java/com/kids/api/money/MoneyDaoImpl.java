@@ -31,7 +31,6 @@ public class MoneyDaoImpl implements MoneyDao {
 
     @Override
     public int budgetActivity(Budget budget) {
-        // TODO Auto-generated method stub
         return temp.insert(ns + "activity", budget);
     }
 
@@ -55,13 +54,37 @@ public class MoneyDaoImpl implements MoneyDao {
     }
 
     @Override
-    public List<Budget> todayDeposit(int kidsId) {
-        return temp.selectList(ns + "todayDeposit", kidsId);
+    public List<Budget> todayDepositContents(int kidsId) {
+        return temp.selectList(ns + "todayDepositContents", kidsId);
     }
 
     @Override
-    public List<Budget> weekDeposit(int kidsId) {
-        return temp.selectList(ns + "weekDeposit", kidsId);
+    public List<Budget> weekDepositContents(int kidsId) {
+        return temp.selectList(ns + "weekDepositContents", kidsId);
+    }
+
+    @Override
+    public int getTodayDeposit(int kidId) {
+        if (temp.selectOne(ns + "todayDeposit", kidId) == null)
+            return 0;
+        return temp.selectOne(ns + "todayDeposit", kidId);
+    }
+
+    @Override
+    public int getWeekDeposit(int kidId) {
+        if (temp.selectOne(ns + "weekDeposit", kidId) == null)
+            return 0;
+        return temp.selectOne(ns + "weekDeposit", kidId);
+    }
+
+    @Override
+    public List<Budget> todaySpendContents(int kidsId) {
+        return temp.selectList(ns + "todaySpendContents", kidsId);
+    }
+
+    @Override
+    public List<Budget> weekSpendContents(int kidsId) {
+        return temp.selectList(ns + "weekSpendContents", kidsId);
     }
 
 }
