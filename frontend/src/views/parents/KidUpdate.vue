@@ -302,7 +302,7 @@ export default {
     methods: {
         update(){
             if (this.$refs.form.validate()) {
-                axios.put(process.env.VUE_APP_API_URL + '/api/kidsaccount/update',
+                axios.put('/api/kidsaccount/update',
                     {
                         'kidId': this.kidId,
                         'birth': new Date(this.year, this.month-1, this.day),
@@ -337,7 +337,7 @@ export default {
         },
 
         deleteKid(){
-            axios.delete(process.env.VUE_APP_API_URL + '/api/kidsaccount/delete/'+this.kidId)
+            axios.delete('/api/kidsaccount/delete/'+this.kidId)
                 .then(() => {
                     alert('삭제 완료');
                     this.dialog2=false;

@@ -63,7 +63,7 @@
                 </v-row>
                 <v-row
                     justify="center"
-                    style="font-size:1.2rem"
+                    style="font-size:1.2rem;margin-bottom:5px"
                 >
                     <div>
                         <b>{{ kid.name }}</b> 어린이의 현재 잔액
@@ -79,7 +79,7 @@
 
                 <v-row
                     justify="center"
-                    style="font-family:CookieRun-Regular;white-space:pre-line;background:lightgray;padding:5px"
+                    style="font-family:CookieRun-Regular;white-space:pre-line;background:lightgray;padding:10px"
                 >
                     {{ quizComment }}
                 </v-row>
@@ -108,6 +108,10 @@
                             {{ q.reward }}원
                         </v-col>
                     </v-col>
+
+                    <div v-if="quest.length==0">
+                        앗! 아직 퀘스트가 없어요!
+                    </div>
                 </div>
                 
                 <v-row
@@ -124,7 +128,18 @@
                         cols="7"
                         class="gift"
                     >
-                        찜한 물건
+                        <div v-if="kid.star" />
+                        <div v-else>
+                            <button
+                                class="btn"
+                                @click="goStore"
+                            >
+                                <img
+                                    src="@/assets/add.png"
+                                    width="50px"
+                                >
+                            </button>
+                        </div>
                     </v-col>
                 </v-row>
                
@@ -136,6 +151,7 @@
                     <button
                         rounded
                         class="head btn"
+                        @click="logout"
                     >
                         <b>로그아웃</b>
                     </button>
@@ -211,6 +227,25 @@ export default {
             if(this.pick==idx) return true;
             return false;
         },
+        changeProfile(){
+            this.dialog = false;
+            this.kid.characterIdx=this.pick;
+            axios.put('/api/kidsaccount/updateProfile',
+                {
+                    'kidId': this.kid.kidId,
+                    'characterIdx': this.pick
+                })
+                .then(() => {
+                    
+                });
+        },
+        goStore(){
+            this.$router.push({name:'Store'});
+        },
+        logout(){
+            this.$store.commit('auth/LOGOUT');
+            this.$router.push({name:'Main'});
+        }
     },
 
 };
@@ -218,7 +253,7 @@ export default {
 
 <style lang="scss" scoped>
   .row{
-    margin-bottom:15px;
+    margin-bottom:25px;
   }
 
   .col{
