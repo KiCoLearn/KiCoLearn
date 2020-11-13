@@ -7,7 +7,7 @@
             >
                 <div class="quest-list">
                     <ul
-                        v-for="(quests,idx) in quests" 
+                        v-for="(quest,idx) in quests" 
                         id="notebook_ul" 
                         :key="idx"
                     >
@@ -15,16 +15,15 @@
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="detailquest"
+                                    @click="kiddetail(quest)"
                                 >
-                                    퀘스트 : {{ quests.name }}
+                                    퀘스트 : {{ quest.name }}
                                 </div>
                                   &nbsp;
                                 <div
                                     class="detail"
-                                    @click="detailquest"
                                 >
-                                    보상 포인트 :{{ quests.reward }}
+                                    보상 포인트 :{{ quest.reward }}
                                 </div>
                                 <div class="right top">
                                     <button
@@ -45,6 +44,11 @@
                 <div class="buttons">
                     <div class="delete" />
                 </div>
+                <kid-detail
+                    :target="target"
+                    :dialog="kidDetail"
+                    @handle="kiddetail"
+                />
             </div>
             <div class="clip">
                 <div class="clip-gray" />
@@ -58,11 +62,23 @@
 <script>
 import axios from '@/plugins/axios';
 import { mapGetters } from 'vuex';
+import KidDetail from '@/components/quest/KidDetail.vue';
+
 export default {
     name : 'KidQuest',
+    components:{
+        KidDetail,
+    },
     data() {
         return {
             quests: new Array(),
+            target:{
+                description:null,
+                questNo:null,
+                reward:null,
+                name:null,
+            },
+            kidDetail:false,
         };
     },
     computed:{
@@ -83,6 +99,12 @@ export default {
 
     },
     methods: {
+        kiddetail(quest){
+            this.target={
+                ...quest,
+            };
+            this.kidDetail = this.kidDetail ? false : true;
+        },
         success(){
             let answer = confirm('퀘스트를 완료하겠습니까?');
             if(answer){
