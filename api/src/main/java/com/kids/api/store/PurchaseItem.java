@@ -7,12 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Item {
+public class PurchaseItem {
     private int itemNo;
-    private String name;
-    private int price;
-    private String description;
-    private String field;
-    private int parentId;
-    private boolean isRequest;
+    private int kidId;
 }

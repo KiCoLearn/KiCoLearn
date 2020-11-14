@@ -50,4 +50,9 @@ public class StoreServiceImpl implements StoreService {
         return sDao.deleteKidItem(kidItem);
     }
 
+    @Override
+    public int updatePurchaseRequest(PurchaseItem item) {
+        return sDao.updatePurchaseRequest(item);
+    }
+
 }

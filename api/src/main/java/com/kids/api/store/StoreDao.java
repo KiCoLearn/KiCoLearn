@@ -18,4 +18,6 @@ public interface StoreDao {
     int deleteKidItem(KidsStore kidItem);
     
     List<Item> getKidsStore(int kidId);
+
+    int updatePurchaseRequest(PurchaseItem item);
 }
