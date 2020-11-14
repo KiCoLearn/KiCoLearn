@@ -68,7 +68,6 @@ export default {
     name : 'KidQuest',
     components:{
         KidDetailquest
-
     },
     data() {
         return {
@@ -88,9 +87,8 @@ export default {
         })
     },
     created() {
-        axios.get(process.env.VUE_APP_API_URL + '/api/quest/kid/list/'+this.kidId)
+        axios.get('/api/quest/kid/list/'+this.kidId)
             .then((res) => {
-                console.log(res);
                 console.log(res.data.data);
                 this.quests = res.data.data;
             })
@@ -107,11 +105,10 @@ export default {
             this.kidDetailquest = this.kidDetailquest ? false : true;
         },
         success(){
-            let answer = confirm('퀘스트를 완료하겠습니까?');
+            let answer = confirm('퀘스트를 완료 요청을 보낼까요?');
 
             if(answer){
-                axios.put(process.env.VUE_APP_API_URL+'/api/quest/kid/finish', {
-                    parentId : this.parentId,
+                axios.put('/api/quest/request', {
                     questNo : this.questNo,
                     kidId : this.kidId,
 
@@ -120,8 +117,6 @@ export default {
                     this.handleDialog();
                     window.location.reload();
                 });
-                console.log('success!!');
-                window.location.reload();
             } else {
                 return;
             }
@@ -135,22 +130,14 @@ export default {
 @import url(https://fonts.googleapis.com/css?family=Gochi+Hand);
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
 
-
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    height: 90%;
-}
 .container {
   position: relative;
-  width: 100%;
+  max-width:330px;
   height: 600px;
-  top: 23rem;
+  top: 21rem;
   left: 50%;
   transform: translate(-50%, -50%);
+  margin: unset;
 }
 .container .list-board {
   position: absolute;
@@ -168,7 +155,7 @@ export default {
   position: absolute;
   background: #ffe8d6;
   width: 86%;
-  height: 90%;
+  height: 90% !important;
   left: 7%;
   top: 5%;
   box-shadow: 2px 2px 0 rgba(80, 20, 13, 0.3);
