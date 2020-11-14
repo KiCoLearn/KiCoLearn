@@ -1,159 +1,183 @@
 <template>
-    <div class="parentstore">
-        <v-tabs 
-            v-model="tab"            
+    <div class="wrapper">
+        <input
+            id="tab1"
+            type="radio"
+            name="tab"
+            checked
         >
-            <v-tab 
-                v-for="title in titles" 
-                :key="title"
-            >
-                {{ title }}
-            </v-tab>
-        </v-tabs>
-        <v-tabs-items v-model="tab">
-            <v-tab-item
-                v-for="title in titles"
-                :key="title"
-            >
-                <div v-if="title === '내 아이템'">
-                    <v-data-table
-                        :headers="headers"
-                        :items="myItems"
-                        :page.sync="page"
-                        :items-per-page="itemsPerPage"
-                        sort-by="name"
-                        class="elevation-1"
-                        hide-default-footer
-                        @page-count="pageCount = $event"
-                    >
-                        <template v-slot:top>
-                            <v-toolbar
-                                flat
+        <label for="tab1">내 아이템</label>
+        <input
+            id="tab2"
+            type="radio"
+            name="tab"
+        >
+        <label for="tab2">스토어 관리</label>
+        <div class="content">
+            <div class="tab1">
+                <v-data-table
+                    :headers="headers"
+                    :items="myItems"
+                    :page.sync="page"
+                    :items-per-page="itemsPerPage"
+                    sort-by="name"
+                    class="elevation-1"
+                    hide-default-footer
+                    @page-count="pageCount = $event"
+                >
+                    <template v-slot:top>
+                        <v-toolbar
+                            flat
+                        >
+                            <v-spacer />
+                            <v-btn
+                                class="editbtn"
+                                rounded
+                                color="#0A97A1"
+                                @click="handleAddItem"   
                             >
-                                <v-spacer />
-                                <v-btn
-                                    class="warning"
-                                    @click="handleAddItem"           
+                                아이템 추가
+                                <v-icon
+                                    right
+                                    color="black"
                                 >
-                                    아이템 추가
-                                </v-btn>                                
-                            </v-toolbar>
-                        </template>
-                        <template v-slot:[`item.field`]="{ item }">
-                            <div class="p-2">
-                                <v-img
-                                    class="img"
-                                    :src="item.field"
-                                    :alt="item.field" 
-                                    height="150px" 
-                                    width="150px" 
-                                />
-                            </div>
-                        </template>
-                        <template v-slot:[`item.actions`]="{ item }">        
-                            <v-icon
-                                small
-                                class="mr-2"
-                                @click="editParentItem(item)"
+                                    mdi-gift-outline
+                                </v-icon>                                    
+                            </v-btn>                                
+                        </v-toolbar>
+                    </template>
+                    <template v-slot:[`item.field`]="{ item }">
+                        <div class="p-2">
+                            <v-img
+                                class="img"
+                                :src="item.field"
+                                :alt="item.field" 
+                                height="150px" 
+                                width="150px" 
+                            />
+                        </div>
+                    </template>
+                    <template v-slot:[`item.actions`]="{ item }">        
+                        <v-icon
+                            small
+                            class="mr-2"
+                            @click="editParentItem(item)"
+                        >
+                            mdi-pencil
+                        </v-icon>
+                        <v-icon
+                            small
+                            @click="deleteParentItem(item)"
+                        >
+                            mdi-delete
+                        </v-icon>
+                    </template>
+                    <template v-slot:no-data>
+                        생성된 아이템이 존재하지 않습니다.
+                    </template>      
+                </v-data-table>
+                <v-pagination
+                    v-model="page"
+                    :length="pageCount"
+                    color="#20B7E5"
+                />
+                <add-item 
+                    :dialog="addItem"
+                    @handle="handleAddItem"
+                />
+                <modify-item
+                    :target="target"
+                    :dialog="edit"
+                    @handle="editParentItem"
+                />
+            </div>
+            <div class="tab2">
+                <v-container fluid>
+                    <v-row>
+                        <v-col cols="12">
+                            <v-combobox
+                                v-model="select"
+                                :items="listName"
+                                label="아이 선택"                                    
+                                outlined
+                                rounded
+                                dense
+                                @change="handleSelect(select)"
+                            />
+                        </v-col>
+                    </v-row>
+                </v-container>
+                <v-data-table
+                    :headers="kheaders"
+                    :items="kidsItems"                        
+                    mobile-breakpoint="0"
+                    sort-by="name"
+                    class="elevation-1"
+                    hide-default-footer
+                >
+                    <template v-slot:top>
+                        <v-toolbar
+                            flat
+                        >
+                            <v-spacer />
+                            <v-btn
+                                rounded
+                                color="#0A97A1"
+                                @click="handleStoreManager"           
                             >
-                                mdi-pencil
+                                스토어 관리
+                                <v-icon>mdi-cog-outline</v-icon>
+                            </v-btn>                                
+                        </v-toolbar>
+                    </template>
+                    <template v-slot:[`item.field`]="{ item }">
+                        <div class="p-2">
+                            <v-img
+                                class="img"
+                                :src="item.field"
+                                :alt="item.field" 
+                                height="50px" 
+                                width="50px" 
+                            />
+                        </div>
+                    </template>
+                    <template v-slot:[`item.request`]="{ item }">
+                        <center v-if="item.request===true">
+                            <v-icon
+                                color="#1BB367"
+                            >
+                                mdi-shopping
                             </v-icon>
-                            <v-icon
-                                small
-                                @click="deleteParentItem(item)"
-                            >
-                                mdi-delete
+                        </center>
+                        <center v-else>
+                            <v-icon>
+                                mdi-shopping
                             </v-icon>
-                        </template>
-                        <template v-slot:no-data>
-                            생성된 아이템이 존재하지 않습니다.
-                        </template>      
-                    </v-data-table>
-                    <v-pagination
-                        v-model="page"
-                        :length="pageCount"
-                        color="#fb8c00"
-                    />
-                    <add-item 
-                        :dialog="addItem"
-                        @handle="handleAddItem"
-                    />
-                    <modify-item
-                        :target="target"
-                        :dialog="edit"
-                        @handle="editParentItem"
-                    />                       
-                </div>
-                <div v-if="title === '스토어 관리'">
-                    <v-container fluid>
-                        <v-row>
-                            <v-col cols="12">
-                                <v-combobox
-                                    v-model="select"
-                                    :items="listName"
-                                    label="아이 선택"                                    
-                                    outlined
-                                    dense
-                                    @change="handleSelect(select)"
-                                />
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                    <v-data-table
-                        :headers="kheaders"
-                        :items="kidsItems"                        
-                        mobile-breakpoint="0"
-                        sort-by="name"
-                        class="elevation-1"
-                        hide-default-footer
-                    >
-                        <template v-slot:top>
-                            <v-toolbar
-                                flat
-                            > 
-                                <v-btn
-                                    class="warning"
-                                    @click="handleStoreManager"           
-                                >
-                                    스토어 관리
-                                </v-btn>                                
-                            </v-toolbar>
-                        </template>
-                        <template v-slot:[`item.field`]="{ item }">
-                            <div class="p-2">
-                                <v-img
-                                    class="img"
-                                    :src="item.field"
-                                    :alt="item.field" 
-                                    height="50px" 
-                                    width="50px" 
-                                />
-                            </div>
-                        </template>
-                        <template v-slot:[`item.actions`]="{ item }">        
-                            <v-icon
-                                small
-                                class="mr-2"
-                                @click="deleteKidsItem(item)"
-                            >
-                                mdi-close-thick
-                            </v-icon>                            
-                        </template>
-                        <template v-slot:no-data>
-                            현재 스토어에 아이템이 존재하지 않습니다.
-                        </template>    
-                    </v-data-table>                    
-                    <store-manager 
-                        :dialog="manager"
-                        :send-data="myItems"
-                        :kids="select"
-                        @handleStoreManager="handleStoreManager"
-                        @handleStoreItem="handleStoreItem"
-                        @getKidsInfo="getKidsInfo"
-                    />
-                </div>
-            </v-tab-item>
-        </v-tabs-items>
+                        </center>
+                    </template>
+                    <template v-slot:[`item.actions`]="{ item }">        
+                        <v-icon
+                            small
+                            class="mr-2"
+                            @click="deleteKidsItem(item)"
+                        >
+                            mdi-close-thick
+                        </v-icon>                            
+                    </template>
+                    <template v-slot:no-data>
+                        현재 스토어에 아이템이 존재하지 않습니다.
+                    </template>    
+                </v-data-table>                    
+                <store-manager 
+                    :dialog="manager"
+                    :send-data="myItems"
+                    :kids="select"
+                    @handleStoreManager="handleStoreManager"
+                    @handleStoreItem="handleStoreItem"
+                    @getKidsInfo="getKidsInfo"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -193,18 +217,19 @@ export default {
                 field:null,
                 itemNo:null,
                 parentId:null,
-                price:null
+                price:null,
+                request:false
             },
             headers: [
                 { value: 'field', sortable:false},
-                { text: '아이템명', value: 'name' },
-                { text: '가격', value: 'price' },
+                { text: '아이템명', value: 'name', sortable: false},
+                { text: '가격', value: 'price', sortable: false},
                 { text: '수정/삭제', value: 'actions', sortable: false },
             ],
             kheaders: [
                 { value: 'field', sortable:false},
-                { text: '아이템명', value: 'name' },
-                { text: '가격', value: 'price' },
+                { text: '아이템명', value: 'name', sortable: false },
+                { text: '구매요청', value: 'request', sortable: false },
                 { text: '삭제', value: 'actions', sortable: false },
             ],
         };
@@ -266,6 +291,7 @@ export default {
             console.log(kids);
             axios.get(process.env.VUE_APP_API_URL + '/api/store/klist/'+ kids.value)
                 .then((res) => {
+                    console.log(res.data.data);
                     this.kidsItems = res.data.data;
                 });
         },
@@ -312,3 +338,136 @@ export default {
     background-size: contain;
 }
 </style>
+
+<style lang="scss" scoped>
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  width: 100%;
+  margin: 10px auto 0px auto;
+  max-width: 800px;
+  height: 100%;
+}
+.wrapper label {
+  cursor: pointer;
+  float: left;
+  margin-right: 5px;
+  display: block;
+  padding: 10px 30px;
+  background-color: #ecf0f1;
+  border-radius: 20px 20px 0 0;
+}
+.wrapper input {
+  display: none;
+}
+.wrapper input[id="tab1"]:checked + label {
+  background-color: #20B7E5;
+  color: #fefefe;
+}
+
+.wrapper input[id="tab2"]:checked + label {
+  background-color: #20B7E5;
+  color: #fefefe;
+}
+
+.wrapper input[id="tab1"]:checked ~ .content .tab1,
+.wrapper input[id="tab2"]:checked ~ .content .tab2 {
+  display: block;
+}
+.wrapper .content {
+  clear: both;
+  position: relative;
+}
+
+.combobox{
+    padding:10;
+}
+.v-data-table-header.v-data-table-header-mobile{
+    height: 0;
+}
+.editbtn{
+    margin: 30;
+}
+
+.tab1{
+  width: 100%;
+  padding: 10px 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  display: none;
+  border-top: 5px solid #20B7E5;
+  border-radius: 0 10px 10px 10px;
+}
+.tab2{
+  width: 100%;
+  padding: 10px 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  display: none;
+  border-top: 5px solid #20B7E5;
+  border-radius: 0 10px 10px 10px;
+}
+
+ul {
+  margin: 0;
+  padding: 0, 10;
+  max-height: 390px;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 5px 5px 0 5px;
+  border-left: none;
+  border-right: none;
+padding-inline-start: 0px;
+
+}
+
+li {
+  list-style: none;
+  background-color: rgba(0, 0, 0, 0.05);
+  background-image: 
+    linear-gradient(
+      90deg,
+      #FFD32E 10px,
+      #EEE 10px,
+      #EEE 11px,
+      transparent 11px);
+  padding: 10px 15px 10px 25px;
+  border: 1px solid #CCC;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.5);
+  margin-bottom: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.detail{
+  width: 70%;
+  margin-top: 5px;
+}
+.right {
+  float: right;
+  position: relative;
+  top: 3px;
+}
+.start,.end{
+      margin-left: 10px;
+  }
+  
+::v-deep .v-input--selection-controls__input{
+    display: none;
+}
+.col{
+        padding: 0;
+}
+
+td.text-start{
+    text-align: center;
+}
+
+</style>>
