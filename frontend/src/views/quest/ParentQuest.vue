@@ -20,20 +20,20 @@
                     <ul
                         v-for="kidquest in kidquests" 
                         id="notebook_ul" 
-                        :key="kidquest.kidId"
+                        :key="kidquest.questNo"
                     >
                         <li>
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="kiddetailquest(kidquest)" 
+                                    @click="detailquest(kidquest)" 
                                 >
                                     {{ kidquest.name }}
                                 </div>
                                 <div class="right top">
                                     <button
                                         class="btn"
-                                        @click="kiddeletequest(kidquest.questNo)"      
+                                        @click="deletequest(kidquest.questNo)"      
                                     >
                                         <img 
                                             src="@/assets/delete.png"
@@ -60,7 +60,7 @@
                         </li>
                     </ul>
                 </div>
-                <div>
+                <!-- <div>
                     <insert-quest
                         :dialog="insertQuest"
                         @handle="addquest"
@@ -69,8 +69,9 @@
                         :target="target"
                         :dialog="detailQuest"
                         @handle="detailquest"
+                        @update-success="fetchParentsQuests"
                     />
-                </div>
+                </div> -->
             </div>
 
             <!--퀘스트 관리 탭 -->
@@ -79,7 +80,7 @@
                     <ul
                         v-for="quest in quests" 
                         id="notebook_ul" 
-                        :key="quest.parentId"
+                        :key="quest.questNo"
                     >
                         <li>
                             <v-row>
@@ -100,8 +101,7 @@
                                             alt="deletequest"
                                         >
                                     </button>
-                                    &nbsp;
-                                    &nbsp;
+                                    
                                     <button
                                         class="btn"
                                         @click="connectkid(quest)"
@@ -120,7 +120,7 @@
                 <div>
                     <button
                         class="btn"
-                        @click="addquest"
+                        @click="openInsertForm"
                     >
                         <img 
                             src="@/assets/add.png"
@@ -129,8 +129,8 @@
                         >
                     </button>
                     <insert-quest
-                        :dialog="insertQuest"
-                        @handle="addquest"
+                        :dialog.sync="insertQuest"
+                        @insert-success="fetchParentsQuests"
                     /> 
                     <connect-kid
                         :target="target"
@@ -140,8 +140,8 @@
                     />
                     <detail-quest
                         :target="target"
-                        :dialog="detailQuest"
-                        @handle="detailquest"
+                        :dialog.sync="detailQuest"
+                        @update-success="fetchParentsQuests"
                     />
                 </div>
             </div>
@@ -198,62 +198,54 @@ export default {
     computed:{
         ...mapGetters({
             parentId:'auth/id',
-            kidId:'auth/id'
+            kidId:'auth/select'
         })
     },
     created() {
-        axios.get(process.env.VUE_APP_API_URL + '/api/quest/list/'+this.parentId)
-            .then((res) => {
-                console.log(res);
-                console.log('부모 번호' +this.parentId);
-                console.log(res.data.data);
-                this.quests = res.data.data;
-            })
-            .catch(err => {
-                console.log(err);
-            });
-        // 아이 리스트 가지고 오기 
-        axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentId)
-            .then((res) => {
-                console.log(res.data);
-                this.kidsList = res.data.data;
-                this.listName = new Array(this.kidsList.length);
-                for (let index = 0; index < this.kidsList.length; index++) {
-                    const element = this.kidsList[index];
-                    this.listName[index] = {
-                        text:element.name,
-                        value:element.kidId,
-                    };
-                    
-                }
-            });
-        //아이 퀘스트 리스트
-        axios.get(process.env.VUE_APP_API_URL + '/api/quest/kid/list/'+this.kidId)
-            .then((res) => {
-                console.log(res);
-                console.log(res.data.data);
-                this.kidquests = res.data.data;
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
+        this.fetchParentsQuests();
+        this.fetchKidQuests();
     },
     methods: {
-        detailquest(quest){
+        fetchParentsQuests(){
+            //부모 퀘스트 리스트
+            axios.get('/api/quest/list/'+this.parentId)
+                .then((res) => {
+                    console.log(res);
+                    console.log('부모 번호' +this.parentId);
+                    console.log(res.data.data);
+                    this.quests = res.data.data;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
+
+        fetchKidQuests(){
+            //아이 퀘스트 리스트
+            axios.get('/api/quest/kid/list/'+this.kidId)
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data.data);
+                    this.kidquests = res.data.data;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
+        openInsertForm() {
+            this.insertQuest=true;
+        },
+        detailquest(quest) {
             this.target={
                 ...quest,
             };
             this.detailQuest = this.detailQuest ? false : true;
         },
-        connectkid(quest){
+        connectkid(quest) {
             this.target={
                 ...quest,
             };
             this.connectKid = this.connectKid ? false : true;
-        },
-        addquest(){
-            this.insertQuest = this.insertQuest ? false :true;
         },
         // 퀘스트 관리탭에서 지우는 것
         deletequest(no){
@@ -280,7 +272,7 @@ export default {
             }
         },
         success(){
-            axios.put(process.env.VUE_APP_API_URL+'/api/quest/kid/finish', {
+            axios.put('/api/quest/kid/finish', {
                 //questNo:this.target.questNo,
                 
                 //parentId: this.target.parentId,

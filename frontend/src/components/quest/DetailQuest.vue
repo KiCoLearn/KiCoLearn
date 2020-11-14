@@ -1,9 +1,8 @@
 <template>
     <v-row justify="center">
         <v-dialog
-            v-model="dialog"
-            persistent
-            max-width="360"
+            :value="dialog"
+            width="360"
         >            
             <v-card>
                 <v-card-title class="headline">                    
@@ -11,8 +10,8 @@
                 </v-card-title>
                 <template>                    
                     <v-form
-                        id="form"
-                        ref="form"
+                        id="detail-form"
+                        ref="detail-form"
                         lazy-validation
                     >
                         <v-col
@@ -27,7 +26,7 @@
                             >
                                 <v-text-field
                                     ref="name"
-                                    v-model="target.name"
+                                    v-model="name"
                                     outlined
                                     clearable
                                     dense
@@ -48,7 +47,7 @@
                             >
                                 <v-text-field
                                     ref="reward"
-                                    v-model="target.reward"
+                                    v-model="reward"
                                     outlined
                                     clearable
                                     dense
@@ -69,7 +68,7 @@
                             >
                                 <v-text-field
                                     ref="description"
-                                    v-model="target.description"
+                                    v-model="description"
                                     outlined
                                     clearable
                                     dense
@@ -92,7 +91,7 @@
                     <v-btn
                         color="orange darken-1"
                         text
-                        @click="handleDialog"
+                        @click="closeDialog"
                     >
                         취소
                     </v-btn>
@@ -109,7 +108,8 @@ export default {
     name:'DetailQuest',
     props:{
         dialog:{
-            type:Boolean
+            type:Boolean,
+            required:true,
         }, 
         
         target:{
@@ -120,44 +120,41 @@ export default {
     },
     data(){
         return {
-            //valid:true,
-            //parentId:0,
-            //questNo:this.questNo,
-            //name:'',
-            //reward:'',
-            //description:'',
-            //kid: Object,
-            //quests : new Array(),
+            name:'',
+            reward:'',
+            description:'',
         };
     },
     computed:{
         ...mapGetters({
             parentId:'auth/id',
-            kidId:'auth/id'
+            kidId:'auth/select'
         })
+    },
+    watch: {
+        target(newValue){
+            this.name = newValue.name;
+            this.reward = newValue.reward;
+            this.description = newValue.description;
+        }
+      
     },
     
     methods: {
         update(){        
-            axios.put(process.env.VUE_APP_API_URL+'/api/quest/parent/update', {
-                //questNo:this.target.questNo,
-                name:this.target.name,
-                reward:this.target.reward,
-                description : this.target.description,  
-                //parentId: this.target.parentId,
-                //parentId: this.target.parentId,
-            }).then(()=>{
-                console.log('퀘스트 수정');
-                alert('수정되었습니다!');
-                this.handleDialog();
-                window.location.reload();
+            axios.put('/api/quest/parent/update', {
+                questNo:this.target.questNo,
+                name:this.name,
+                reward:this.reward,
+                description : this.description,  
+            }).then(() => {
+                this.$emit('update-success');
+                this.closeDialog();
             });
-            console.log('success!!');
-        
         },
-        handleDialog(){
-            this.$emit('handle');
-        },
+        closeDialog() {
+            this.$emit('update:dialog', false);
+        }
     },
     
 };
