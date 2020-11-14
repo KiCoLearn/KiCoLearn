@@ -1,45 +1,17 @@
 import KidQuest from '@/views/quest/KidQuest';
-import AddQuest from '@/views/quest/AddQuest';
 import ParentQuest from '@/views/quest/ParentQuest';
-import InsertQuest from '@/components/quest/InsertQuest';
-import DetailQuest from '@/components/quest/DetailQuest';
-import ConnectKid from '@/components/quest/ConnectKid';
-import KidDetailquest from '@/components/quest/KidDetailquest';
+
 export default[
     {
-        path: '/kidquest',
+        path: '/kid/quest',
         name: 'KidQuest',
-        component:KidQuest
-    },
-
-    {
-        path: '/addquest',
-        name: 'AddQuest',
-        component:AddQuest
+        component:KidQuest,
+        meta: { requireAuth: true, kidOnly: true },
     },
     {
-        path: '/insertquest',
-        name: 'InsertQuest',
-        component:InsertQuest
-    },
-    {
-        path: '/parentquest',
+        path: '/parents/quest',
         name: 'ParentQuest',
-        component:ParentQuest
-    },
-    {
-        path: '/detailquest',
-        name: 'DetailQuest',
-        component:DetailQuest
-    },
-    {
-        path: '/connectkid',
-        name: 'ConnectKid',
-        component:ConnectKid
-    },
-    {
-        path: '/kiddetailquest',
-        name: 'KidDetailquest',
-        component:KidDetailquest
+        component:ParentQuest,
+        meta: { requireAuth: true, parentsOnly: true },
     },
 ];

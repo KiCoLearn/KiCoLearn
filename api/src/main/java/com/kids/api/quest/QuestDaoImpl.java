@@ -49,7 +49,7 @@ public class QuestDaoImpl implements QuestDao {
     }
 
     @Override
-    public List<Quest> getKidQuestListByKidId(int kidId) {
+    public List<KidQuestDetail> getKidQuestListByKidId(int kidId) {
         return temp.selectList(ns + "kidQuestList", kidId);
     }
 
