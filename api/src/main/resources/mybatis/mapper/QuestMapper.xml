@@ -41,4 +41,9 @@
             where kid_id= #{kidId}
             order by quest_no desc;
 	</select>
+	
+	<update id="updateRequest" parameterType="kidsquest">
+		update kids_quest set request=true  where quest_no = #{questNo} and kid_id = #{kidId}
+	</update>
+	
 </mapper>

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.api.global.handler.Handler;
 import com.kids.api.notification.NotificationService;
-import com.kids.api.store.Item;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -152,11 +151,12 @@ public class QuestController {
         return entity;
     }
     
-    @PostMapping("/{id}/request")
-    @ApiOperation(value = "아이 퀘스트 완료")
-    public ResponseEntity<Object> finishQuest(@PathVariable int id) {
+    @PutMapping("/request")
+    @ApiOperation(value = "아이 퀘스트 완료 요청")
+    public ResponseEntity<Object> requestQuest(@RequestBody KidsQuest quest) {
         try {
-            notificationService.completeQuestFromKidId(id);
+            qService.updateRequest(quest);
+            notificationService.completeQuestFromKidId(quest.getKidId());
 
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
