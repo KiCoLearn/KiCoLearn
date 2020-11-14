@@ -29,8 +29,8 @@ public class QuestDaoImpl implements QuestDao {
     }
 
     @Override
-    public int updateQuest(int questNo) {
-        return temp.update(ns + "update", questNo);
+    public int updateQuest(Quest quest) {
+        return temp.update(ns + "update", quest);
     }
 
     @Override

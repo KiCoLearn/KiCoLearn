@@ -9,7 +9,7 @@ public interface QuestService {
 
     List<Quest> getQuestListByParentId(int parentId);
 
-    int updateQuest(int questNo);
+    int updateQuest(Quest quest);
     int deleteQuest(int questNo);
 
     int setKidsQuest(KidsQuest quest);
