@@ -3,7 +3,8 @@ import AddQuest from '@/views/quest/AddQuest';
 import ParentQuest from '@/views/quest/ParentQuest';
 import InsertQuest from '@/components/quest/InsertQuest';
 import DetailQuest from '@/components/quest/DetailQuest';
-import KidDetail from '@/components/quest/KidDetail';
+import ConnectKid from '@/components/quest/ConnectKid';
+import KidDetailquest from '@/components/quest/KidDetailquest';
 export default[
     {
         path: '/kidquest',
@@ -32,8 +33,13 @@ export default[
         component:DetailQuest
     },
     {
-        path: '/kiddetail',
-        name: 'KidDetail',
-        component:KidDetail
+        path: '/connectkid',
+        name: 'ConnectKid',
+        component:ConnectKid
+    },
+    {
+        path: '/kiddetailquest',
+        name: 'KidDetailquest',
+        component:KidDetailquest
     },
 ];

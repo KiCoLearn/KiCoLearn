@@ -15,7 +15,7 @@
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="kiddetail(quest)"
+                                    @click="kiddetailquest(quest)"
                                 >
                                     퀘스트 : {{ quest.name }}
                                 </div>
@@ -44,7 +44,7 @@
                 <div class="buttons">
                     <div class="delete" />
                 </div>
-                <kid-detail
+                <kid-detailquest
                     :target="target"
                     :dialog="kidDetail"
                     @handle="kiddetail"
@@ -62,12 +62,15 @@
 <script>
 import axios from '@/plugins/axios';
 import { mapGetters } from 'vuex';
-import KidDetail from '@/components/quest/KidDetail.vue';
+import KidDetailquest from '@/components/quest/KidDetailquest.vue';
+
+
 
 export default {
     name : 'KidQuest',
     components:{
-        KidDetail,
+        KidDetailquest
+
     },
     data() {
         return {
@@ -78,7 +81,7 @@ export default {
                 reward:null,
                 name:null,
             },
-            kidDetail:false,
+            kidDetailquest:false,
         };
     },
     computed:{
@@ -99,15 +102,27 @@ export default {
 
     },
     methods: {
-        kiddetail(quest){
+        kiddetailquest(quest){
             this.target={
                 ...quest,
             };
-            this.kidDetail = this.kidDetail ? false : true;
+            this.kidDetailquest = this.kidDetailquest ? false : true;
         },
         success(){
             let answer = confirm('퀘스트를 완료하겠습니까?');
+
             if(answer){
+                axios.put(process.env.VUE_APP_API_URL+'/api/quest/kid/finish', {
+                    parentId : this.parentId,
+                    questNo : this.questNo,
+                    kidId : this.kidId,
+
+                }).then(()=>{
+                    console.log('퀘스트 완료');
+                    this.handleDialog();
+                    window.location.reload();
+                });
+                console.log('success!!');
                 window.location.reload();
             } else {
                 return;

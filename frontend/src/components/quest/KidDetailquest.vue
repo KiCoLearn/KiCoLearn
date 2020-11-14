@@ -46,7 +46,7 @@
 <script>
 
 export default {
-    name:'KidDetail',
+    name:'KidDetailquest',
     props:{
         dialog:{
             type:Boolean

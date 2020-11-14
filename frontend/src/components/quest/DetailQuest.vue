@@ -118,12 +118,6 @@ export default {
         }
       
     },
-    computed:{
-        ...mapGetters({
-            parentId:'auth/id',
-            kidId:'auth/id'
-        })
-    },
     data(){
         return {
             //valid:true,
@@ -136,7 +130,12 @@ export default {
             //quests : new Array(),
         };
     },
-
+    computed:{
+        ...mapGetters({
+            parentId:'auth/id',
+            kidId:'auth/id'
+        })
+    },
     
     methods: {
         update(){        
