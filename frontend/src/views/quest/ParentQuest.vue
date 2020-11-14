@@ -26,14 +26,14 @@
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="detailquest(quest)" 
+                                    @click="kiddetailquest(kidquest)" 
                                 >
                                     {{ kidquest.name }}
                                 </div>
                                 <div class="right top">
                                     <button
                                         class="btn"
-                                        @click="kidquestdelete(quest.questNo)"      
+                                        @click="kiddeletequest(kidquest.questNo)"      
                                     >
                                         <img 
                                             src="@/assets/delete.png"
@@ -61,16 +61,6 @@
                     </ul>
                 </div>
                 <div>
-                    <button
-                        class="btn"
-                        @click="addquest"
-                    >
-                        <img 
-                            src="@/assets/add.png"
-                            width="40px"
-                            alt="addquest"
-                        >
-                    </button>
                     <insert-quest
                         :dialog="insertQuest"
                         @handle="addquest"
@@ -265,8 +255,9 @@ export default {
         addquest(){
             this.insertQuest = this.insertQuest ? false :true;
         },
+        // 퀘스트 관리탭에서 지우는 것
         deletequest(no){
-            let answer = confirm('아이템을 삭제하시겠습니까?');
+            let answer = confirm('퀘스트를 삭제하시겠습니까?');
             if(answer){
                 axios.delete(process.env.VUE_APP_API_URL+'/api/quest/parent/delete/'+no)
                     .then(()=>{
@@ -276,25 +267,33 @@ export default {
                 return;
             }
         },
-        // addkidquest(){
-        //     axios.post(process.env.VUE_APP_API_URL+'/api/quest/kid/regist', {
-                         
-        //         kidId: this.kidId,    
-        //         questNo : this.target.questNo,
-        //         'startTime': new Date(this.year, this.month-1, this.day),
-        //         'endTime' : new Date(this.endyear, this.endmonth-1, this.endday),
-  
-        //     })
-        //         .then(()=>{
-        //             console.log('퀘스트 번호'+ this.target.questNo);
-        //             console.log(this.qusestNo);
-        //             alert('등록되었습니다!');
-        //             this.handleDialog();
-        //             window.location.reload();
-        //         });
-        //     console.log('success!!');
-
-        // },
+        // 아이퀘스트 탭에서 지우는것 
+        kiddeletequest(no){
+            let answer = confirm('퀘스트를 삭제하시겠습니까?');
+            if(answer){
+                axios.delete(process.env.VUE_APP_API_URL+'/api/quest/kid/delete/'+no+'/'+this.kidId)
+                    .then(()=>{
+                        window.location.reload();
+                    });
+            } else {
+                return;
+            }
+        },
+        success(){
+            axios.put(process.env.VUE_APP_API_URL+'/api/quest/kid/finish', {
+                //questNo:this.target.questNo,
+                
+                //parentId: this.target.parentId,
+                //parentId: this.target.parentId,
+            }).then(()=>{
+                console.log('퀘스트 완료!');
+                alert('완료 승인 되었습니다!');
+                this.handleDialog();
+                window.location.reload();
+            });
+            console.log('success!!');
+            
+        },
         handleConnectquest(quest){
             this.kidquests.push(quest);
         },
