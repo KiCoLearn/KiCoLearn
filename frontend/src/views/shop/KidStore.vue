@@ -25,7 +25,7 @@
                     </div>
                     <div class="money-amount pt-1">
                         <p class="font-weight-black">
-                            1000 원
+                            {{ holding }} 원
                         </p>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ export default {
         return {
             kidItems:[],
             likeNo:0,
-            amount:0
+            holding:0
         };
     },
 
@@ -80,8 +80,8 @@ export default {
             });
         axios.get(process.env.VUE_APP_API_URL + '/api/money/'+this.kidId)
             .then((res)=>{
-                console.log(res.data.data);
-                //this.amount = res.data.data;
+                //console.log(res.data.data);
+                this.holding = res.data.data;
             });
     },
     methods:{
