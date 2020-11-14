@@ -15,9 +15,40 @@
             <button
                 v-if="role === 'parents' && isAuthorized"
                 class="head error btn"
+                @click="dialog=true"
             >
                 <b>회원탈퇴</b>
             </button>
+
+            <v-dialog
+                v-model="dialog"
+                width="300"
+            >
+                <v-card>
+                    <v-card-title style="display:flex;justify-content:center">
+                        <b>정말 탈퇴하시겠습니까?</b>
+                    </v-card-title>
+                    <v-card-actions>
+                        <v-spacer />
+
+                        <v-btn
+                            color="green darken-1"
+                            text
+                            @click="dialog = false"
+                        >
+                            <b>취소</b>
+                        </v-btn>
+
+                        <v-btn
+                            color="green darken-1"
+                            text
+                            @click="unlink"
+                        >
+                            <b>탈퇴</b>
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
 
             <button
                 v-if="role === 'parents' && isAuthorized"
@@ -99,6 +130,7 @@ export default {
     data() {
         return {
             kids: new Array(),
+            dialog:false,
         };
     },
     computed: {
@@ -152,6 +184,16 @@ export default {
                 }).finally(() => {
                 });
         },
+        unlink() {
+            this.$store.dispatch('auth/unlink')
+                .then(() => {
+                    this.dialog=false;
+                    this.$router.push({name:'Main'});
+                }).catch(() => {
+
+                }).finally(() => {
+                });
+        }
     },
 };
 </script>

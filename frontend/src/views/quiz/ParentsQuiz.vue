@@ -83,12 +83,13 @@ export default {
         background: #4A655A;
         border : 6px rgb(142, 105, 13) solid;
         color: white;
+        padding: 10px;
     }
 
     ::v-deep &-box {
         margin: auto;
         margin-bottom: 15px;
-        width: 60%;
+        width: 62%;
         font-size: 1.7rem;
         border-radius: 4px;
     }
