@@ -330,7 +330,7 @@ export default {
 
 .wrapper {
   width: 100%;
-  margin: 10px auto;
+  margin: 10px auto 0px auto;
   max-width: 800px;
   height: 100%;
 }
@@ -385,7 +385,6 @@ export default {
   display: none;
   border-top: 5px solid #20B7E5;
   border-radius: 0 10px 10px 10px;
-  overflow-y: scroll;
 }
 .tab2{
   width: 100%;
@@ -397,8 +396,6 @@ export default {
   display: none;
   border-top: 5px solid #20B7E5;
   border-radius: 0 10px 10px 10px;
-  overflow-y: scroll;
-
 }
 
 ul {
