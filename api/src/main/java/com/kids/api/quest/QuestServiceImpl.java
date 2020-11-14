@@ -38,7 +38,9 @@ public class QuestServiceImpl implements QuestService {
 
     @Override
     public int finishKidsQuest(KidsQuest quest) {
-        return qDao.finishKidsQuest(quest);
+        int count = qDao.finishKidsQuest(quest);
+        if (count!=1) throw new RuntimeException("퀘스트가 없거나 완료되지 못함.");
+        return 1;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class QuestServiceImpl implements QuestService {
     }
 
     @Override
-    public List<Quest> getKidQuestListByKidId(int kidId) {
+    public List<KidQuestDetail> getKidQuestListByKidId(int kidId) {
         return qDao.getKidQuestListByKidId(kidId);
     }
 

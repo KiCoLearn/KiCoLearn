@@ -114,8 +114,8 @@ public class QuestController {
     public ResponseEntity<Map<String, Object>> getKidsQuestListByKidId(@PathVariable int kidId) {
         ResponseEntity<Map<String, Object>> entity = null;
         try {
-            List<Quest> list = qService.getKidQuestListByKidId(kidId);
-            logger.debug("kid_quest: " + list);
+            List<KidQuestDetail> list = qService.getKidQuestListByKidId(kidId);
+            logger.info("kid_quest: " + list);
             entity = resultHandler.handleSuccess(list);
         } catch (RuntimeException e) {
             entity = resultHandler.handleException(e);
@@ -141,7 +141,7 @@ public class QuestController {
     @ApiOperation(value = "아이 퀘스트 완료")
     public ResponseEntity<Map<String, Object>> finishQuest(@RequestBody KidsQuest kidQuest) {
         ResponseEntity<Map<String, Object>> entity = null;
-        logger.debug("finish kid_quest: " + kidQuest);
+        logger.info("finish kid_quest: " + kidQuest);
         try {
             qService.finishKidsQuest(kidQuest);
             int kidId = kidQuest.getKidId();
