@@ -19,7 +19,7 @@
                                 <div
                                     class="detail"
                                 >
-                                    보상 포인트 :{{ quest.reward }}
+                                    포인트 : {{ quest.reward }}
                                 </div>
                                 <div class="right top">
                                     <button
@@ -29,8 +29,8 @@
                                         <img
                                             :id="`${quest.questNo}-image`"
                                             class="complete-image"
-                                            :src="!quest.finish ? finishquest :questsucc"
-                                            width="80px"
+                                            :src="!quest.finish ? requestquest :finishquest"
+                                            width="100px"
                                             alt="success"
                                         >
                                     </button>
@@ -73,8 +73,8 @@ export default {
                 
             },
             kidDetailquest: false,
-            questsucc: `${require('@/assets/questsucc.png')}`,
-            finishquest :  `${require('@/assets/finish_resize.png')}`
+            requestquest: `${require('@/assets/request.png')}`,
+            finishquest :  `${require('@/assets/good.png')}`
           
 
         };
@@ -127,13 +127,12 @@ export default {
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
 .complete-image {
   position: absolute;
-  top: 1px;
-  right: -42px;
-
+  top: -30px;
+  right: -58px;
   width: auto;
   height: auto;
-  max-width: 5rem;
-  max-height: 4rem;
+  max-width: 5.5rem;
+  max-height: 5.5rem;
 }
 
 #app {
@@ -332,6 +331,7 @@ li {
 .detail{
   width: 70%;
   margin-top: 5px;
+  text-align: left;
 }
 .right {
   float: right;

@@ -76,24 +76,7 @@ export default {
     data() {
         return {
             quests: [
-                {
-                    id: 1,
-                    title: '미션 성공',
-                    price: 500,
-                    imgsrc: require('@/assets/questsuc.png')
-                },
-                {
-                    id: 2,
-                    title: '깁밥',
-                    price: 749,
-                    imgsrc: require('@/assets/questsuc.png')
-                },
-                {
-                    id: 3,
-                    title: '용돈',
-                    price: 949,
-                    imgsrc: require('@/assets/questsuc.png')
-                },
+                
             ],
            
         };

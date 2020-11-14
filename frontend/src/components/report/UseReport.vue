@@ -33,19 +33,19 @@ export default {
                     id: 1,
                     title: '소비가 줄었어요!',
                     percent: 23,
-                    imgsrc: require('@/assets/questsuc.png')
+                    imgsrc: require('@/assets/great.png')
                 },
                 {
                     id: 2,
                     title: '소비가 줄었어요!',
                     percent: 50,
-                    imgsrc: require('@/assets/questsuc.png')
+                    imgsrc: require('@/assets/great.png')
                 },
                 {
                     id: 3,
                     title: '소비가 늘었어요!',
                     percent: 40,
-                    imgsrc: require('@/assets/questsuc.png')
+                    imgsrc: require('@/assets/great.png')
                 },
 
             ],

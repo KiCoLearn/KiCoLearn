@@ -38,14 +38,16 @@
                                             width="30px"
                                         >
                                     </button>
-                          
                                     <button
                                         class="btn"
                                         @click="successQuest(kidQuest)"      
                                     >
-                                        <img 
-                                            src="@/assets/success.png"
-                                            width="30px"
+                                        <img
+                                            :id="`${kidQuest}-image`"
+                                            class="complete-image"
+                                            :src="!kidQuest.request ? norequest :newrequest"
+                                            width="100px"
+                                            alt="success"
                                         >
                                     </button>
                                 </div>
@@ -143,6 +145,8 @@ export default {
                 reward:null,
                 name:null,
             },
+            norequest: `${require('@/assets/norequest.png')}`,
+            newrequest :  `${require('@/assets/newrequest.png')}`
 
         };
     },
@@ -171,6 +175,7 @@ export default {
             axios.get('/api/quest/kid/list/'+this.kidId)
                 .then((res) => {
                     this.kidQuests = res.data.data;
+                    console.log(this.kidQuests);
                 })
                 .catch(err => {
                     console.log(err);
@@ -216,7 +221,15 @@ export default {
 * {
   box-sizing: border-box;
 }
-
+.complete-image {
+  position: absolute;
+  top: -22px;
+  right: -60px;
+  width: auto;
+  height: auto;
+  max-width: 4.5rem;
+  max-height: 4.5rem;
+}
 .wrapper {
   width: 100%;
   margin: 10px auto;

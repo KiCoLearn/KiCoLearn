@@ -76,11 +76,11 @@ export default {
     computed: {
         formatedStartTime(){
             if(!this.target || !this.target.startTime) return null;
-            return new Date(this.target.startTime).format('yyyy년 MM월 dd일');
+            return new Date(this.target.startTime).format('yyyy년 MM월 dd일 hh시 mm분');
         },
         formatedEndTime(){
             if(!this.target || !this.target.endTime) return null;
-            return new Date(this.target.endTime).format('yyyy년 MM월 dd일');
+            return new Date(this.target.endTime).format('yyyy년 MM월 dd일 hh시 mm분');
         },
     },
     methods:{
