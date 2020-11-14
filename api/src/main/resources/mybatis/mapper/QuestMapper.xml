@@ -11,8 +11,8 @@
 		insert into quest(name, reward, description, parent_id) values(#{name}, #{reward}, #{description}, #{parentId})			
 	</insert>
 	
-	<update id="update" parameterType="int">
-		update quest set where quest_no = #{questNo}
+	<update id="update" parameterType="quest">
+		update quest set name=#{name}, reward=#{reward}, description=#{description} where quest_no = #{questNo}
 	</update>
 	
 	<select id="list" parameterType="int" resultType="quest">

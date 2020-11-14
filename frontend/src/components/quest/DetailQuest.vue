@@ -1,9 +1,8 @@
 <template>
     <v-row justify="center">
         <v-dialog
-            v-model="dialog"
-            persistent
-            max-width="360"
+            :value="dialog"
+            width="360"
         >            
             <v-card>
                 <v-card-title class="headline">                    
@@ -11,9 +10,8 @@
                 </v-card-title>
                 <template>                    
                     <v-form
-                        id="form"
-                        ref="form"
-                        v-model="valid"
+                        id="detail-form"
+                        ref="detail-form"
                         lazy-validation
                     >
                         <v-col
@@ -93,7 +91,7 @@
                     <v-btn
                         color="orange darken-1"
                         text
-                        @click="handleDialog"
+                        @click="closeDialog"
                     >
                         취소
                     </v-btn>
@@ -105,51 +103,58 @@
 
 <script>
 import axios from '@/plugins/axios';
-
+import { mapGetters } from 'vuex';
 export default {
     name:'DetailQuest',
     props:{
         dialog:{
-            type:Boolean
-        },
+            type:Boolean,
+            required:true,
+        }, 
+        
+        target:{
+            type:Object,
+            required:true
+        }
+      
     },
     data(){
         return {
-            valid:true,
-            parentId:0,
-            questNo:this.questNo,
             name:'',
             reward:'',
             description:'',
         };
     },
-    created() {
-        this.name = this.item.name;
-        this.description = this.item.description;
-        this.reward = this.item.reward;
-        this.parentId = this.item.parentId;
+    computed:{
+        ...mapGetters({
+            parentId:'auth/id',
+            kidId:'auth/select'
+        })
+    },
+    watch: {
+        target(newValue){
+            this.name = newValue.name;
+            this.reward = newValue.reward;
+            this.description = newValue.description;
+        }
+      
     },
     
     methods: {
         update(){        
-            if (this.$refs.form.validate()){
-                axios.put(process.env.VUE_APP_API_URL+'/api/quest/update', {
-                    'description' : this.item.description,    
-                    'name':this.item.name,
-                    'parentId': this.item.parentId,
-                    'reward':this.item.reward,
-                })
-                    .then(()=>{
-                        alert('수정되었습니다!');
-                        this.back();
-                        window.location.reload();
-                    });
-                console.log('success!!');
-            }
+            axios.put('/api/quest/parent/update', {
+                questNo:this.target.questNo,
+                name:this.name,
+                reward:this.reward,
+                description : this.description,  
+            }).then(() => {
+                this.$emit('update-success');
+                this.closeDialog();
+            });
         },
-        handleDialog(){
-            this.$emit('handle');
-        },
+        closeDialog() {
+            this.$emit('update:dialog', false);
+        }
     },
     
 };

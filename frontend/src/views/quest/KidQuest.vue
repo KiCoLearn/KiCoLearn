@@ -7,7 +7,7 @@
             >
                 <div class="quest-list">
                     <ul
-                        v-for="(quests,idx) in quests" 
+                        v-for="(quest,idx) in quests" 
                         id="notebook_ul" 
                         :key="idx"
                     >
@@ -15,16 +15,15 @@
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="detailquest"
+                                    @click="kiddetailquest(quest)"
                                 >
-                                    퀘스트 : {{ quests.name }}
+                                    퀘스트 : {{ quest.name }}
                                 </div>
                                   &nbsp;
                                 <div
                                     class="detail"
-                                    @click="detailquest"
                                 >
-                                    보상 포인트 :{{ quests.reward }}
+                                    보상 포인트 :{{ quest.reward }}
                                 </div>
                                 <div class="right top">
                                     <button
@@ -45,6 +44,11 @@
                 <div class="buttons">
                     <div class="delete" />
                 </div>
+                <kid-detailquest
+                    :target="target"
+                    :dialog="kidDetail"
+                    @handle="kiddetail"
+                />
             </div>
             <div class="clip">
                 <div class="clip-gray" />
@@ -58,11 +62,26 @@
 <script>
 import axios from '@/plugins/axios';
 import { mapGetters } from 'vuex';
+import KidDetailquest from '@/components/quest/KidDetailquest.vue';
+
+
+
 export default {
     name : 'KidQuest',
+    components:{
+        KidDetailquest
+
+    },
     data() {
         return {
             quests: new Array(),
+            target:{
+                description:null,
+                questNo:null,
+                reward:null,
+                name:null,
+            },
+            kidDetailquest:false,
         };
     },
     computed:{
@@ -83,9 +102,27 @@ export default {
 
     },
     methods: {
+        kiddetailquest(quest){
+            this.target={
+                ...quest,
+            };
+            this.kidDetailquest = this.kidDetailquest ? false : true;
+        },
         success(){
             let answer = confirm('퀘스트를 완료하겠습니까?');
+
             if(answer){
+                axios.put(process.env.VUE_APP_API_URL+'/api/quest/kid/finish', {
+                    parentId : this.parentId,
+                    questNo : this.questNo,
+                    kidId : this.kidId,
+
+                }).then(()=>{
+                    console.log('퀘스트 완료');
+                    this.handleDialog();
+                    window.location.reload();
+                });
+                console.log('success!!');
                 window.location.reload();
             } else {
                 return;

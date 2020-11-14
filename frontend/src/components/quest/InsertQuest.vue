@@ -2,8 +2,7 @@
     <v-row justify="center">
         <v-dialog
             v-model="dialog"
-            persistent
-            max-width="360"
+            width="360"
         >            
             <v-card>
                 <v-card-title class="headline">                    
@@ -11,25 +10,25 @@
                 </v-card-title>
                 <template>                    
                     <v-form
-                        id="form"
-                        ref="form"
+                        id="insert-form"
+                        ref="insert-form"
                         lazy-validation
                     >
                         <v-text-field
-                            id="text"
                             v-model="name"
+                            type="text"
                             label="퀘스트 명"
                             required                            
                         />
                         <v-text-field
-                            id="text"
                             v-model="reward"
+                            type="number"
                             label="보상"
                             required                            
                         />
                         <v-text-field
-                            id="text"
                             v-model="description"
+                            type="text"
                             label="설명"
                             required                            
                         />                        
@@ -39,15 +38,13 @@
                     <v-spacer />
                     <v-btn
                         color="orange darken-1"
-                        text
-                        @click="handleAddItem"
+                        @click="insert"
                     >
                         등록
                     </v-btn>
                     <v-btn
                         color="orange darken-1"
-                        text
-                        @click="handleDialog"
+                        @click="closeDialog"
                     >
                         취소
                     </v-btn>
@@ -59,53 +56,47 @@
 
 <script>
 import axios from '@/plugins/axios';
-
+import { mapGetters } from 'vuex';
 export default {
-    name:'InsertQuest',
-    props:{
-        dialog:{
-            type:Boolean
+    name: 'InsertQuest',
+    props: {
+        dialog: {
+            type: Boolean,
+            required: true,
         },
     },
-    data(){
+    data() {
         return {
             name:'',
             reward:'',
-            description:'',
-            parentId:4,
+            description:'',  
         };
     },
+    computed: {
+        ...mapGetters({
+            parentId:'auth/id',
+            kidId:'auth/select'
+        })
+    },
     methods: {
-        handleAddItem(){        
-            if (this.$refs.form.validate()){
-                axios.post(process.env.VUE_APP_API_URL+'/api/quest/parent/regist', {
-                    description: this.description,    
+        insert() {        
+            if (this.$refs['insert-form'].validate()) {
+                axios.post('/api/quest/parent/regist', {
                     name: this.name,
                     parentId: this.parentId,
                     reward: this.reward,
+                    description: this.description,    
                 })
-                    .then(()=>{
-                        alert('등록되었습니다!');
-                        this.handleDialog();
-                        window.location.reload();
+                    .then(() => {
+                        this.$emit('insert-success');
+                        this.closeDialog();
                     });
-                console.log('success!!');
             }
         },
-        handleDialog(){
-            this.$emit('handle');
-        },
+        closeDialog() {
+            this.$emit('update:dialog', false);
+        }
     },
     
 };
 </script>
-
-<style>
-#form{
-    padding:0.4rem;    
-}
-#text{
-    margin: 0.2rem;
-    width: 300px;
-}
-</style>
