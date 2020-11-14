@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.api.global.handler.Handler;
@@ -151,12 +152,13 @@ public class QuestController {
         return entity;
     }
     
-    @PutMapping("/request")
+
+    @PostMapping("/{id}/request")
     @ApiOperation(value = "아이 퀘스트 완료 요청")
-    public ResponseEntity<Object> requestQuest(@RequestBody KidsQuest quest) {
+    public ResponseEntity<Object> finishQuest(@PathVariable("id") int kidId,
+    		@RequestParam int questNo) {
         try {
-            qService.updateRequest(quest);
-            notificationService.completeQuestFromKidId(quest.getKidId());
+            notificationService.completeQuestFromKidId(kidId);
 
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {

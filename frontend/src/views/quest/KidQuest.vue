@@ -7,32 +7,30 @@
             >
                 <div class="quest-list">
                     <ul
-                        v-for="(quest,idx) in quests" 
+                        v-for="(quest) in quests" 
                         id="notebook_ul" 
-                        :key="idx"
+                        :key="quest.questNo"
                     >
                         <li>
                             <v-row>
-                                <div
-                                    class="detail"
-                                    @click="kiddetailquest(quest)"
-                                >
-                                    퀘스트 : {{ quest.name }}
-                                </div>
-                                  &nbsp;
+                                <kid-detailquest
+                                    :target="quest"
+                                />
                                 <div
                                     class="detail"
                                 >
-                                    보상 포인트 :{{ quest.reward }}
+                                    포인트 : {{ quest.reward }}
                                 </div>
                                 <div class="right top">
                                     <button
                                         class="btn"
-                                        @click="success"
+                                        @click="success(quest.questNo)"
                                     >
-                                        <img 
-                                            src="@/assets/questsucc.png"
-                                            width="30px"
+                                        <img
+                                            :id="`${quest.questNo}-image`"
+                                            class="complete-image"
+                                            :src="!quest.finish ? requestquest :finishquest"
+                                            width="100px"
                                             alt="success"
                                         >
                                     </button>
@@ -40,15 +38,10 @@
                             </v-row>
                         </li>
                     </ul>
-                </div>
+                </div>     
                 <div class="buttons">
                     <div class="delete" />
                 </div>
-                <kid-detailquest
-                    :target="target"
-                    :dialog="kidDetail"
-                    @handle="kiddetail"
-                />
             </div>
             <div class="clip">
                 <div class="clip-gray" />
@@ -62,7 +55,7 @@
 <script>
 import axios from '@/plugins/axios';
 import { mapGetters } from 'vuex';
-import KidDetailquest from '@/components/quest/KidQuestDetail.vue';
+import KidDetailquest from '@/components/quest/KidQuestDetail2.vue';
 
 export default {
     name : 'KidQuest',
@@ -77,9 +70,15 @@ export default {
                 questNo:null,
                 reward:null,
                 name:null,
+                
             },
-            kidDetailquest:false,
+            kidDetailquest: false,
+            requestquest: `${require('@/assets/request.png')}`,
+            finishquest :  `${require('@/assets/good.png')}`
+          
+
         };
+        
     },
     computed:{
         ...mapGetters({    
@@ -87,35 +86,32 @@ export default {
         })
     },
     created() {
-        axios.get('/api/quest/kid/list/'+this.kidId)
-            .then((res) => {
-                console.log(res.data.data);
-                this.quests = res.data.data;
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
+        this.fetchQuests();
     },
     methods: {
-        kiddetailquest(quest){
-            this.target={
-                ...quest,
-            };
-            this.kidDetailquest = this.kidDetailquest ? false : true;
+        fetchQuests() {
+            axios.get('/api/quest/kid/list/'+this.kidId)
+                .then((res) => {
+                    this.quests = res.data.data;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         },
-        success(){
-            let answer = confirm('퀘스트를 완료 요청을 보낼까요?');
+        success(questNo){
+            let answer = confirm('퀘스트 완료 요청을 보낼까요?');
 
             if(answer){
-                axios.put('/api/quest/request', {
-                    questNo : this.questNo,
-                    kidId : this.kidId,
-
+                axios({
+                    url: `/api/quest/${this.kidId}/request`,
+                    method: 'post',
+                    params: {
+                        questNo: questNo,
+                    },
                 }).then(()=>{
                     console.log('퀘스트 완료');
-                    this.handleDialog();
-                    window.location.reload();
+                    //this.handleDialog();
+                    this.fetchQuests();
                 });
             } else {
                 return;
@@ -129,7 +125,24 @@ export default {
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Gochi+Hand);
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+.complete-image {
+  position: absolute;
+  top: -30px;
+  right: -58px;
+  width: auto;
+  height: auto;
+  max-width: 5.5rem;
+  max-height: 5.5rem;
+}
 
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    height: 90%;
+}
 .container {
   position: relative;
   max-width:330px;
@@ -318,6 +331,7 @@ li {
 .detail{
   width: 70%;
   margin-top: 5px;
+  text-align: left;
 }
 .right {
   float: right;

@@ -16,6 +16,7 @@ public class KidQuestDetail {
     private Timestamp startTime;
     private Timestamp endTime;
     private boolean finish;
+    private boolean request;
     private String name;
     private int reward;
     private String description;
