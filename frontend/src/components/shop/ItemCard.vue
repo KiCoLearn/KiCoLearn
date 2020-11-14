@@ -16,11 +16,49 @@
                 class="text-left" 
                 v-text="sendData.description"                            
             />
-
-            <v-card-text 
-                class="text-left"                            
-                v-text="sendData.price" 
-            />
+            <v-spacer />
+            <div class="parent">
+                <div class="child1">
+                    <v-img
+                        class="child1 mr-3"
+                        :src="require('@/assets/coins.png')"
+                        width="25px"
+                        height="25px"
+                    />
+                </div>
+                <div>
+                    <p class="child2 font-weight-bold pr-5">
+                        {{ sendData.price }}원
+                    </p>
+                </div>
+                <!-- <v-card-text
+                    class="left mx-auto"
+                >
+                    <v-img
+                        :src="require('@/assets/coins.png')"
+                        width="20px"
+                        height="20px"
+                    />
+                </v-card-text>                         
+                <v-card-text 
+                    class="right mx-auto"                    
+                >  
+                    {{ sendData.price }}
+                </v-card-text> -->
+                <!-- <v-btn
+                    text
+                    disabled
+                >
+                    <v-img
+                        :src="require('@/assets/coins.png')"
+                        width="30px"
+                        height="30px"
+                    />                    
+                </v-btn>
+                <p class="font-weight-bold pr-5">
+                    {{ sendData.price }}원
+                </p> -->
+            </div>
 
             <v-card-actions class="text-right">
                 <v-btn
@@ -106,5 +144,25 @@ export default {
 .item-img{
     height: 150px;
     object-fit: contain;
+}
+div.v-card__text.left{
+    float: left;
+    width: 20%;
+    padding: 0;
+}
+div.v-card__text.right{
+    float: left;
+    width: 80%;
+    padding: 0;
+}
+.parent {
+    display: flex;
+}
+.child1 {
+    flex: 1;
+    float: right;
+}
+.child2 {
+    flex: 2;
 }
 </style>
