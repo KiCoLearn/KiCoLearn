@@ -152,8 +152,9 @@ public class QuestController {
         return entity;
     }
     
+
     @PostMapping("/{id}/request")
-    @ApiOperation(value = "아이 퀘스트 완료")
+    @ApiOperation(value = "아이 퀘스트 완료 요청")
     public ResponseEntity<Object> finishQuest(@PathVariable("id") int kidId,
     		@RequestParam int questNo) {
         try {

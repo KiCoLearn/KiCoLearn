@@ -6,7 +6,7 @@
                 class="quiz-description"
             >
                 <div class="quiz-main">
-                    해설 : {{ todayProblem.description }}
+                    {{ todayProblem.description }}
                 </div>
             </v-row>
 

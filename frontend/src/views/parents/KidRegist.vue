@@ -12,6 +12,7 @@
 
             <v-dialog
                 v-model="dialog"
+                persistent
                 scrollable
                 width="300px"
             >

@@ -43,7 +43,7 @@ public class NotificationService {
                                                       .notification(Notification.builder()
                                                                                 .title("아이가 퀘스트를 완료했어요!")
                                                                                 .body("확인해주세요")
-                                                                                .click_action("parentquest")
+                                                                                .click_action("parents/quest")
                                                                                 .build())
                                                       .data(NotificationData.builder()
                                                                             .message("합니다")

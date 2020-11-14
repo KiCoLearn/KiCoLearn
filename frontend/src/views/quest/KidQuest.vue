@@ -61,7 +61,6 @@ export default {
     name : 'KidQuest',
     components:{
         KidDetailquest
-
     },
     data() {
         return {
@@ -100,7 +99,7 @@ export default {
                 });
         },
         success(questNo){
-            let answer = confirm('퀘스트를 완료하겠습니까?');
+            let answer = confirm('퀘스트 완료 요청을 보낼까요?');
 
             if(answer){
                 axios({
@@ -147,11 +146,12 @@ export default {
 }
 .container {
   position: relative;
-  width: 100%;
+  max-width:330px;
   height: 600px;
-  top: 23rem;
+  top: 21rem;
   left: 50%;
   transform: translate(-50%, -50%);
+  margin: unset;
 }
 .container .list-board {
   position: absolute;
@@ -169,7 +169,7 @@ export default {
   position: absolute;
   background: #ffe8d6;
   width: 86%;
-  height: 90%;
+  height: 90% !important;
   left: 7%;
   top: 5%;
   box-shadow: 2px 2px 0 rgba(80, 20, 13, 0.3);
