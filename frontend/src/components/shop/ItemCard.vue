@@ -1,7 +1,7 @@
 <template>
     <v-card
         id="card"
-        class="mx-auto"
+        class="mx-auto mb-3 mt-1"
     >
         <v-img
             class="item-img"
@@ -94,7 +94,7 @@ export default {
 <style>
 #card {
     margin: 0.01rem;
-    max-width: 340px;
+    max-width: 320px;
     min-width: 300px;
     border-radius: 20px;    
 }

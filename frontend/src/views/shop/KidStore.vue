@@ -1,13 +1,23 @@
 <template>
     <div class="kidstore">
-        <item-card 
-            v-for="item in kidItems"
-            :key="item.itemNo"                    
-            :send-data="item"
-            :like-no="likeNo"
-            @handleLike="likeItem"
-            @releaseLike="releaseLike"
-        />
+        <div>
+            <v-img
+                class="mx-auto"
+                :src="require('@/assets/shop.png')"
+                width="128"
+                height="128"
+            />
+        </div>
+        <div class="store-back mx-auto">
+            <item-card 
+                v-for="item in kidItems"
+                :key="item.itemNo"                    
+                :send-data="item"
+                :like-no="likeNo"
+                @handleLike="likeItem"
+                @releaseLike="releaseLike"
+            />
+        </div>
     </div>
 </template>
 
@@ -78,5 +88,13 @@ export default {
     display: inline;
     padding: 0;
     justify-content: center;
+}
+.store-back{
+    background-color: #ffffff;
+    width: 100%;
+    border-radius: 10px;
+    padding: 3px;
+    border-top: 15px solid #b3754c;
+    border-bottom: 15px solid #b3754c;
 }
 </style>
