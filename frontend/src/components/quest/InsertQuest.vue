@@ -3,7 +3,20 @@
         <v-dialog
             v-model="dialog"
             width="360"
-        >            
+        >
+            <template v-slot:activator="{ on, attrs }">
+                <button
+                    class="btn"
+                    v-bind="attrs"
+                    v-on="on"
+                >
+                    <img 
+                        src="@/assets/add.png"
+                        width="40px"
+                        alt="addquest"
+                    >
+                </button>
+            </template>
             <v-card>
                 <v-card-title class="headline">                    
                     퀘스트 등록
@@ -59,14 +72,9 @@ import axios from '@/plugins/axios';
 import { mapGetters } from 'vuex';
 export default {
     name: 'InsertQuest',
-    props: {
-        dialog: {
-            type: Boolean,
-            required: true,
-        },
-    },
     data() {
         return {
+            dialog: false,
             name:'',
             reward:'',
             description:'',  
@@ -94,7 +102,7 @@ export default {
             }
         },
         closeDialog() {
-            this.$emit('update:dialog', false);
+            this.dialog = false;
         }
     },
     

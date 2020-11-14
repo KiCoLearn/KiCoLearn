@@ -62,9 +62,7 @@
 <script>
 import axios from '@/plugins/axios';
 import { mapGetters } from 'vuex';
-import KidDetailquest from '@/components/quest/KidDetailquest.vue';
-
-
+import KidDetailquest from '@/components/quest/KidQuestDetail.vue';
 
 export default {
     name : 'KidQuest',

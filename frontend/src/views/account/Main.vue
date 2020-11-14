@@ -2,14 +2,20 @@
     <div class="login">
         <v-layout>
             <v-flex>
-                <v-row justify="center"> 
+                <v-row
+                    justify="center"
+                    style="margin-bottom:15px"
+                >  
                     <img
-                        src="@/assets/adults.png"
-                        width="150px"
+                        src="@/assets/logo.png"
+                        width="300px"
                     >
                 </v-row>
 
-                <v-row justify="center">
+                <v-row
+                    justify="center"
+                    style="margin-bottom:0px"
+                >
                     <Kakao />
                 </v-row>
 

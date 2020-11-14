@@ -18,60 +18,42 @@
             <div class="tab1">
                 <div>
                     <ul
-                        v-for="kidquest in kidquests" 
+                        v-for="kidQuest in kidQuests" 
                         id="notebook_ul" 
-                        :key="kidquest.questNo"
+                        :key="kidQuest.questNo"
                     >
                         <li>
                             <v-row>
-                                <div
-                                    class="detail"
-                                    @click="detailquest(kidquest)" 
-                                >
-                                    {{ kidquest.name }}
-                                </div>
+                                <kid-quest-detail
+                                    :target="kidQuest"
+                                    @update-success="fetchKidQuests"
+                                />
                                 <div class="right top">
                                     <button
                                         class="btn"
-                                        @click="deletequest(kidquest.questNo)"      
+                                        @click="deleteKidQuest(kidQuest.questNo)"      
                                     >
                                         <img 
                                             src="@/assets/delete.png"
                                             width="30px"
-                                            alt="kidquestdelete"
                                         >
                                     </button>
                           
-                                    &nbsp;
-                                    &nbsp;
                                     <button
                                         class="btn"
-                                        @click="success"      
+                                        @click="successQuest(kidQuest)"      
                                     >
                                         <img 
                                             src="@/assets/success.png"
                                             width="30px"
-                                            alt="success"
                                         >
                                     </button>
-                                    <div />
                                 </div>
                             </v-row>
                         </li>
                     </ul>
                 </div>
-                <!-- <div>
-                    <insert-quest
-                        :dialog="insertQuest"
-                        @handle="addquest"
-                    /> 
-                    <detail-quest
-                        :target="target"
-                        :dialog="detailQuest"
-                        @handle="detailquest"
-                        @update-success="fetchParentsQuests"
-                    />
-                </div> -->
+                <div />
             </div>
 
             <!--퀘스트 관리 탭 -->
@@ -84,16 +66,14 @@
                     >
                         <li>
                             <v-row>
-                                <div
-                                    class="detail"
-                                    @click="detailquest(quest)"
-                                >
-                                    {{ quest.name }}
-                                </div>
+                                <detail-quest
+                                    :target="quest"
+                                    @update-success="fetchParentsQuests"
+                                />
                                 <div class="right top">
                                     <button
                                         class="btn"
-                                        @click="deletequest(quest.questNo)"
+                                        @click="deleteQuest(quest.questNo)"
                                     >
                                         <img 
                                             src="@/assets/delete.png"
@@ -102,47 +82,19 @@
                                         >
                                     </button>
                                     
-                                    <button
-                                        class="btn"
-                                        @click="connectkid(quest)"
-                                    >
-                                        <img 
-                                            src="@/assets/children.png"
-                                            width="30px"
-                                            alt="addquest"
-                                        >
-                                    </button>
+                                    <connect-kid
+                                        :target="quest"
+                                        @connect-success="fetchKidQuests"
+                                    />
                                 </div>
                             </v-row>
                         </li>
                     </ul>
                 </div>
                 <div>
-                    <button
-                        class="btn"
-                        @click="openInsertForm"
-                    >
-                        <img 
-                            src="@/assets/add.png"
-                            width="40px"
-                            alt="addquest"
-                        >
-                    </button>
                     <insert-quest
-                        :dialog.sync="insertQuest"
                         @insert-success="fetchParentsQuests"
                     /> 
-                    <connect-kid
-                        :target="target"
-                        :dialog="connectKid"
-                        @handle="connectKid"
-                        @handleConnectquest="handleConnectquest"
-                    />
-                    <detail-quest
-                        :target="target"
-                        :dialog.sync="detailQuest"
-                        @update-success="fetchParentsQuests"
-                    />
                 </div>
             </div>
         </div>
@@ -154,22 +106,21 @@ import axios from '@/plugins/axios';
 import InsertQuest from '@/components/quest/InsertQuest.vue';
 import DetailQuest from '@/components/quest/DetailQuest.vue';
 import ConnectKid from '@/components/quest/ConnectKid.vue';
+import KidQuestDetail from '@/components/quest/KidQuestDetail.vue';
 import { mapGetters } from 'vuex';
 
 export default {
-    components: { InsertQuest,DetailQuest, ConnectKid,},
-
+    components: { 
+        InsertQuest, DetailQuest, ConnectKid, KidQuestDetail
+    },
     data() {
         return {
             valid:true,
             quests: new Array(),
-            kidquests: new Array(),
+            kidQuests: new Array(),
             kidsList: new Array(),
             listName: new Array(),
-            insertQuest:false,
-            detailQuest:false,
-            connectKid:false,
-            dialog:false,
+
             years:['2020','2021'],
             year:'',
             month:'',
@@ -207,12 +158,8 @@ export default {
     },
     methods: {
         fetchParentsQuests(){
-            //부모 퀘스트 리스트
             axios.get('/api/quest/list/'+this.parentId)
                 .then((res) => {
-                    console.log(res);
-                    console.log('부모 번호' +this.parentId);
-                    console.log(res.data.data);
                     this.quests = res.data.data;
                 })
                 .catch(err => {
@@ -221,76 +168,45 @@ export default {
         },
 
         fetchKidQuests(){
-            //아이 퀘스트 리스트
             axios.get('/api/quest/kid/list/'+this.kidId)
                 .then((res) => {
-                    console.log(res);
-                    console.log(res.data.data);
-                    this.kidquests = res.data.data;
+                    this.kidQuests = res.data.data;
                 })
                 .catch(err => {
                     console.log(err);
                 });
         },
-        openInsertForm() {
-            this.insertQuest=true;
-        },
-        detailquest(quest) {
-            this.target={
-                ...quest,
-            };
-            this.detailQuest = this.detailQuest ? false : true;
-        },
-        connectkid(quest) {
-            this.target={
-                ...quest,
-            };
-            this.connectKid = this.connectKid ? false : true;
-        },
-        // 퀘스트 관리탭에서 지우는 것
-        deletequest(no){
+        deleteQuest(no){
             let answer = confirm('퀘스트를 삭제하시겠습니까?');
             if(answer){
-                axios.delete(process.env.VUE_APP_API_URL+'/api/quest/parent/delete/'+no)
+                axios.delete(`/api/quest/parent/delete/${no}`)
                     .then(()=>{
-                        window.location.reload();
+                        this.fetchParentsQuests();
                     });
             } else {
                 return;
             }
         },
-        // 아이퀘스트 탭에서 지우는것 
-        kiddeletequest(no){
+        deleteKidQuest(no){
             let answer = confirm('퀘스트를 삭제하시겠습니까?');
             if(answer){
-                axios.delete(process.env.VUE_APP_API_URL+'/api/quest/kid/delete/'+no+'/'+this.kidId)
+                axios.delete(`/api/quest/kid/delete/${no}/${this.kidId}`)
                     .then(()=>{
-                        window.location.reload();
+                        this.fetchKidQuests();
                     });
             } else {
                 return;
             }
         },
-        success(){
+        successQuest(kidquest){
             axios.put('/api/quest/kid/finish', {
-                //questNo:this.target.questNo,
-                
-                //parentId: this.target.parentId,
-                //parentId: this.target.parentId,
-            }).then(()=>{
-                console.log('퀘스트 완료!');
-                alert('완료 승인 되었습니다!');
-                this.handleDialog();
-                window.location.reload();
-            });
-            console.log('success!!');
-            
-        },
-        handleConnectquest(quest){
-            this.kidquests.push(quest);
-        },
-        handleDialog(){
-            this.$emit('handle');
+                questNo: kidquest.questNo,
+                kidId: kidquest.parentId,
+            })
+                .then(()=>{
+                    //완료후?
+                    alert('하이?');
+                });
         },
     }
 };
@@ -390,7 +306,7 @@ li {
   cursor: pointer;
   border-radius: 3px;
 }
-.detail{
+::v-deep .detail{
   width: 70%;
   margin-top: 5px;
 }
@@ -410,4 +326,4 @@ li {
         padding: 0;
     }
 
-</style>>
+</style>
