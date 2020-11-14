@@ -27,8 +27,8 @@ public class QuestServiceImpl implements QuestService {
     }
 
     @Override
-    public int updateQuest(int questNo) {
-        return qDao.updateQuest(questNo);
+    public int updateQuest(Quest quest) {
+        return qDao.updateQuest(quest);
     }
 
     @Override
