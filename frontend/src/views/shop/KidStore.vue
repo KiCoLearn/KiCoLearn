@@ -72,3 +72,11 @@ export default {
     
 };
 </script>
+
+<style scoped>
+.kidstore{
+    display: inline;
+    padding: 0;
+    justify-content: center;
+}
+</style>
