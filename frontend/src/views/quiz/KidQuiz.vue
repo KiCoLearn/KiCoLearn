@@ -69,18 +69,18 @@ export default {
         align-items: center;
         margin: auto;
         width: 330px;
-        height: 330px;
         border-radius: 6px;
         background: #4A655A;
         border : 6px rgb(142, 105, 13) solid;
         color: white;
+        padding: 10px;
     }
 
     ::v-deep &-box {
         margin: auto;
         margin-bottom: 15px;
-        width: 60%;
-        font-size: 1.7rem;
+        width: 62%;
+        font-size: 1.5rem;
         border-radius: 4px;
     }
 
@@ -107,16 +107,16 @@ export default {
     }
 
     ::v-deep &-question{
-        height: 200px;
         max-width: 230px;
         align-items: center;
     }
     ::v-deep &-description{
-        height: 200px;
         max-width: 230px;
         align-items: center;
         font-size: 1.5rem;
         margin: auto;
+        margin-bottom: 7.5px;
+        margin-top: 7.5px;
     }
     ::v-deep &-main{
         overflow-wrap: anywhere;

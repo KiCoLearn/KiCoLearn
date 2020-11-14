@@ -23,8 +23,7 @@
                 <v-col
                     cols="4"
                     :class="[
-                        {'correct': 'O' === answer && 'O' === todayProblem.answer},
-                        {'incorrect': 'O' === answer && 'O' !== todayProblem.answer},
+                        {'correct': 'O' === todayProblem.answer},
                         'quiz-answer']"
                 >
                     <b style="color:blue">O</b>
@@ -32,8 +31,7 @@
                 <v-col
                     cols="4"
                     :class="[
-                        {'correct': 'X' === answer && 'X' === todayProblem.answer},
-                        {'incorrect': 'X' === answer && 'X' !== todayProblem.answer},
+                        {'correct': 'X' === todayProblem.answer},
                         'quiz-answer']"
                 >
                     <b style="color:red">X</b>

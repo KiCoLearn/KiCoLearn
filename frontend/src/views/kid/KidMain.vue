@@ -15,6 +15,7 @@
                     >
                     <v-dialog
                         v-model="dialog"
+                        persistent
                         scrollable
                         width="300px"
                     >
@@ -90,6 +91,7 @@
                         :key="q.questNo"  
                         class="quest"
                         justify="center"
+                        @click="goQuest"
                     >
                         <v-col cols="12">
                             <img
@@ -116,19 +118,37 @@
                 
                 <v-row
                     justify="center"
-                    style="margin-top:25px"
+                    style="margin-top:25px;width:100%"
                 >
-                    <v-col cols="4">
+                    <v-col
+                        cols="4"
+                        style="width:100px;height:100px; display:flex; align-items:center;margin-right:10px;justify-content:center"
+                    >
                         <img
-                            src="@/assets/heart.png"
-                            width="100px"
+                            :src="imgSrc"
+                            style="max-height:100px;max-width:100px;width:auto;height:auto"
                         >
                     </v-col>
                     <v-col
-                        cols="7"
+                        cols="8"
                         class="gift"
                     >
-                        <div v-if="kid.star" />
+                        <div v-if="kid.likeItem">
+                            <template v-if="leftMoneyToLikeItem>0"> 
+                                <b>{{ likeItem.name }}</b> 사기 위해서<br> 
+                                <b>{{ leftMoneyToLikeItem }}원</b>을 모아야해요!
+                            </template>
+                            <template v-else> 
+                                <b>{{ likeItem.name }}</b><br>
+                                지금 살 수있어요!<br>
+                                사러 가볼까요?
+                                <img
+                                    src="@/assets/redo.png"
+                                    width="20px"
+                                    @click="goStore"
+                                >
+                            </template>
+                        </div>
                         <div v-else>
                             <button
                                 class="btn"
@@ -179,37 +199,57 @@ export default {
             items: 48,
             pick: null,
             quizComment:null,
+            likeItem : Object,
+            imgSrc : require('@/assets/heart.png'),
         };
     },
 
     computed: {
         ...mapGetters({
             kidId : 'auth/id',
-        })
+        }),
+        leftMoneyToLikeItem(){
+            if(this.likeItem.price-this.kid.totalMoney<0) return 0;
+            return this.likeItem.price-this.kid.totalMoney;
+        } 
     },
     created() {
         axios.get('/api/quiz/today/'+this.kidId)
             .then((res) => {
                 //console.log(res.data.data);
-                
                 if(res.data.data!=null) {
                     this.quizComment = res.data.data.correct ? `오늘의 퀴즈로 300원을 얻었어요!` : `아쉽게 오늘의 퀴즈를 틀렸지만 \n내일 맞추면 300원을 얻을 수 있어요^^`;
                 } else{
                     this.quizComment='아직 오늘의 퀴즈를 풀지 않았어요.\n맞추면 300원! 얼른 풀러가볼까요?';
                 }
+            })
+            .catch(() => {
             });
 
         axios.get('/api/kidsaccount/detail/'+this.kidId)
             .then((res) => {
                 this.kid= res.data.data;
                 this.pick =res.data.data.characterIdx;
+                if(this.kid.likeItem){
+                    axios.get('/api/store/detail/'+this.kid.likeItem)
+                        .then((res) => {
+                            this.likeItem = res.data.data;
+                            console.log(this.likeItem);
+                            this.imgSrc = this.likeItem.field;
+                        });
+                }
+
+            })
+            .catch(() => {
             });
 
         axios.get('/api/quest/kid/list/'+this.kidId)
             .then((res) => {
             //console.log(res.data.data);
                 this.quest = res.data.data;
-            });    
+            })
+            .catch(() => {
+            }); 
     },
     methods: {
         photo(idx){
@@ -240,7 +280,10 @@ export default {
                 });
         },
         goStore(){
-            this.$router.push({name:'Store'});
+            this.$router.push({name:'KidStore'});
+        },
+        goQuest(){
+            this.$router.push({name:'KidQuest'});
         },
         logout(){
             this.$store.commit('auth/LOGOUT');
@@ -254,6 +297,8 @@ export default {
 <style lang="scss" scoped>
   .row{
     margin-bottom:25px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .col{
