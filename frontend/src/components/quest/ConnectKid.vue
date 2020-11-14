@@ -50,102 +50,161 @@
                                 />
                             </v-col>
                         </v-col>
+
                         <v-col
                             cols="12"
-                            style="display:flex; justify-content:center"
+                            sm="6"
+                            md="4"
                         >
-                            <label><b>시작일</b></label>
-                            <v-col
-                                cols="9"
-                                style="display:flex;justify-content:center;"
+                            <v-dialog
+                                ref="dialog"
+                                v-model="dateModal"
+                                :return-value.sync="date"
+                                persistent
+                                lazy
+                                full-width
+                                width="290px"
                             >
-                                <v-col
-                                    cols="5"
-                                    class="startTime"
-                                >
-                                    <v-select
-                                        v-model="year"
-                                        :items="years"
-                                        placeholder="연도"
-                                        outlined
-                                        dense
-                                        :rules="[rules.required]"
-                                    />
-                                </v-col>    
-                                <v-col
-                                    cols="2"
-                                    class="startTime"
-                                >
+                                <template v-slot:activator="{ on }">
                                     <v-text-field
-                                        v-model="month"
-                                        placeholder="월"
-                                        outlined
-                                        dense
-                                        :rules="[rules.required, rules.month]"
+                                        v-model="sdate"
+                                        label="시작 날짜"
+                                        prepend-icon="mdi-calendar"
+                                        readonly
+                                        v-on="on"
                                     />
-                                </v-col>
-                                <v-col
-                                    cols="2"
-                                    class="startTime"
+                                </template>
+                                <v-date-picker
+                                    v-model="date"
+                                    scrollable
                                 >
-                                    <v-text-field
-                                        v-model="day"
-                                        placeholder="일"
-                                        outlined
-                                        dense
-                                        :rules="[rules.required, rules.day]"
-                                    />
-                                </v-col>
-                            </v-col>
-                        </v-col>       
+                                    <v-spacer />
+                                    <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="dateModal = false"
+                                    >
+                                        Cancel
+                                    </v-btn>
+                                    <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="timeModal = true"
+                                    >
+                                        OK
+                                    </v-btn>
+                                </v-date-picker>
+                            </v-dialog>
+
+                            <v-dialog
+                                ref="dialog2"
+                                v-model="timeModal"
+                                :return-value.sync="time"
+                                persistent
+                                lazy
+                                full-width
+                                width="290px"
+                            >
+                                <v-time-picker
+                                    v-if="timeModal"
+                                    v-model="time"
+                                    full-width
+                                >
+                                    <v-spacer />
+                                    <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="timeModal = false"
+                                    >
+                                        Cancel
+                                    </v-btn>
+                                    <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="set()"
+                                    >
+                                        OK
+                                    </v-btn>
+                                </v-time-picker>
+                            </v-dialog>
+                        </v-col>
                         <v-col
                             cols="12"
-                            style="display:flex; justify-content:center"
+                            sm="6"
+                            md="4"
                         >
-                            <label><b>종료일</b></label>
-                            <v-col
-                                cols="9"
-                                style="display:flex;justify-content:center;"
+                            <v-dialog
+                                ref="dialog3"
+                                v-model="enddateModal"
+                                :return-value.sync="enddate"
+                                persistent
+                                lazy
+                                full-width
+                                width="290px"
                             >
-                                <v-col
-                                    cols="5"
-                                    class="endTime"
-                                >
-                                    <v-select
-                                        v-model="endyear"
-                                        :items="endyears"
-                                        placeholder="연도"
-                                        outlined
-                                        dense
-                                        :rules="[rules.required]"
-                                    />
-                                </v-col>    
-                                <v-col
-                                    cols="2"
-                                    class="endTime"
-                                >
+                                <template v-slot:activator="{ on }">
                                     <v-text-field
-                                        v-model="endmonth"
-                                        placeholder="월"
-                                        outlined
-                                        dense
-                                        :rules="[rules.required, rules.month]"
+                                        v-model="edate"
+                                        label="종료 날짜"
+                                        prepend-icon="mdi-calendar"
+                                        readonly
+                                        v-on="on"
                                     />
-                                </v-col>
-                                <v-col
-                                    cols="2"
-                                    class="endTime"
+                                </template>
+                                <v-date-picker
+                                    v-model="enddate"
+                                    scrollable
                                 >
-                                    <v-text-field
-                                        v-model="endday"
-                                        placeholder="일"
-                                        outlined
-                                        dense
-                                        :rules="[rules.required, rules.day]"
-                                    />
-                                </v-col>
-                            </v-col>
-                        </v-col>  
+                                    <v-spacer />
+                                    <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="enddateModal = false"
+                                    >
+                                        Cancel
+                                    </v-btn>
+                                    <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="endtimeModal = true"
+                                    >
+                                        OK
+                                    </v-btn>
+                                </v-date-picker>
+                            </v-dialog>
+
+                            <v-dialog
+                                ref="dialog4"
+                                v-model="endtimeModal"
+                                :return-value.sync="endtime"
+                                persistent
+                                lazy
+                                full-width
+                                width="290px"
+                            >
+                                <v-time-picker
+                                    v-if="endtimeModal"
+                                    v-model="endtime"
+                                    full-width
+                                >
+                                    <v-spacer />
+                                    <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="endtimeModal = false"
+                                    >
+                                        Cancel
+                                    </v-btn>
+                                    <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="set2()"
+                                    >
+                                        OK
+                                    </v-btn>
+                                </v-time-picker>
+                            </v-dialog>
+                        </v-col>
                     </v-form>
                 </div>
             </template>
@@ -173,6 +232,7 @@
 <script>
 import axios from '@/plugins/axios';
 import { mapGetters } from 'vuex';
+
 export default {
     name: 'ConnectKid',
     props: {
@@ -181,12 +241,15 @@ export default {
             required: true,
         },
     },
+
     data() {
         return {
-            dialog: false,
+            dialog:false,
+            //startdate: false,
+            //starttime:false,
             valid: true,
             kidsList: new Array(),
-            listName: new Array(),            
+            listName: new Array(),       
             years:['2020','2021'],
             year:'',
             month:'',
@@ -201,6 +264,16 @@ export default {
                 month : (value) => (value>=1 && value<=12),
                 day : (value) => (value>=1 && value<=31),
             },
+            date: '',
+            sdate: '',
+            dateModal: false,
+            time: '',
+            timeModal: false,
+            enddate: '',
+            edate: '',
+            enddateModal: false,
+            endtime: '',
+            endtimeModal: false,
 
         };
     },
@@ -235,15 +308,28 @@ export default {
             });
     },
     methods: {
+        set() {
+            this.sdate = this.date +' '+ this.time;
+            this.$refs.dialog.save(this.date);
+            this.$refs.dialog2.save(this.time);
+        },
+        set2() {
+            this.edate = this.enddate +' '+ this.endtime;
+            this.$refs.dialog3.save(this.enddate);
+            this.$refs.dialog4.save(this.endtime);
+            console.log(this.enddate);
+        },
+
         addKidQuest() {
             console.log(this.target);
             axios.post('/api/quest/kid/regist', {          
                 kidId: this.selectkid,    
                 questNo: this.target.questNo,
-                startTime: new Date(this.year, this.month-1, this.day),
-                endTime: new Date(this.endyear, this.endmonth-1, this.endday),
+                startTime: this.date +'T'+ this.time+':00.000',
+                endTime:  this.enddate +'T'+ this.endtime+ ':00.000',
             })
                 .then((res) => {
+                    
                     console.log(res);
                     this.$emit('connect-success');
                     this.closeDialog();
