@@ -6,17 +6,12 @@
             "src": "/img/icons/android-chrome-192x192.png",
             "type": "image/png",
             "sizes": "192x192"
-        },
-        {
-            "src": "/img/icons/android-chrome-512x512.png",
-            "type": "image/png",
-            "sizes": "512x512"
         }
     ],
     "start_url": "/",
-    "background_color": "#3367D6",
+    "background_color": "#fff8dc",
     "display": "standalone",
-    "theme_color": "#3367D6",
+    "theme_color": "#fff8dc",
     "scope": "/",
     "gcm_sender_id": "103953800507"
 }
