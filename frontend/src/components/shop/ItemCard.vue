@@ -140,9 +140,22 @@ export default {
                     .then(()=>{
                         alert('요청 완료!');
                         this.sendData.request = true;
+                        this.handleActivity(item);
                     }); 
             }
 
+        },
+        handleActivity(item){
+            axios.post(process.env.VUE_APP_API_URL + '/api/money/activity',{
+                amount:item.price,
+                kidId:this.kidId,
+                contents:'아이템 구매',
+                isDeposit:false,
+                leftMoney:this.holding
+            })
+                .then(()=>{
+                    this.$emit('handleHolding', item.price);
+                });            
         }
     }
 };

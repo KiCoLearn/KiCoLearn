@@ -40,6 +40,7 @@
                 :holding="holding"
                 @handleLike="likeItem"
                 @releaseLike="releaseLike"
+                @handleHolding="handleHolding"
             />
         </div>
     </div>
@@ -107,7 +108,11 @@ export default {
                 .then(()=>{
                     this.likeNo = 0;
                 });
+        },
+        handleHolding(price){
+            this.holding = this.holding - price;
         }
+
     }   
     
 };
