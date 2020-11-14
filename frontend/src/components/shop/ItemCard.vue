@@ -30,34 +30,7 @@
                     <p class="child2 font-weight-bold pr-5">
                         {{ sendData.price }}원
                     </p>
-                </div>
-                <!-- <v-card-text
-                    class="left mx-auto"
-                >
-                    <v-img
-                        :src="require('@/assets/coins.png')"
-                        width="20px"
-                        height="20px"
-                    />
-                </v-card-text>                         
-                <v-card-text 
-                    class="right mx-auto"                    
-                >  
-                    {{ sendData.price }}
-                </v-card-text> -->
-                <!-- <v-btn
-                    text
-                    disabled
-                >
-                    <v-img
-                        :src="require('@/assets/coins.png')"
-                        width="30px"
-                        height="30px"
-                    />                    
-                </v-btn>
-                <p class="font-weight-bold pr-5">
-                    {{ sendData.price }}원
-                </p> -->
+                </div>                
             </div>
 
             <v-card-actions class="text-right">
@@ -91,9 +64,21 @@
                 </v-btn>
                 <v-spacer />
                 <v-btn
+                    v-if="sendData.request===true"
                     class="mr-1 mt-3"
                     rounded
                     outlined
+                    disabled
+                >                    
+                    <v-icon>mdi-shopping-outline</v-icon>
+                    요청완료
+                </v-btn>
+                <v-btn
+                    v-else-if="sendData.request===false"
+                    class="mr-1 mt-3"
+                    rounded
+                    outlined
+                    @click="handlePurchaseRequest(sendData)"
                 >                    
                     <v-icon>mdi-shopping-outline</v-icon>
                     구매요청
@@ -104,7 +89,8 @@
 </template>
 
 <script>
-//import axios from '@/plugins/axios';
+import axios from '@/plugins/axios';
+import { mapGetters } from 'vuex';
 
 export default {
     name:'ItemCard',
@@ -116,14 +102,47 @@ export default {
         likeNo:{
             type:Number,
             required:true
+        },
+        holding:{
+            type:Number,
+            required:true
         }
     },
+
+    computed:{
+        ...mapGetters({
+            kidId:'auth/id'
+        })
+    },
+
     methods:{
         handleLikeItem(itemNo) {
             this.$emit('handleLike', itemNo);
         },
         handleRelease() {
             this.$emit('releaseLike');
+        },
+        handlePurchaseRequest(item){
+            console.log(item);
+            console.log(this.holding);
+            if(this.holding < item.price){
+                alert('소지금이 부족합니다!');
+                return;
+            }
+
+            let ans = confirm('구매요청 하시겠습니까?').valueOf();
+
+            if(ans===true){
+                axios.put(process.env.VUE_APP_API_URL + '/api/store/request/purchase', {
+                    itemNo:item.itemNo,
+                    kidId:this.kidId
+                })
+                    .then(()=>{
+                        alert('요청 완료!');
+                        this.sendData.request = true;
+                    }); 
+            }
+
         }
     }
 };

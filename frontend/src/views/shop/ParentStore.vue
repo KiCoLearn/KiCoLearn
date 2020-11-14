@@ -141,6 +141,20 @@
                             />
                         </div>
                     </template>
+                    <template v-slot:[`item.request`]="{ item }">
+                        <center v-if="item.request===true">
+                            <v-icon
+                                color="#1BB367"
+                            >
+                                mdi-shopping
+                            </v-icon>
+                        </center>
+                        <center v-else>
+                            <v-icon>
+                                mdi-shopping
+                            </v-icon>
+                        </center>
+                    </template>
                     <template v-slot:[`item.actions`]="{ item }">        
                         <v-icon
                             small
@@ -203,7 +217,8 @@ export default {
                 field:null,
                 itemNo:null,
                 parentId:null,
-                price:null
+                price:null,
+                request:false
             },
             headers: [
                 { value: 'field', sortable:false},
@@ -214,7 +229,7 @@ export default {
             kheaders: [
                 { value: 'field', sortable:false},
                 { text: '아이템명', value: 'name', sortable: false },
-                { text: '가격', value: 'price', sortable: false },
+                { text: '구매요청', value: 'request', sortable: false },
                 { text: '삭제', value: 'actions', sortable: false },
             ],
         };
@@ -276,6 +291,7 @@ export default {
             console.log(kids);
             axios.get(process.env.VUE_APP_API_URL + '/api/store/klist/'+ kids.value)
                 .then((res) => {
+                    console.log(res.data.data);
                     this.kidsItems = res.data.data;
                 });
         },
@@ -448,6 +464,10 @@ li {
 }
 .col{
         padding: 0;
-    }
+}
+
+td.text-start{
+    text-align: center;
+}
 
 </style>>

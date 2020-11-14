@@ -37,6 +37,7 @@
                 :key="item.itemNo"                    
                 :send-data="item"
                 :like-no="likeNo"
+                :holding="holding"
                 @handleLike="likeItem"
                 @releaseLike="releaseLike"
             />
