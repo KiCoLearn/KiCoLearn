@@ -12,7 +12,7 @@ public interface QuestDao {
     int updateQuest(Quest quest);
 
     int deleteQuest(int questNo);
-    
+
     int setKidsQuest(KidsQuest quest);
 
     int finishKidsQuest(KidsQuest quest);
@@ -20,4 +20,6 @@ public interface QuestDao {
     int deleteKidQuest(KidsQuest quest);
 
     List<KidQuestDetail> getKidQuestListByKidId(int kidId);
+
+    int updateRequest(KidsQuest quest);
 }
