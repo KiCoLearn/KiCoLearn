@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.api.global.handler.Handler;
 import com.kids.api.notification.NotificationService;
-import com.kids.api.store.Item;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -154,9 +154,10 @@ public class QuestController {
     
     @PostMapping("/{id}/request")
     @ApiOperation(value = "아이 퀘스트 완료")
-    public ResponseEntity<Object> finishQuest(@PathVariable int id) {
+    public ResponseEntity<Object> finishQuest(@PathVariable("id") int kidId,
+    		@RequestParam int questNo) {
         try {
-            notificationService.completeQuestFromKidId(id);
+            notificationService.completeQuestFromKidId(kidId);
 
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
