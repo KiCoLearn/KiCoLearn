@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.api.global.handler.Handler;
+import com.kids.api.notification.NotificationService;
+import com.kids.api.quest.KidsQuest;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -30,6 +32,9 @@ public class StoreController {
 
     @Autowired
     Handler resultHandler;
+    
+    @Autowired
+    NotificationService notificationService;
 
     @GetMapping("/plist/{parentId}")
     @ApiOperation(value = "부모 번호로 아이템 리스트 조회")
@@ -141,6 +146,20 @@ public class StoreController {
             entity = resultHandler.handleException(e);
         }
         return entity;
+    }
+    
+    @PutMapping("/request/purchase")
+    @ApiOperation(value = "아이 아이템 구매 요청")
+    public ResponseEntity<Object> requestQuest(@RequestBody PurchaseItem item) {
+        try {
+            sService.updatePurchaseRequest(item);
+            notificationService.itemPurchaseRequest(item.getKidId());
+
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

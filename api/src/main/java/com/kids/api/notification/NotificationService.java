@@ -25,7 +25,7 @@ import com.kids.api.notification.model.exception.NotificationFailedException;
 public class NotificationService {
     @Value("${fcm.server-key}")
     String FCM_SERVER_KEY;
-    
+
     @Value("${custom.server-url}")
     String SERVER_URL;
 
@@ -49,8 +49,26 @@ public class NotificationService {
                                                                             .message("합니다")
                                                                             .build())
                                                       .build();
-        
+
         this.sendNotification(notification);
+    }
+
+    public void itemPurchaseRequest(int kidId) {
+        Kids kid = kService.detailKid(kidId);
+        String token = parentsAccountService.getTokenById(kid.getParentId());
+        FCMNotification notification = FCMNotification.builder()
+                                                      .to(token)
+                                                      .notification(Notification.builder()
+                                                                                .title(kid.getName() + "이(가) 아이템 구매를 원합니다!")
+                                                                                .body("확인해주세요!")
+                                                                                .click_action("parents/purchase")
+                                                                                .build())
+                                                      .data(NotificationData.builder()
+                                                                            .message("스토어에서 구매 수락해주세요!")
+                                                                            .build())
+                                                      .build();
+        this.sendNotification(notification);
+
     }
 
     public void sendNotification(FCMNotification notification) {
