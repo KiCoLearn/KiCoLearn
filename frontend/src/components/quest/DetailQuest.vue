@@ -13,7 +13,6 @@
                     <v-form
                         id="form"
                         ref="form"
-                        v-model="valid"
                         lazy-validation
                     >
                         <v-col
@@ -28,7 +27,7 @@
                             >
                                 <v-text-field
                                     ref="name"
-                                    v-model="name"
+                                    v-model="target.name"
                                     outlined
                                     clearable
                                     dense
@@ -49,7 +48,7 @@
                             >
                                 <v-text-field
                                     ref="reward"
-                                    v-model="reward"
+                                    v-model="target.reward"
                                     outlined
                                     clearable
                                     dense
@@ -70,7 +69,7 @@
                             >
                                 <v-text-field
                                     ref="description"
-                                    v-model="description"
+                                    v-model="target.description"
                                     outlined
                                     clearable
                                     dense
@@ -105,47 +104,56 @@
 
 <script>
 import axios from '@/plugins/axios';
-
+import { mapGetters } from 'vuex';
 export default {
     name:'DetailQuest',
     props:{
         dialog:{
             type:Boolean
-        },
+        }, 
+        
+        target:{
+            type:Object,
+            required:true
+        }
+      
     },
     data(){
         return {
-            valid:true,
-            parentId:0,
-            questNo:this.questNo,
-            name:'',
-            reward:'',
-            description:'',
+            //valid:true,
+            //parentId:0,
+            //questNo:this.questNo,
+            //name:'',
+            //reward:'',
+            //description:'',
+            //kid: Object,
+            //quests : new Array(),
         };
     },
-    created() {
-        this.name = this.item.name;
-        this.description = this.item.description;
-        this.reward = this.item.reward;
-        this.parentId = this.item.parentId;
+    computed:{
+        ...mapGetters({
+            parentId:'auth/id',
+            kidId:'auth/id'
+        })
     },
     
     methods: {
         update(){        
-            if (this.$refs.form.validate()){
-                axios.put(process.env.VUE_APP_API_URL+'/api/quest/update', {
-                    'description' : this.item.description,    
-                    'name':this.item.name,
-                    'parentId': this.item.parentId,
-                    'reward':this.item.reward,
-                })
-                    .then(()=>{
-                        alert('수정되었습니다!');
-                        this.back();
-                        window.location.reload();
-                    });
-                console.log('success!!');
-            }
+            axios.put(process.env.VUE_APP_API_URL+'/api/quest/parent/update', {
+                //questNo:this.target.questNo,
+                name:this.target.name,
+                reward:this.target.reward,
+                description : this.target.description,  
+                //parentId: this.target.parentId,
+                //parentId: this.target.parentId,
+            }).then(()=>{
+                console.log('퀘스트 수정');
+                alert('수정되었습니다!');
+                this.handleDialog();
+                window.location.reload();
+            });
+            console.log('success!!');
+        
         },
         handleDialog(){
             this.$emit('handle');

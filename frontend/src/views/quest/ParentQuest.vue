@@ -18,50 +18,55 @@
             <div class="tab1">
                 <div>
                     <ul
-                        v-for="(kidquest,idx) in kidquests" 
+                        v-for="kidquest in kidquests" 
                         id="notebook_ul" 
-                        :key="idx"
+                        :key="kidquest.kidId"
                     >
                         <li>
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="detailquest"
+                                    @click="kiddetailquest(kidquest)" 
                                 >
                                     {{ kidquest.name }}
                                 </div>
                                 <div class="right top">
                                     <button
                                         class="btn"
-                                        @click="deletequest(kidquest.questNo)"
+                                        @click="kiddeletequest(kidquest.questNo)"      
                                     >
                                         <img 
                                             src="@/assets/delete.png"
                                             width="30px"
-                                            alt="deletequest"
+                                            alt="kidquestdelete"
                                         >
                                     </button>
+                          
+                                    &nbsp;
+                                    &nbsp;
+                                    <button
+                                        class="btn"
+                                        @click="success"      
+                                    >
+                                        <img 
+                                            src="@/assets/success.png"
+                                            width="30px"
+                                            alt="success"
+                                        >
+                                    </button>
+                                    <div />
                                 </div>
                             </v-row>
                         </li>
                     </ul>
                 </div>
                 <div>
-                    <button
-                        class="btn"
-                        @click="addquest"
-                    >
-                        <img 
-                            src="@/assets/add.png"
-                            width="40px"
-                            alt="addquest"
-                        >
-                    </button>
                     <insert-quest
                         :dialog="insertQuest"
                         @handle="addquest"
                     /> 
                     <detail-quest
+                        :target="target"
                         :dialog="detailQuest"
                         @handle="detailquest"
                     />
@@ -72,15 +77,15 @@
             <div class="tab2">
                 <div>
                     <ul
-                        v-for="(quest,idx) in quests" 
+                        v-for="quest in quests" 
                         id="notebook_ul" 
-                        :key="idx"
+                        :key="quest.parentId"
                     >
                         <li>
                             <v-row>
                                 <div
                                     class="detail"
-                                    @click="detailquest(quest.questNo)"
+                                    @click="detailquest(quest)"
                                 >
                                     {{ quest.name }}
                                 </div>
@@ -95,180 +100,18 @@
                                             alt="deletequest"
                                         >
                                     </button>
-                 &nbsp;
-                 &nbsp;
-                   
-                                    <v-dialog
-                                        v-model="dialog"
-                                        width="400"
+                                    &nbsp;
+                                    &nbsp;
+                                    <button
+                                        class="btn"
+                                        @click="connectkid(quest)"
                                     >
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <button
-                                                v-bind="attrs"
-                                                class="btn"
-                                                v-on="on"
-                                            >
-                                                <img 
-                                                    src="@/assets/children.png"
-                                                    width="30px"
-                                                    alt="kidselect"
-                                                >
-                                            </button>
-                                        </template>
-                                        <v-card>
-                                            <v-card-title style="display:flex;justify-content:center">
-                                                아이 퀘스트 등록
-                                            </v-card-title>
-                                            <template>
-                                                <div>                   
-                                                    <v-form
-                                                        id="form"
-                                                        ref="form"
-                                                        v-model="valid"
-                                                        lazy-validation
-                                                    >
-                                                        <v-col
-                                                            cols="12"
-                                                            style="display:flex; justify-content:center"
-                                                        >
-                                                            <label><b>아이선택</b></label>
-                                                            <v-col cols="1" />
-                                                            <v-col
-                                                                cols="8"
-                                                                style="display:flex; justify-content:flex-start"
-                                                            >
-                                                                <v-select
-                                                                    ref="kidId"
-                                                                    v-model="selectkid"
-                                                                    :items="listName"
-                                                                    outlined
-                                                                    clearable
-                                                                    dense
-                                                                    class="kidId"
-                                                                    placeholder="아이선택"
-                                                                />
-                                                            </v-col>
-                                                        </v-col>
-                                                        <v-col
-                                                            cols="12"
-                                                            style="display:flex; justify-content:center"
-                                                        >
-                                                            <label><b>시작일</b></label>
-                                                            <v-col
-                                                                cols="9"
-                                                                style="display:flex;justify-content:center;"
-                                                            >
-                                                                <v-col
-                                                                    cols="5"
-                                                                    class="startTime"
-                                                                >
-                                                                    <v-select
-                                                                        ref="year"
-                                                                        v-model="year"
-                                                                        :items="years"
-                                                                        placeholder="연도"
-                                                                        outlined
-                                                                        dense
-                                                                        :rules="[rules.required]"
-                                                                    />
-                                                                </v-col>    
-                                                                <v-col
-                                                                    cols="2"
-                                                                    class="startTime"
-                                                                >
-                                                                    <v-text-field
-                                                                        v-model="month"
-                                                                        placeholder="월"
-                                                                        outlined
-                                                                        dense
-                                                                        :rules="[rules.required, rules.month]"
-                                                                    />
-                                                                </v-col>
-                                                                <v-col
-                                                                    cols="2"
-                                                                    class="startTime"
-                                                                >
-                                                                    <v-text-field
-                                                                        v-model="day"
-                                                                        placeholder="일"
-                                                                        outlined
-                                                                        dense
-                                                                        :rules="[rules.required, rules.day]"
-                                                                    />
-                                                                </v-col>
-                                                            </v-col>
-                                                        </v-col>       
-                                                        <v-col
-                                                            cols="12"
-                                                            style="display:flex; justify-content:center"
-                                                        >
-                                                            <label><b>종료일</b></label>
-                                                            <v-col
-                                                                cols="9"
-                                                                style="display:flex;justify-content:center;"
-                                                            >
-                                                                <v-col
-                                                                    cols="5"
-                                                                    class="endTime"
-                                                                >
-                                                                    <v-select
-                                                                        ref="year"
-                                                                        v-model="endyear"
-                                                                        :items="endyears"
-                                                                        placeholder="연도"
-                                                                        outlined
-                                                                        dense
-                                                                        :rules="[rules.required]"
-                                                                    />
-                                                                </v-col>    
-                                                                <v-col
-                                                                    cols="2"
-                                                                    class="endTime"
-                                                                >
-                                                                    <v-text-field
-                                                                        v-model="endmonth"
-                                                                        placeholder="월"
-                                                                        outlined
-                                                                        dense
-                                                                        :rules="[rules.required, rules.month]"
-                                                                    />
-                                                                </v-col>
-                                                                <v-col
-                                                                    cols="2"
-                                                                    class="endTime"
-                                                                >
-                                                                    <v-text-field
-                                                                        v-model="endday"
-                                                                        placeholder="일"
-                                                                        outlined
-                                                                        dense
-                                                                        :rules="[rules.required, rules.day]"
-                                                                    />
-                                                                </v-col>
-                                                            </v-col>
-                                                        </v-col>  
-                                                    </v-form>
-                                                </div>
-                                            </template>
-                                            <v-card-actions>
-                                                <v-spacer />
-                                                <v-btn
-                                                    color="green darken-1"
-                                                    text
-                                                    @click="dialog= false"
-                                                >
-                                                    <b>취소</b>
-                                                </v-btn>
-                                                <v-btn
-                                                    color="green darken-1"
-                                                    text
-                                                    @click="addkidquest"
-                                                >
-                                                    <b>등록</b>
-                                                </v-btn>
-                                            </v-card-actions>
-                                        </v-card>
-                                    </v-dialog>
+                                        <img 
+                                            src="@/assets/children.png"
+                                            width="30px"
+                                            alt="addquest"
+                                        >
+                                    </button>
                                 </div>
                             </v-row>
                         </li>
@@ -289,7 +132,14 @@
                         :dialog="insertQuest"
                         @handle="addquest"
                     /> 
+                    <connect-kid
+                        :target="target"
+                        :dialog="connectKid"
+                        @handle="connectKid"
+                        @handleConnectquest="handleConnectquest"
+                    />
                     <detail-quest
+                        :target="target"
                         :dialog="detailQuest"
                         @handle="detailquest"
                     />
@@ -303,25 +153,22 @@
 import axios from '@/plugins/axios';
 import InsertQuest from '@/components/quest/InsertQuest.vue';
 import DetailQuest from '@/components/quest/DetailQuest.vue';
+import ConnectKid from '@/components/quest/ConnectKid.vue';
 import { mapGetters } from 'vuex';
+
 export default {
-    components: { InsertQuest,DetailQuest, },
-    computed:{
-        ...mapGetters({
-            parentId:'auth/id',
-            kidId:'auth/id'
-        })
-    },
+    components: { InsertQuest,DetailQuest, ConnectKid,},
+
     data() {
         return {
             valid:true,
-            parentId:4,
             quests: new Array(),
             kidquests: new Array(),
             kidsList: new Array(),
             listName: new Array(),
             insertQuest:false,
             detailQuest:false,
+            connectKid:false,
             dialog:false,
             years:['2020','2021'],
             year:'',
@@ -333,19 +180,32 @@ export default {
             endday:'',
             items:48,
             selectkid:null,
-            questNo:this.questNo,
             rules:{
                 required: (value) => !!value,
                 month : (value) => (value>=1 && value<=12),
                 day : (value) => (value>=1 && value<=31),
             },
+            target:{
+                description:null,
+                questNo:null,
+                parentId:null,
+                reward:null,
+                name:null,
+            },
 
         };
+    },
+    computed:{
+        ...mapGetters({
+            parentId:'auth/id',
+            kidId:'auth/id'
+        })
     },
     created() {
         axios.get(process.env.VUE_APP_API_URL + '/api/quest/list/'+this.parentId)
             .then((res) => {
                 console.log(res);
+                console.log('부모 번호' +this.parentId);
                 console.log(res.data.data);
                 this.quests = res.data.data;
             })
@@ -370,14 +230,9 @@ export default {
         //아이 퀘스트 리스트
         axios.get(process.env.VUE_APP_API_URL + '/api/quest/kid/list/'+this.kidId)
             .then((res) => {
-                console.log('아이 퀘스트 리스트');
                 console.log(res);
-                console.log('아이 번호'+this.kidId);
-                console.log('체크1');
-                console.log(res.data);
-                console.log('체크2');
                 console.log(res.data.data);
-                this.kidquests = res.data;
+                this.kidquests = res.data.data;
             })
             .catch(err => {
                 console.log(err);
@@ -385,14 +240,24 @@ export default {
 
     },
     methods: {
-        detailquest(){
+        detailquest(quest){
+            this.target={
+                ...quest,
+            };
             this.detailQuest = this.detailQuest ? false : true;
+        },
+        connectkid(quest){
+            this.target={
+                ...quest,
+            };
+            this.connectKid = this.connectKid ? false : true;
         },
         addquest(){
             this.insertQuest = this.insertQuest ? false :true;
         },
+        // 퀘스트 관리탭에서 지우는 것
         deletequest(no){
-            let answer = confirm('아이템을 삭제하시겠습니까?');
+            let answer = confirm('퀘스트를 삭제하시겠습니까?');
             if(answer){
                 axios.delete(process.env.VUE_APP_API_URL+'/api/quest/parent/delete/'+no)
                     .then(()=>{
@@ -402,24 +267,35 @@ export default {
                 return;
             }
         },
-        addkidquest(){
-            axios.post(process.env.VUE_APP_API_URL+'/api/quest/kid/regist', {
-                         
-                kidId: this.kidId,    
-                questNo : this.questNo,
-                'startTime': new Date(this.year, this.month-1, this.day),
-                'endTime' : new Date(this.endyear, this.endmonth-1, this.endday),
-  
-            })
-                .then(()=>{
-                    console.log('퀘스트 번호');
-                    console.log(this.qusestNo);
-                    alert('등록되었습니다!');
-                    this.handleDialog();
-                    window.location.reload();
-                });
+        // 아이퀘스트 탭에서 지우는것 
+        kiddeletequest(no){
+            let answer = confirm('퀘스트를 삭제하시겠습니까?');
+            if(answer){
+                axios.delete(process.env.VUE_APP_API_URL+'/api/quest/kid/delete/'+no+'/'+this.kidId)
+                    .then(()=>{
+                        window.location.reload();
+                    });
+            } else {
+                return;
+            }
+        },
+        success(){
+            axios.put(process.env.VUE_APP_API_URL+'/api/quest/kid/finish', {
+                //questNo:this.target.questNo,
+                
+                //parentId: this.target.parentId,
+                //parentId: this.target.parentId,
+            }).then(()=>{
+                console.log('퀘스트 완료!');
+                alert('완료 승인 되었습니다!');
+                this.handleDialog();
+                window.location.reload();
+            });
             console.log('success!!');
-
+            
+        },
+        handleConnectquest(quest){
+            this.kidquests.push(quest);
         },
         handleDialog(){
             this.$emit('handle');
@@ -492,7 +368,7 @@ export default {
 
 ul {
   margin: 0;
-  padding: 0, 10;
+  padding: 0, 10px;
   max-height: 390px;
   overflow-y: auto;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -513,7 +389,7 @@ li {
       #EEE 10px,
       #EEE 11px,
       transparent 11px);
-  padding: 10px 15px 10px 25px;
+  padding: 10px 15px 10px 5px;
   border: 1px solid #CCC;
   box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.5);
   margin-bottom: 5px;

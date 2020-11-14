@@ -59,7 +59,7 @@
 
 <script>
 import axios from '@/plugins/axios';
-
+import { mapGetters } from 'vuex';
 export default {
     name:'InsertQuest',
     props:{
@@ -72,9 +72,16 @@ export default {
             name:'',
             reward:'',
             description:'',
-            parentId:4,
+            
         };
     },
+    computed:{
+        ...mapGetters({
+            parentId:'auth/id',
+            kidId:'auth/id'
+        })
+    },
+    
     methods: {
         handleAddItem(){        
             if (this.$refs.form.validate()){

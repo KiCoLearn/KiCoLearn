@@ -59,15 +59,19 @@
 
 <script>
 import axios from '@/plugins/axios';
-
+import { mapGetters } from 'vuex';
 export default {
     name:'ReportMain',
     data() {
         return {
             recents: new Array(),
-            kidId:1,
-           
         };
+    },
+    computed:{
+        ...mapGetters({
+            parentId:'auth/id',
+            kidId:'auth/id'
+        })
     },
     created() {
         axios.get(process.env.VUE_APP_API_URL + '/api/money/activity/'+this.kidId)
@@ -79,6 +83,7 @@ export default {
             .catch(err => {
                 console.log(err);
             });
+
 
     }
         
