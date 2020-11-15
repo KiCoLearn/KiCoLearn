@@ -51,12 +51,14 @@
                 <v-card-actions>
                     <v-spacer />
                     <v-btn
+                        text
                         color="orange darken-1"
                         @click="insert"
                     >
                         등록
                     </v-btn>
                     <v-btn
+                        text
                         color="orange darken-1"
                         @click="closeDialog"
                     >
@@ -109,3 +111,10 @@ export default {
     
 };
 </script>
+
+<style lang="scss" scoped>
+    ::v-deep .v-text-field{
+        width: 90%;
+        margin: auto;
+    }
+</style>

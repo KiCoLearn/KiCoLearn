@@ -25,8 +25,7 @@
                     cols="12"
                     style="display:flex; justify-content:center"
                 >
-                    <label><b>퀘스트 이름</b></label>
-                    <v-col cols="1" />
+                    <label class="label1"><b>퀘스트 이름</b></label>
                     <v-col
                         cols="8"
                         style="display:flex; justify-content:flex-start"
@@ -46,8 +45,7 @@
                     cols="12"
                     style="display:flex; justify-content:center"
                 >
-                    <label><b>보상 포인트</b></label>
-                    <v-col cols="1" />
+                    <label class="label1"><b>보상 포인트</b></label>
                     <v-col
                         cols="8"
                         style="display:flex; justify-content:flex-start"
@@ -67,8 +65,8 @@
                     cols="12"
                     style="display:flex; justify-content:center"
                 >
-                    <label><b>설명</b></label>
-                    <v-col cols="1" />
+                    <label class="label1"><b>퀘스트 내용</b></label>
+                    
                     <v-col
                         cols="8"
                         style="display:flex; justify-content:flex-start"
@@ -90,16 +88,16 @@
                 <v-btn
                     color="orange darken-1"
                     text
-                    @click="update"
+                    @click="closeDialog"
                 >
-                    수정
+                    취소
                 </v-btn>
                 <v-btn
                     color="orange darken-1"
                     text
-                    @click="closeDialog"
+                    @click="update"
                 >
-                    취소
+                    수정
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -156,12 +154,14 @@ export default {
 };
 </script>
 
-<style>
-#form{
-    padding:0.4rem;    
+<style scoped>
+ .label1{
+    margin-top:8px;
+    margin-right: 10px;
+ }
+
+.col{
+    padding:0;
 }
-#text{
-    margin: 0.2rem;
-    width: 300px;
-}
+
 </style>
