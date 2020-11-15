@@ -11,7 +11,7 @@
             >
                 <img 
                     src="@/assets/children.png"
-                    width="30px"
+                    width="45px"
                     alt="addquest"
                 >
             </button>                          
@@ -61,8 +61,8 @@
                                 v-model="dateModal"
                                 :return-value.sync="date"
                                 persistent
-                                lazy
-                                full-width
+                              
+                                
                                 width="290px"
                             >
                                 <template v-slot:activator="{ on }">
@@ -80,14 +80,14 @@
                                 >
                                     <v-spacer />
                                     <v-btn
-                                        flat
+                                        text
                                         color="primary"
                                         @click="dateModal = false"
                                     >
                                         Cancel
                                     </v-btn>
                                     <v-btn
-                                        flat
+                                        text
                                         color="primary"
                                         @click="timeModal = true"
                                     >
@@ -101,25 +101,24 @@
                                 v-model="timeModal"
                                 :return-value.sync="time"
                                 persistent
-                                lazy
-                                full-width
+                    
+                               
                                 width="290px"
                             >
                                 <v-time-picker
                                     v-if="timeModal"
                                     v-model="time"
-                                    full-width
                                 >
                                     <v-spacer />
                                     <v-btn
-                                        flat
+                                        text
                                         color="primary"
                                         @click="timeModal = false"
                                     >
                                         Cancel
                                     </v-btn>
                                     <v-btn
-                                        flat
+                                        text
                                         color="primary"
                                         @click="set()"
                                     >
@@ -138,8 +137,7 @@
                                 v-model="enddateModal"
                                 :return-value.sync="enddate"
                                 persistent
-                                lazy
-                                full-width
+                              
                                 width="290px"
                             >
                                 <template v-slot:activator="{ on }">
@@ -157,14 +155,14 @@
                                 >
                                     <v-spacer />
                                     <v-btn
-                                        flat
+                                        text
                                         color="primary"
                                         @click="enddateModal = false"
                                     >
                                         Cancel
                                     </v-btn>
                                     <v-btn
-                                        flat
+                                        text
                                         color="primary"
                                         @click="endtimeModal = true"
                                     >
@@ -178,25 +176,23 @@
                                 v-model="endtimeModal"
                                 :return-value.sync="endtime"
                                 persistent
-                                lazy
-                                full-width
+                               
                                 width="290px"
                             >
                                 <v-time-picker
                                     v-if="endtimeModal"
                                     v-model="endtime"
-                                    full-width
                                 >
                                     <v-spacer />
                                     <v-btn
-                                        flat
+                                        text
                                         color="primary"
                                         @click="endtimeModal = false"
                                     >
                                         Cancel
                                     </v-btn>
                                     <v-btn
-                                        flat
+                                        text
                                         color="primary"
                                         @click="set2()"
                                     >

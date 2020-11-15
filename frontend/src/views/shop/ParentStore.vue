@@ -262,10 +262,25 @@ export default {
             });
 
     },
+
+    mounted() {
+        this.$el.querySelectorAll('.v-input__control input').forEach(e => {
+            e.setAttribute('autocomplete', 'off');
+        }); 
+    },
     
     methods: {
+        getParentsItem(){
+            axios.get('/api/store/plist/'+this.parentId)
+                .then((res) => {
+                    this.myItems = res.data.data;
+                });
+        },
+
         handleAddItem(){
+            this.getParentsItem();
             this.addItem = this.addItem ? false : true;
+
         },
         editParentItem(item){
             this.target={
