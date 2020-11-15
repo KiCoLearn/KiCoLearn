@@ -172,7 +172,6 @@ public class QuestController {
         try {
             notificationService.completeQuestFromKidId(quest.getKidId());
             qService.updateRequest(quest);
-            notificationService.completeQuestFromKidId(quest.getKidId());
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
             e.printStackTrace();

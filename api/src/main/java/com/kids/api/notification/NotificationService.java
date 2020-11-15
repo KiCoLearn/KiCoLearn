@@ -41,7 +41,7 @@ public class NotificationService {
         FCMNotification notification = FCMNotification.builder()
                                                       .to(token)
                                                       .notification(Notification.builder()
-                                                                                .title("아이가 퀘스트를 완료했어요!")
+                                                                                .title(kid.getName() + "이(가) 퀘스트를 완료했어요!")
                                                                                 .body("확인해주세요")
                                                                                 .click_action("parents/quest")
                                                                                 .build())

@@ -18,31 +18,30 @@
                 label="이름"
                 v-text="target.name"
             />                        
-            <v-card-subtitle
-                class="text-left" 
-                label="보상 포인트"   
-                v-text="target.reward"                         
-            />
-
             <v-card-text>
+                <v-text-field 
+                    class="text-left" 
+                    label="보상 포인트"   
+                    v-text="'보상 : '+target.reward+'원'" 
+                />     
                 <v-text-field 
                     class="text-left"                            
                     label="설명" 
-                    v-text="target.description"   
-                />
+                    v-text="'주내용 : '+target.description"   
+                />                  
             </v-card-text>
-           
+
       
             <v-card-text 
                 class="text-left"                            
                 aria-label="시작 시간" 
-                v-text="formatedStartTime"   
+                v-text="'시작 : ' +formatedStartTime"   
             />
 
             <v-card-text 
                 class="text-left"                            
                 aria-label="완료 시간" 
-                v-text="formatedEndTime"   
+                v-text="'완료 : '+formatedEndTime"   
             />
 
             <v-card-actions>
@@ -76,11 +75,11 @@ export default {
     computed: {
         formatedStartTime(){
             if(!this.target || !this.target.startTime) return null;
-            return new Date(this.target.startTime).format('yyyy년 MM월 dd일');
+            return new Date(this.target.startTime).format('yyyy년 MM월 dd일 hh시 mm분');
         },
         formatedEndTime(){
             if(!this.target || !this.target.endTime) return null;
-            return new Date(this.target.endTime).format('yyyy년 MM월 dd일');
+            return new Date(this.target.endTime).format('yyyy년 MM월 dd일 hh시 mm분');
         },
     },
     methods:{
