@@ -144,21 +144,21 @@
                                 사러 가볼까요?
                                 <img
                                     src="@/assets/redo.png"
-                                    width="20px"
+                                    width="25px"
                                     @click="goStore"
                                 >
                             </template>
                         </div>
                         <div v-else>
-                            <button
-                                class="btn"
-                                @click="goStore"
-                            >
+                            <template> 
+                                찜한 상품이 없어요!<br>
+                                찜하러 가볼까요?
                                 <img
-                                    src="@/assets/add.png"
-                                    width="50px"
+                                    src="@/assets/redo.png"
+                                    width="25px"
+                                    @click="goStore"
                                 >
-                            </button>
+                            </template>
                         </div>
                     </v-col>
                 </v-row>
