@@ -21,7 +21,7 @@
                 <div class="child1">
                     <v-img
                         class="child1 mr-3"
-                        :src="require('@/assets/coins.png')"
+                        :src="require('@/assets/coin.png')"
                         width="25px"
                         height="25px"
                     />
@@ -47,7 +47,6 @@
                     <v-icon color="red">
                         mdi-heart-multiple
                     </v-icon>
-                    찜
                 </v-btn>
                 <v-btn
                     v-else
@@ -60,7 +59,6 @@
                     @click="handleLikeItem(sendData.itemNo)"
                 >
                     <v-icon>mdi-heart-multiple-outline</v-icon>
-                    찜
                 </v-btn>
                 <v-spacer />
                 <v-btn
@@ -197,4 +195,6 @@ div.v-card__text.right{
 .child2 {
     flex: 2;
 }
+
+
 </style>
