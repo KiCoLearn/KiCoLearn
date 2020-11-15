@@ -142,7 +142,7 @@ export default {
         }),
     },
     created() {
-        axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentsId,
+        axios.get('/api/kidsaccount/list/'+this.parentsId,
             {
             })
             .then((res) => {

@@ -194,27 +194,7 @@
                         />원
                     </v-col>
                 </v-row>
-    
-
-                <!-- <v-row
-                    v-for="q in quest.slice(0, 3)"
-                    :key="q.questNo"  
-                    :v-if="quest.length>0"
-                    class="quest"
-                    justify="center"
-                >
-                    <v-col cols="3">
-                        {{ q.name }}
-                    </v-col>
-                    <v-col cols="6">
-                        {{ q.description }}
-                    </v-col>
-                    <v-col cols="3">
-                        {{ q.reward }}원
-                    </v-col>
-                </v-row> -->
-
-               
+         
                 <v-row
                     justify="end"
                     class="nav"
