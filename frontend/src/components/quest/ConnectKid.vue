@@ -10,6 +10,7 @@
                 v-on="on"
             >
                 <img 
+                    class="connect-image"
                     src="@/assets/children.png"
                     width="45px"
                     alt="addquest"
@@ -51,11 +52,7 @@
                             </v-col>
                         </v-col>
 
-                        <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                        >
+                        <v-col>
                             <v-dialog
                                 ref="dialog"
                                 v-model="dateModal"
@@ -76,7 +73,6 @@
                                 </template>
                                 <v-date-picker
                                     v-model="date"
-                                    scrollable
                                 >
                                     <v-spacer />
                                     <v-btn
@@ -127,11 +123,7 @@
                                 </v-time-picker>
                             </v-dialog>
                         </v-col>
-                        <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                        >
+                        <v-col>
                             <v-dialog
                                 ref="dialog3"
                                 v-model="enddateModal"
@@ -150,8 +142,7 @@
                                     />
                                 </template>
                                 <v-date-picker
-                                    v-model="enddate"
-                                    scrollable
+                                    v-model="enddate" 
                                 >
                                     <v-spacer />
                                     <v-btn
@@ -346,7 +337,15 @@ export default {
     display: none;
 }
 .col{
-        padding: 0;
+        padding: 8px;
     }
-  
+.connect-image{
+    position: absolute;
+    top: -6px;
+    right: -50px;
+    width: auto;
+    height: auto;
+    max-width: 2.5rem;
+    max-height: 2.5rem;
+  }
 </style>
