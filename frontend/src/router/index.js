@@ -14,6 +14,8 @@ import DummyRoutes from '@/router/dummy';
 
 import QuestRoutes from '@/router/quest';
 
+import Error from '@/views/Page404';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -58,8 +60,12 @@ const routes = [
                 next();
             }
             
-        }
-
+        },
+    },
+    {
+        path: '/*',
+        name: 'Error',
+        component: Error,
     },
 ];
 

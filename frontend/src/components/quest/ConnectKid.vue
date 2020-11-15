@@ -294,6 +294,28 @@ export default {
                 }
             });
     },
+
+    mounted() {
+
+        this.$refs.timePicker.onChange = function () {
+
+            //this.$emit(`click:${selectingNames[this.selecting]}`, value);
+
+            if (this.inputHour === this.lazyInputHour &&
+                this.inputMinute === this.lazyInputMinute &&
+                (!this.useSeconds || this.inputSecond === this.lazyInputSecond)
+            ) return;
+
+            const time = this.genValue();
+            if (time === null) return;
+
+            this.lazyInputHour = this.inputHour;
+            this.lazyInputMinute = this.inputMinute;
+            this.useSeconds && (this.lazyInputSecond = this.inputSecond);
+
+            this.$emit('change', time);
+        }.bind(this.$refs.timePicker);
+    },
     methods: {
         set() {
             this.sdate = this.date +' '+ this.time;
