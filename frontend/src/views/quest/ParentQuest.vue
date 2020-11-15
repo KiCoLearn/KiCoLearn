@@ -71,11 +71,13 @@
 
             <!--퀘스트 관리 탭 -->
             <div class="tab2">
-                <div>
+                <div class="page">
                     <ul
                         v-for="quest in quests" 
                         id="notebook_ul" 
                         :key="quest.questNo"
+                        :quests-per-page="questsPerPage"
+                        :pageCount="pageCount"
                     >
                         <li>
                             <v-row>
@@ -110,6 +112,14 @@
                         @insert-success="fetchParentsQuests"
                     /> 
                 </div>
+                <br>
+                <v-pagination
+                    v-model="page"
+                    :length="pageCount"
+                    prev-icon="mdi-menu-left"
+                    next-icon="mdi-menu-right"
+                    color="#fb8c00"
+                />
             </div>
         </div>
     </div>
@@ -134,7 +144,9 @@ export default {
             kidQuests: new Array(),
             kidsList: new Array(),
             listName: new Array(),
-
+            page:1,
+            pageCount:1,
+            questsPerPage: 7,
             years:['2020','2021'],
             year:'',
             month:'',
@@ -159,14 +171,13 @@ export default {
             },
             norequest: `${require('@/assets/norequest.png')}`,
             newrequest :  `${require('@/assets/newrequest.png')}`
-
         };
     },
     computed:{
         ...mapGetters({
             parentId:'auth/id',
             kidId:'auth/select'
-        })
+        }),
     },
     created() {
         this.fetchParentsQuests();

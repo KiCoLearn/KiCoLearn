@@ -24,7 +24,7 @@
 	</delete>
 	
 	<insert id="addKidItem" parameterType="kidstore">
-		insert into kids_store values(#{kidId}, #{itemNo})
+		insert into kids_store(kid_id, item_no) values(#{kidId}, #{itemNo})
 	</insert>
 	
 	<delete id="deleteKidItem" parameterType="kidstore">
