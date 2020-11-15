@@ -3,7 +3,7 @@
         <div class="store-left">
             <v-img
                 class="mx-auto"
-                :src="require('@/assets/shop.png')"
+                :src="require('@/assets/store.png')"
                 width="128"
                 height="128"
             />
@@ -161,5 +161,9 @@ div .store-right{
 }
 .money-amount{
     flex:2;
+}
+
+::v-deep .v-image__image--cover{
+        background-size: contain;
 }
 </style>

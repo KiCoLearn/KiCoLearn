@@ -34,9 +34,7 @@
                             <v-img
                                 class="img"
                                 :src="item.field"
-                                :alt="item.field" 
-                                height="50px" 
-                                width="50px" 
+                                :alt="item.field"
                             />
                         </div>
                     </template>
@@ -119,3 +117,19 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+    .img{
+        max-height:50px;
+        max-width:50px;
+        width:auto;
+        height:auto;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        
+    }
+
+    ::v-deep .v-image__image--cover{
+        background-size: contain;
+    }
+</style>
