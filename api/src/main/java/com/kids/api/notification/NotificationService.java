@@ -61,7 +61,7 @@ public class NotificationService {
                                                       .notification(Notification.builder()
                                                                                 .title(kid.getName() + "이(가) 아이템 구매를 원합니다!")
                                                                                 .body("확인해주세요!")
-                                                                                .click_action("parents/purchase")
+                                                                                .click_action("parents/store")
                                                                                 .build())
                                                       .data(NotificationData.builder()
                                                                             .message("스토어에서 구매 수락해주세요!")
@@ -125,7 +125,7 @@ public class NotificationService {
                 while ((line = br.readLine()) != null) {
                     sb.append(line);
                 }
-
+               
                 JSONObject response = new JSONObject(sb.toString());
                 try {
                     int code = response.getInt("code");
