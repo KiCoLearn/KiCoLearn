@@ -65,6 +65,8 @@
                         v-for="quest in quests" 
                         id="notebook_ul" 
                         :key="quest.questNo"
+                        :quests-per-page="questsPerPage"
+                        :page="page"
                     >
                         <li>
                             <v-row>
@@ -101,9 +103,11 @@
                 <br>
                 <v-pagination
                     v-model="page"
-                    :length="pageCount"
+                    :total-rows="rows"
+                    :quests-per-page="questsPerPage"
                     prev-icon="mdi-menu-left"
                     next-icon="mdi-menu-right"
+                    color="#fb8c00"
                 />
             </div>
         </div>
@@ -130,8 +134,8 @@ export default {
             kidsList: new Array(),
             listName: new Array(),
             page:1,
-            pageCount:1,
-            questsPerPage: 5,
+            //pageCount:0,
+            questsPerPage: 7,
             years:['2020','2021'],
             year:'',
             month:'',
@@ -163,7 +167,10 @@ export default {
         ...mapGetters({
             parentId:'auth/id',
             kidId:'auth/select'
-        })
+        }),
+        rows(){
+            return this.quests.length;
+        }
     },
     created() {
         this.fetchParentsQuests();
@@ -347,8 +354,5 @@ li {
 .col{
         padding: 0;
     }
-.v-pagination {
-    background-color: #fb8c00 !important;
-    border-color: #fb8c00 !important;
-}
+
 </style>
