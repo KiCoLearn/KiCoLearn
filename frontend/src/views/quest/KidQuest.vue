@@ -24,10 +24,9 @@
                                 <div class="right top">
                                     <button
                                         class="btn"
-                                        @click="success(quest.questNo)"
+                                        @click="quest.request? pass :success(quest.questNo)"
                                     >
                                         <img
-                                            :id="`${quest.questNo}-image`"
                                             class="complete-image"
                                             :src="!quest.finish ? requestquest :finishquest"
                                             width="100px"
@@ -117,6 +116,9 @@ export default {
                 return;
             }
 
+        },
+        pass(){
+          
         }
     },
         

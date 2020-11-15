@@ -234,7 +234,7 @@ export default {
                     axios.get('/api/store/detail/'+this.kid.likeItem)
                         .then((res) => {
                             this.likeItem = res.data.data;
-                            console.log(this.likeItem);
+                            //console.log(this.likeItem);
                             this.imgSrc = this.likeItem.field;
                         });
                 }

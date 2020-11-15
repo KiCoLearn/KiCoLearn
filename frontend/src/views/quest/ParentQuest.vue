@@ -36,7 +36,7 @@
                                     >
                                         <img 
                                             src="@/assets/delete.png"
-                                            width="30px"
+                                            width="40px"
                                         >
                                     </button>
                                 </div>
@@ -91,7 +91,7 @@
                                     >
                                         <img 
                                             src="@/assets/delete.png"
-                                            width="30px"
+                                            width="40px"
                                             alt="deletequest"
                                         >
                                     </button>
@@ -255,7 +255,7 @@ export default {
 .wrapper {
   width: 100%;
   margin: 10px auto;
-  max-width: 800px;
+  max-width: 330px;
   height: 100%;
 }
 .wrapper label {
@@ -285,7 +285,7 @@ export default {
 
 .tab1{
   width: 100%;
-  padding: 70px 0px;
+  padding: 50px 0px;
   position: absolute;
   top: 0;
   left: 0;
@@ -293,11 +293,10 @@ export default {
   display: none;
   border-top: 5px solid #e74c3c;
   border-radius: 0 10px 10px 10px;
-  overflow-y: scroll;
 }
 .tab2{
   width: 100%;
-  padding: 70px 0px;
+  padding: 50px 0 0 0;
   position: absolute;
   top: 0;
   left: 0;
@@ -305,7 +304,6 @@ export default {
   display: none;
   border-top: 5px solid #e74c3c;
   border-radius: 0 10px 10px 10px;
-  overflow-y: scroll;
 
 }
 
@@ -342,7 +340,7 @@ li {
   border-radius: 3px;
 }
 ::v-deep .detail{
-  width: 70%;
+  width: 60%;
   padding-bottom: 0 !important;
 }
 .right {

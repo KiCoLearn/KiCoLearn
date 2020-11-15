@@ -8,11 +8,12 @@
                 <button
                     class="btn"
                     v-bind="attrs"
+                    style="margin-top:10px"
                     v-on="on"
                 >
                     <img 
                         src="@/assets/add.png"
-                        width="40px"
+                        width="50px"
                         alt="addquest"
                     >
                 </button>

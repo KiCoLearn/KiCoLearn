@@ -63,4 +63,14 @@ public class QuestDaoImpl implements QuestDao {
         return temp.update(ns + "updateRequest", quest);
     }
 
+    @Override
+    public int getFinishCount(int kidId) {
+        return temp.selectOne(ns+"finishCount", kidId);
+    }
+
+    @Override
+    public int getRequestCount(int kidId) {
+        return temp.selectOne(ns+"requestCount", kidId);
+    }
+
 }

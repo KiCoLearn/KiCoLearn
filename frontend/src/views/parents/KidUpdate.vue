@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <h2>아이 정보 등록</h2>
+        <h2>아이 정보 수정</h2>
         <v-layout justify-center>
             <div class="character">
                 <img

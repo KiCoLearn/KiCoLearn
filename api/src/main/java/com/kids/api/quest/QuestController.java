@@ -1,5 +1,6 @@
 package com.kids.api.quest;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.api.global.handler.Handler;
@@ -191,6 +191,24 @@ public class QuestController {
             kidQuest.setKidId(kidId);
             qService.deleteKidQuest(kidQuest);
             entity = resultHandler.handleSuccess("success");
+        } catch (RuntimeException e) {
+            entity = resultHandler.handleException(e);
+        }
+        return entity;
+    }
+    
+    @GetMapping("/kid/number/{kidId}")
+    @ApiOperation(value = "아이 번호로 퀘스트 완료, 요청 숫자 조회")
+    public ResponseEntity<Map<String, Object>> getNumberByKidId(@PathVariable int kidId) {
+        ResponseEntity<Map<String, Object>> entity = null;
+        try {
+            int finish = qService.getFinishCount(kidId);
+            int request = qService.getRequestCount(kidId);
+            Map<String, Integer> map = new HashMap<>();
+            map.put("finish",finish);
+            map.put("request",request);
+            
+            entity = resultHandler.handleSuccess(map);
         } catch (RuntimeException e) {
             entity = resultHandler.handleException(e);
         }

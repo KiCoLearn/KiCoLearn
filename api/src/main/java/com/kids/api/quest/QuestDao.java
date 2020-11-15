@@ -22,4 +22,8 @@ public interface QuestDao {
     List<KidQuestDetail> getKidQuestListByKidId(int kidId);
 
     int updateRequest(KidsQuest quest);
+    
+    int getFinishCount(int kidId);
+    
+    int getRequestCount(int kidId);    
 }
