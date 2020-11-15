@@ -33,13 +33,14 @@
                             <v-btn
                                 class="editbtn"
                                 rounded
-                                color="#0A97A1"
+                                color="#20B7E5"
+                                style="color:white"
                                 @click="handleAddItem"   
                             >
                                 아이템 추가
                                 <v-icon
                                     right
-                                    color="black"
+                                    color="white"
                                 >
                                     mdi-gift-outline
                                 </v-icon>                                    
@@ -49,24 +50,21 @@
                     <template v-slot:[`item.field`]="{ item }">
                         <div class="p-2">
                             <v-img
-                                class="img"
+                                class="img2"
                                 :src="item.field"
                                 :alt="item.field" 
-                                height="150px" 
-                                width="150px" 
                             />
                         </div>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">        
                         <v-icon
-                            small
+                            
                             class="mr-2"
                             @click="editParentItem(item)"
                         >
                             mdi-pencil
                         </v-icon>
                         <v-icon
-                            small
                             @click="deleteParentItem(item)"
                         >
                             mdi-delete
@@ -79,6 +77,7 @@
                 <v-pagination
                     v-model="page"
                     :length="pageCount"
+                    style="margin-top:5px"
                     color="#20B7E5"
                 />
                 <add-item 
@@ -92,21 +91,23 @@
                 />
             </div>
             <div class="tab2">
-                <v-container fluid>
-                    <v-row>
-                        <v-col cols="12">
-                            <v-combobox
-                                v-model="select"
-                                :items="listName"
-                                label="아이 선택"                                    
-                                outlined
-                                rounded
-                                dense
-                                @change="handleSelect(select)"
-                            />
-                        </v-col>
-                    </v-row>
-                </v-container>
+                <v-row>
+                    <v-col
+                        cols="12"
+                        style="margin-top:10px;padding: 4px 16px;"
+                    >
+                        <v-combobox
+                            v-model="select"
+                            :items="listName"
+                            label="아이 선택"                                    
+                            outlined
+                            rounded
+                            dense
+                            @change="handleSelect(select)"
+                        />
+                    </v-col>
+                </v-row>
+                
                 <v-data-table
                     :headers="kheaders"
                     :items="kidsItems"                        
@@ -122,7 +123,8 @@
                             <v-spacer />
                             <v-btn
                                 rounded
-                                color="#0A97A1"
+                                color="#20B7E5"
+                                style="color:white"
                                 @click="handleStoreManager"           
                             >
                                 스토어 관리
@@ -136,8 +138,6 @@
                                 class="img"
                                 :src="item.field"
                                 :alt="item.field" 
-                                height="50px" 
-                                width="50px" 
                             />
                         </div>
                     </template>
@@ -329,8 +329,13 @@ export default {
 </script>
 
 <style scoped>
+::v-deep .v-data-table__mobile-row{
+    font-size: 1rem !important;
+}
+
 ::v-deep .v-data-table__mobile-table-row > td:first-child{
     display: flex;
+    padding: 5px;
     justify-content: center;
 }
 
@@ -342,6 +347,10 @@ export default {
 <style lang="scss" scoped>
 * {
   box-sizing: border-box;
+}
+
+.row{
+    margin: 0;
 }
 
 .wrapper {
@@ -393,18 +402,15 @@ export default {
 
 .tab1{
   width: 100%;
-  padding: 10px 10px;
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #fff;
   display: none;
   border-top: 5px solid #20B7E5;
   border-radius: 0 10px 10px 10px;
 }
 .tab2{
   width: 100%;
-  padding: 10px 10px;
   position: absolute;
   top: 0;
   left: 0;
@@ -470,4 +476,29 @@ td.text-start{
     text-align: center;
 }
 
+::v-deep .v-text-field__details{
+    display: none;
+}
+
+::v-deep .v-data-table-header, .v-data-table-header-mobile{
+    display: none !important;
+}
+
+.img{
+    max-height:50px;
+    max-width:50px;
+    width:auto;
+    height:auto;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.img2{
+    max-height:150px;
+    max-width:150px;
+    width:auto;
+    height:auto;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
 </style>>

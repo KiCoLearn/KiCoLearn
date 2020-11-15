@@ -288,7 +288,7 @@ export default {
         })
     },
     created() {
-        axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/detail/'+this.kidId)
+        axios.get('/api/kidsaccount/detail/'+this.kidId)
             .then((res) => {
                 this.name = res.data.data.name;
                 const birth = res.data.data.birth.split('-');

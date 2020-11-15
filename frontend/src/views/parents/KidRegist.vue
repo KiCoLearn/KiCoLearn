@@ -244,7 +244,7 @@ export default {
     methods: {
         regist(){
             if (this.$refs.form.validate()) {
-                axios.post(process.env.VUE_APP_API_URL + '/api/kidsaccount/regist',
+                axios.post('/api/kidsaccount/regist',
                     {
                         'birth': new Date(this.year, this.month-1, this.day),
                         'name': this.name,
