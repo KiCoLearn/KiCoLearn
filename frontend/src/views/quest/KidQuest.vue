@@ -103,14 +103,14 @@ export default {
 
             if(answer){
                 axios({
-                    url: `/api/quest/${this.kidId}/request`,
-                    method: 'post',
-                    params: {
-                        questNo: questNo,
+                    url: `/api/quest/request`,
+                    method: 'put',
+                    data: {
+                        kidId : this.kidId,
+                        questNo : questNo,
                     },
                 }).then(()=>{
                     console.log('퀘스트 완료');
-                    //this.handleDialog();
                     this.fetchQuests();
                 });
             } else {

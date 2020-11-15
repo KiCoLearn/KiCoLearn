@@ -31,6 +31,7 @@
                                 <div class="right top">
                                     <button
                                         class="btn"
+                                        style="margin-right:5px"
                                         @click="deleteKidQuest(kidQuest.questNo)"      
                                     >
                                         <img 
@@ -38,19 +39,29 @@
                                             width="30px"
                                         >
                                     </button>
-                                    <button
-                                        class="btn"
-                                        @click="successQuest(kidQuest)"      
-                                    >
-                                        <img
-                                            :id="`${kidQuest}-image`"
-                                            class="complete-image"
-                                            :src="!kidQuest.request ? norequest :newrequest"
-                                            width="100px"
-                                            alt="success"
-                                        >
-                                    </button>
                                 </div>
+                                <button
+                                    v-if="kidQuest.finish"
+                                    class="btn"
+                                >
+                                    <img
+                                        width="45px"
+                                        src="@/assets/good.png"
+                                        alt="success"
+                                    >
+                                </button>
+                                <button
+                                    v-else
+                                    class="btn"
+                                    @click="successQuest(kidQuest)"      
+                                >
+                                    <img
+                                            
+                                        :src="!kidQuest.request ? norequest :newrequest"
+                                        width="45px"
+                                        alt="success"
+                                    >
+                                </button>
                             </v-row>
                         </li>
                     </ul>
@@ -77,6 +88,7 @@
                                 <div class="right top">
                                     <button
                                         class="btn"
+                                        style="margin-right:5px"
                                         @click="deleteQuest(quest.questNo)"
                                     >
                                         <img 
@@ -215,15 +227,19 @@ export default {
             }
         },
         successQuest(kidquest){
-            axios.put('/api/quest/kid/finish', {
-                questNo: kidquest.questNo,
-                kidId: kidquest.parentId,
-            })
-                .then(()=>{
-                    //완료후?
-                    alert('하이?');
-                });
+            let answer = confirm('퀘스트를 완료하시겠습니까?');
+            if(answer){
+                axios.put('/api/quest/kid/finish', {
+                    questNo: kidquest.questNo,
+                    kidId: kidquest.kidId,
+                })
+                    .then(()=>{
+                        console.log('퀘스트 완료!');
+                    });
+            }
         },
+
+        
     }
 };
 </script>
@@ -232,6 +248,12 @@ export default {
 * {
   box-sizing: border-box;
 }
+
+.row{
+    margin: 0;
+    align-items: center;
+}
+
 .complete-image {
   position: absolute;
   top: -22px;
@@ -274,7 +296,7 @@ export default {
 
 .tab1{
   width: 100%;
-  padding: 70px 10px;
+  padding: 70px 0px;
   position: absolute;
   top: 0;
   left: 0;
@@ -286,7 +308,7 @@ export default {
 }
 .tab2{
   width: 100%;
-  padding: 70px 10px;
+  padding: 70px 0px;
   position: absolute;
   top: 0;
   left: 0;
@@ -332,7 +354,7 @@ li {
 }
 ::v-deep .detail{
   width: 70%;
-  margin-top: 5px;
+  padding-bottom: 0 !important;
 }
 .right {
   float: right;
@@ -348,6 +370,8 @@ li {
 }
 .col{
         padding: 0;
-    }
+}
+
+
 
 </style>

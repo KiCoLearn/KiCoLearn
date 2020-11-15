@@ -11,8 +11,8 @@
                 </v-card-title>
                 <template>                    
                     <v-form
-                        id="form"
-                        ref="form"                        
+                        id="add-form"
+                        ref="add-form"                        
                         lazy-validation
                     >
                         <v-file-input                            
@@ -23,20 +23,20 @@
                             prepend-icon="mdi-camera"                                                     
                         />
                         <v-text-field
-                            id="text"
                             v-model="name"
+                            class="item-field"
                             label="이름"
                             required                            
                         />
                         <v-text-field
-                            id="text"
                             v-model="price"
+                            class="item-field"
                             label="가격"
                             required                            
                         />
                         <v-text-field
-                            id="text"
                             v-model="description"
+                            class="item-field"
                             label="설명"
                             required                            
                         />                        
@@ -94,6 +94,11 @@ export default {
             parentId:'auth/id'
         })
     },
+    mounted() {
+        document.querySelectorAll('.item-field input').forEach(e => {
+            e.setAttribute('autocomplete', 'off');
+        }); 
+    },
     methods: {
         handleAddItem(){
             let base = +new Date() + Math.random() + this.parentId + this.name + this.description + this.price;
@@ -129,7 +134,7 @@ export default {
                 Key:this.photoKey,
                 Body:this.file,
                 ACL:'public-read'
-            }, (err,data) =>{
+            }, (err) =>{
                 if(err){
                     console.log('error!!:',err);
                 } else {
@@ -143,9 +148,8 @@ export default {
                         .then(()=>{
                             alert('등록되었습니다!');
                             this.handleDialog();
-                            window.location.reload();
+                            //window.location.reload();
                         });
-                    console.log('success!!',data);
                 }
             });
             
@@ -158,12 +162,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #form{
     padding:0.4rem;    
 }
 #text{
     margin: 0.2rem;
     width: 300px;
+}
+
+::v-deep .v-text-field{
+    width: 90%;
+    margin: auto;
 }
 </style>

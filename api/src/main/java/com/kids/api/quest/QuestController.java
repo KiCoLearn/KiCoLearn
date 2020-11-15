@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.api.global.handler.Handler;
+import com.kids.api.money.Budget;
+import com.kids.api.money.MoneyService;
 import com.kids.api.notification.NotificationService;
 
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +31,10 @@ public class QuestController {
 
     @Autowired
     QuestService qService;
-    
+
+    @Autowired
+    MoneyService mService;
+
     @Autowired
     NotificationService notificationService;
 
@@ -92,22 +97,20 @@ public class QuestController {
         }
         return entity;
     }
-  
-    
+
     @DeleteMapping("/parent/delete/{questNo}")
     @ApiOperation(value = "부모가 퀘스트 삭제")
     public ResponseEntity<Map<String, Object>> deleteQuest(@PathVariable int questNo) {
         ResponseEntity<Map<String, Object>> entity = null;
         logger.debug("delete quest: " + questNo);
         try {
-        	qService.deleteQuest(questNo);
+            qService.deleteQuest(questNo);
             entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
             entity = resultHandler.handleException(e);
         }
         return entity;
     }
-    
 
     @GetMapping("/kid/list/{kidId}")
     @ApiOperation(value = "아이 번호로 퀘스트 리스트 조회")
@@ -144,6 +147,17 @@ public class QuestController {
         logger.info("finish kid_quest: " + kidQuest);
         try {
             qService.finishKidsQuest(kidQuest);
+
+            Quest finishQuest = qService.detailQuest(kidQuest.getQuestNo());
+            Budget budget = Budget.builder()
+                            .amount(finishQuest.getReward())
+                            .contents("퀘스트")
+                            .isDeposit(true)
+                            .kidId(kidQuest.getKidId())
+                            .build();
+            int cnt = mService.makeActivity(budget);
+            if(cnt!=1) throw new RuntimeException("다시 시도하세요.");
+
             int kidId = kidQuest.getKidId();
             entity = resultHandler.handleSuccess("success");
         } catch (RuntimeException e) {
@@ -151,15 +165,14 @@ public class QuestController {
         }
         return entity;
     }
-    
 
-    @PostMapping("/{id}/request")
+    @PutMapping("/request")
     @ApiOperation(value = "아이 퀘스트 완료 요청")
-    public ResponseEntity<Object> finishQuest(@PathVariable("id") int kidId,
-    		@RequestParam int questNo) {
+    public ResponseEntity<Object> requestQuest(@RequestBody KidsQuest quest) {
         try {
-            notificationService.completeQuestFromKidId(kidId);
-
+            notificationService.completeQuestFromKidId(quest.getKidId());
+            qService.updateRequest(quest);
+            notificationService.completeQuestFromKidId(quest.getKidId());
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
             e.printStackTrace();
