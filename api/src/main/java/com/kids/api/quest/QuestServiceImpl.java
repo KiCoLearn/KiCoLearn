@@ -64,4 +64,14 @@ public class QuestServiceImpl implements QuestService {
         return qDao.updateRequest(quest);
     }
 
+    @Override
+    public int getFinishCount(int kidId) {
+        return qDao.getFinishCount(kidId);
+    }
+
+    @Override
+    public int getRequestCount(int kidId) {
+        return qDao.getRequestCount(kidId);
+    }
+
 }

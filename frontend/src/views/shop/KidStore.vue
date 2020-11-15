@@ -120,6 +120,7 @@ export default {
 
 <style scoped>
 .kidstore{
+    width: 330px;
     display: inline;
     padding: 0;
     justify-content: center;

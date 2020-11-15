@@ -67,7 +67,7 @@
         >
             <!-- 카드 헤더 --> 
             <div class="card-header">
-                <div class="card-header-is_closed"> 
+                <!-- <div class="card-header-is_closed"> 
                     <div class="card-header-text">
                         퀘스트
                     </div> 
@@ -75,7 +75,7 @@
                         2 / 5
                     </div> 
                 </div>
-                <div class="card-header-close" />
+                <div class="card-header-close" /> -->
             </div>
             <!--  카드 바디 -->
             <div class="card-body">
@@ -100,8 +100,8 @@
                 
                 <!--  카드 바디 푸터 -->
                 <div class="card-body-footer">
-                    <i class="icon icon-view_count" />완료 38회
-                    <i class="icon icon-comments_count" />요청 4개
+                    <i class="icon icon-view_count" />완료 <b>{{ kid.finish }}</b>회
+                    <i class="icon icon-comments_count" />요청 <b>{{ kid.request }}</b>개
                     <i class="reg_date"> {{ kid.birth }} </i>
                 </div>
             </div>
@@ -145,10 +145,15 @@ export default {
         axios.get('/api/kidsaccount/list/'+this.parentsId,
             {
             })
-            .then((res) => {
-                //console.log('response', res);
-                this.kids = res.data.data;
-                //console.log(this.kids);
+            .then(async (res) => {
+                const data = res.data.data;
+
+                for (let index = 0; index < data.length; index++) {
+                    const questNumber = await this.getKidQuestNumber(data[index].kidId);
+                    data[index].finish = questNumber.finish;
+                    data[index].request = questNumber.request;
+                }
+                this.kids= data;
             });
     },
     methods: {
@@ -193,7 +198,15 @@ export default {
 
                 }).finally(() => {
                 });
-        }
+        },
+        async getKidQuestNumber(kidId){
+            const res = await axios.get('/api/quest/kid/number/'+kidId)
+                .catch(err => {
+                    console.log(err);
+                });
+            return {'finish' : res.data.data.finish, 'request' : res.data.data.request};
+   
+        },
     },
 };
 </script>
@@ -205,7 +218,7 @@ export default {
 }
 
 .card {
-    height: 300px;
+    height: 270px;
     width: 300px !important;
     border-radius: 15px;
     display: block;
@@ -221,13 +234,10 @@ export default {
     cursor: pointer;
 }
 
-.card-header-close:hover{
-    cursor: pointer;
-}
 
 .card-header {
 	width: 100%;
-	height: 61px;
+	height: 20px;
 	border-radius: 15px 15px 0 0;
     margin-top: 10px;
 }
@@ -259,6 +269,7 @@ h1 {
     display: flex;
     justify-content: center;
 	align-items: center;
+    margin-top: 5px;
 }
 
 .card-body-footer {
@@ -268,7 +279,7 @@ h1 {
     padding-bottom: 11px;
     bottom: 0;
     width: 300px; 
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: white;
 }
 
