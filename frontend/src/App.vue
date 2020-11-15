@@ -38,15 +38,11 @@ export default {
 
     },
     mounted() {
-        /*
-        TODO: 이거 수정한 것 같은데
-        이 코드 -> 로그인 후 리퀘스트
         this.$store.dispatch('fcm/requestPermission')
             .then(() => {
                 this.$store.dispatch('fcm/getToken');
             }).catch(() => {
             });
-            */
     },
 
 

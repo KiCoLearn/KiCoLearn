@@ -294,7 +294,6 @@ export default {
 .quest-list{
   padding-top: 10px;
   text-align: center;
-  width: 90%;
 }
 ul {
   margin: 0;

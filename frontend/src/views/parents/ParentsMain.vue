@@ -91,7 +91,7 @@
                     </div>
                     
                     <img
-                        src="@/assets/wallet.png"
+                        src="@/assets/coins.png"
                         width="30px"
                         style="margin-left:10px;"
                     >

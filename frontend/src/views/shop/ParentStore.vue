@@ -501,4 +501,8 @@ td.text-start{
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
+::v-deep .v-image__image--cover{
+        background-size: contain;
+}
 </style>>
