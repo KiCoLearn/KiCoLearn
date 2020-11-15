@@ -210,6 +210,7 @@ export default {
                 axios.delete(`/api/quest/parent/delete/${no}`)
                     .then(()=>{
                         this.fetchParentsQuests();
+                        this.fetchKidQuests();
                     });
             } else {
                 return;

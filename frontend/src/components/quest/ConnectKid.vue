@@ -339,13 +339,5 @@ export default {
 .col{
         padding: 8px;
     }
-.connect-image{
-    position: absolute;
-    top: -6px;
-    right: -50px;
-    width: auto;
-    height: auto;
-    max-width: 2.5rem;
-    max-height: 2.5rem;
-  }
+
 </style>
