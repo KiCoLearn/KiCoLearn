@@ -145,6 +145,7 @@
                         <center v-if="item.request===true">
                             <v-icon
                                 color="#1BB367"
+                                @click="handleAccept(item)"
                             >
                                 mdi-shopping
                             </v-icon>
@@ -324,6 +325,12 @@ export default {
             callback(this.select);
         },
         deleteKidsItem(item){
+            if(item.request){
+                let ans = confirm('구매 요청된 아이템입니다. 정말로 삭제하시겠습니까?').valueOf();
+                if(ans===false){
+                    return;
+                }
+            }
             axios.post(process.env.VUE_APP_API_URL + '/api/store/kidsitem/delete',{
                 itemNo:item.itemNo,
                 kidId:this.select.value
@@ -338,6 +345,24 @@ export default {
                 .catch(()=>{
                     alert('이미 등록된 아이템입니다.');
                 });
+        },
+        handleAccept(item){
+            let ans = confirm('아이템 구매를 수락하시겠습니까??').valueOf();
+            if(ans){
+                axios.post(process.env.VUE_APP_API_URL + '/api/store/kidsitem/delete',{
+                    itemNo:item.itemNo,
+                    kidId:this.select.value
+                })
+                    .then(()=>{
+                        this.kidsItems.forEach((data,index)=>{
+                            if(data.itemNo===item.itemNo){
+                                this.kidsItems.splice(index, 1);
+                            }
+                        });
+                        confirm('수락되었습니다!');
+                    });
+                
+            }
         }
     },
 };
