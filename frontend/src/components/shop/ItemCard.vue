@@ -121,8 +121,8 @@ export default {
             this.$emit('releaseLike');
         },
         handlePurchaseRequest(item){
-            console.log(item);
-            console.log(this.holding);
+            //console.log(item);
+            //console.log(this.holding);
             if(this.holding < item.price){
                 alert('소지금이 부족합니다!');
                 return;

@@ -14,7 +14,7 @@
         
         <v-container
             fluid
-            style="height: 100%;"
+            style="height: 100%;width:371px"
         >
             <router-view />
         </v-container>

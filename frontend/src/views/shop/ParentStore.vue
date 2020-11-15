@@ -250,7 +250,7 @@ export default {
         
         axios.get(process.env.VUE_APP_API_URL + '/api/kidsaccount/list/'+this.parentId)
             .then((res) => {
-                console.log(res.data);
+                //console.log(res.data);
                 this.kidsList = res.data.data;
                 this.listName = new Array(this.kidsList.length);
                 for (let index = 0; index < this.kidsList.length; index++) {
@@ -304,10 +304,10 @@ export default {
                 });
         },
         handleSelect(kids){
-            console.log(kids);
+            //console.log(kids);
             axios.get(process.env.VUE_APP_API_URL + '/api/store/klist/'+ kids.value)
                 .then((res) => {
-                    console.log(res.data.data);
+                    //console.log(res.data.data);
                     this.kidsItems = res.data.data;
                 });
         },

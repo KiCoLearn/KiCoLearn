@@ -27,7 +27,6 @@
                                         @click="quest.request? pass :success(quest.questNo)"
                                     >
                                         <img
-                                            class="complete-image"
                                             :src="!quest.finish ? requestquest :finishquest"
                                             width="100px"
                                             alt="success"
@@ -127,15 +126,6 @@ export default {
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Gochi+Hand);
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
-.complete-image {
-  position: absolute;
-  top: -30px;
-  right: -58px;
-  width: auto;
-  height: auto;
-  max-width: 5.5rem;
-  max-height: 5.5rem;
-}
 
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;

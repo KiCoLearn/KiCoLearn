@@ -198,7 +198,7 @@ export default {
             axios.get('/api/quest/kid/list/'+this.kidId)
                 .then((res) => {
                     this.kidQuests = res.data.data;
-                    console.log(this.kidQuests);
+                    //console.log(this.kidQuests);
                 })
                 .catch(err => {
                     console.log(err);
@@ -234,7 +234,7 @@ export default {
                     kidId: kidquest.kidId,
                 })
                     .then(()=>{
-                        console.log('퀘스트 완료!');
+                        //console.log('퀘스트 완료!');
                     });
             }
         },
