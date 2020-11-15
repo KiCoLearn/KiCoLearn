@@ -64,7 +64,7 @@
                             >
                                 <template v-slot:activator="{ on }">
                                     <v-text-field
-                                        v-model="sdate"
+                                        v-model="formattedStartDate"
                                         label="시작 날짜"
                                         prepend-icon="mdi-calendar"
                                         readonly
@@ -134,7 +134,7 @@
                             >
                                 <template v-slot:activator="{ on }">
                                     <v-text-field
-                                        v-model="edate"
+                                        v-model="formattedEndDate"
                                         label="종료 날짜"
                                         prepend-icon="mdi-calendar"
                                         readonly
@@ -142,7 +142,7 @@
                                     />
                                 </template>
                                 <v-date-picker
-                                    v-model="enddate" 
+                                    v-model="enddate"
                                 >
                                     <v-spacer />
                                     <v-btn
@@ -167,7 +167,6 @@
                                 v-model="endtimeModal"
                                 :return-value.sync="endtime"
                                 persistent
-                               
                                 width="290px"
                             >
                                 <v-time-picker
@@ -232,8 +231,6 @@ export default {
     data() {
         return {
             dialog:false,
-            //startdate: false,
-            //starttime:false,
             valid: true,
             kidsList: new Array(),
             listName: new Array(),       
@@ -251,32 +248,43 @@ export default {
                 month : (value) => (value>=1 && value<=12),
                 day : (value) => (value>=1 && value<=31),
             },
-            date: '',
-            sdate: '',
+            date: new Date().format('yyyy-MM-dd'),
             dateModal: false,
-            time: '',
+            time: '00:00',
             timeModal: false,
-            enddate: '',
-            edate: '',
+            enddate: new Date().format('yyyy-MM-dd'),
             enddateModal: false,
-            endtime: '',
+            endtime: '00:00',
             endtimeModal: false,
-
+            updatedStartDate: false,
+            updatedEndDate: false,
         };
     },
     computed:{
         ...mapGetters({
             parentId:'auth/id',
         }),
+        formattedStartDate() {
+            if (this.updatedStartDate) {
+                return `${this.date} ${this.time}`;
+            } else {
+                return '';
+            }
+        },
+        formattedEndDate() {
+            if (this.updatedEndDate) {
+                return `${this.enddate} ${this.endtime}`;
+            } else {
+                return '';
+            }
+        },
     },
-
     watch: {
         target(newValue){
             this.name = newValue.name;
             this.reward = newValue.reward;
             this.description = newValue.description;
         }
-      
     },
     created() {
         // 아이 리스트 가지고 오기 
@@ -318,28 +326,24 @@ export default {
     },
     methods: {
         set() {
-            this.sdate = this.date +' '+ this.time;
+            this.updatedStartDate = true;
             this.$refs.dialog.save(this.date);
             this.$refs.dialog2.save(this.time);
         },
         set2() {
-            this.edate = this.enddate +' '+ this.endtime;
+            this.updatedEndDate = true;
             this.$refs.dialog3.save(this.enddate);
             this.$refs.dialog4.save(this.endtime);
-            console.log(this.enddate);
         },
 
         addKidQuest() {
-            console.log(this.target);
             axios.post('/api/quest/kid/regist', {          
                 kidId: this.selectkid,    
                 questNo: this.target.questNo,
                 startTime: this.date +'T'+ this.time+':00.000',
                 endTime:  this.enddate +'T'+ this.endtime+ ':00.000',
             })
-                .then((res) => {
-                    
-                    console.log(res);
+                .then(() => {
                     this.$emit('connect-success');
                     this.closeDialog();
                 });
