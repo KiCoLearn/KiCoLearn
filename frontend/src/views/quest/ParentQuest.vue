@@ -66,7 +66,7 @@
                         id="notebook_ul" 
                         :key="quest.questNo"
                         :quests-per-page="questsPerPage"
-                        :page="page"
+                        :pageCount="pageCount"
                     >
                         <li>
                             <v-row>
@@ -103,8 +103,7 @@
                 <br>
                 <v-pagination
                     v-model="page"
-                    :total-rows="rows"
-                    :quests-per-page="questsPerPage"
+                    :length="pageCount"
                     prev-icon="mdi-menu-left"
                     next-icon="mdi-menu-right"
                     color="#fb8c00"
@@ -134,7 +133,7 @@ export default {
             kidsList: new Array(),
             listName: new Array(),
             page:1,
-            //pageCount:0,
+            pageCount:1,
             questsPerPage: 7,
             years:['2020','2021'],
             year:'',
@@ -160,7 +159,6 @@ export default {
             },
             norequest: `${require('@/assets/norequest.png')}`,
             newrequest :  `${require('@/assets/newrequest.png')}`
-            
         };
     },
     computed:{
@@ -168,9 +166,6 @@ export default {
             parentId:'auth/id',
             kidId:'auth/select'
         }),
-        rows(){
-            return this.quests.length;
-        }
     },
     created() {
         this.fetchParentsQuests();
