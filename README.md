@@ -75,16 +75,10 @@ yarn serve
 
 <br>
 
-### **👪팀원소개 **
+## **👪 팀원소개**
 
-**이진영**
-
-- Github: [@leejinzero](https://github.com/leejinzero)
-
-**김형준**
-
-- Github: [@hyungjun268](https://github.com/hyungjun268)
-
-**유현진**
-
-- Github: [@guswls](https://github.com/guswls)
+| Name   | GitHub                                         | Role      |
+| ------ | ---------------------------------------------- | --------- |
+| 이진영 | [leejinzero](https://github.com/leejinzero)    | FullStack |
+| 김형준 | [@guswls](https://github.com/guswls)           | FullStack |
+| 유현진 | [@hyungjun268](https://github.com/hyungjun268) | FrontEnd  |
