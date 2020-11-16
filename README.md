@@ -1,5 +1,7 @@
-# **키코런** 
+## 🏠 [Explore KiCoLearn](https://k3a506.p.ssafy.io/)
+<br>
 
+# **키코런** 
 > 어린이를 위한 쉽고 간편한 경제체험 서비스
 
 ## **✏️ 개요** 
@@ -8,7 +10,7 @@
 
 ## **🔧 Tech Stack**
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4dbfa18d-fbac-4746-8c7e-3b47442b0cdf/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4dbfa18d-fbac-4746-8c7e-3b47442b0cdf/Untitled.png)
+![](./images/techstack.png)
 
 ## **⚙️ Install and Usage**
 
