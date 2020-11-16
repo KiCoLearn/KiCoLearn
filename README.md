@@ -9,7 +9,7 @@
 
 ## 🔧 **Tech Stack**
 
-![](./images/이미지1.png)
+![](./images/techstack.png)
 
 ## **⚙️ Install and Usage**
 
