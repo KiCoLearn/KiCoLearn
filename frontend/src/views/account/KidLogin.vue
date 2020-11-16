@@ -118,7 +118,7 @@ export default {
                     certificationNo: code
                 })
                 .then((response) => {
-                    console.log(response);
+                    //console.log(response);
                     this.setToken({
                         accessToken: response.headers['authorization'],
                         refreshToken: null,
