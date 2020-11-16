@@ -25,6 +25,7 @@
                         <img
                             src="@/assets/gallery.png"
                             width="45px"
+                            class="profile"
                         >
                     </button>
                 </template>
