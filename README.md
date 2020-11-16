@@ -1,16 +1,16 @@
-## 키코런
+# **키코런** 
 
 > 어린이를 위한 쉽고 간편한 경제체험 서비스
 
-## 개요
+## **✏️ 개요** 
 
 > 어릴 때의 경제 습관을 길들여야 한다는 경제 전문가들의 분석 결과가 존재한다. 하지만, 맞벌이 부부의 경우 자녀의 경제 습관 혹은 지식을 기르기 위해 시간을 내기가 힘들다. 또한, 부모와 자녀가 동시에 사용할 수 있는 컨텐츠 부족으로 시작하기 쉽지 않다. 이를 위해, 쉽고 간편한 경제교육 서비스를 만들었다.
 
-## 🔧 **Tech Stack**
+## **🔧 Tech Stack**
 
 ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4dbfa18d-fbac-4746-8c7e-3b47442b0cdf/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4dbfa18d-fbac-4746-8c7e-3b47442b0cdf/Untitled.png)
 
-## **⚙️ Install and Usage**
+## **⚙️ Install and Usage**
 
 ### **Frontend**
 
@@ -75,16 +75,16 @@ yarn serve
 
 <br>
 
-### **👪팀원소개**
+### **👪���팀원소개 **���**
 
 **이진영**
 
-- Github: [@leejinzero](https://github.com/leejinzero)
+- Github: [@leejinzero](https://github.com/leejinzero)
 
 **김형준**
 
-- Github: [@hyungjun268](https://github.com/hyungjun268)
+- Github: [@hyungjun268](https://github.com/hyungjun268)
 
 **유현진**
 
-- Github: [@guswls](https://github.com/guswls)
+- Github: [@guswls](https://github.com/guswls)
