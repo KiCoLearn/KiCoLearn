@@ -12,27 +12,30 @@
                         :key="quest.questNo"
                     >
                         <li>
-                            <v-row>
-                                <kid-detailquest
-                                    :target="quest"
-                                />
-                                <div
+                            <v-row justify="center">
+                                <v-col cols="12">
+                                    <kid-detailquest
+                                        :target="quest"
+                                    />
+                                </v-col>
+                                <v-col
+                                    cols="6"
                                     class="detail"
                                 >
-                                    포인트 : {{ quest.reward }}
-                                </div>
-                                <div class="right top">
+                                    <b>{{ quest.reward }}</b>원
+                                </v-col>
+                                <v-col cols="4">
                                     <button
                                         class="btn"
                                         @click="quest.request? pass :success(quest.questNo)"
                                     >
                                         <img
-                                            :src="!quest.finish ? requestquest :finishquest"
-                                            width="100px"
+                                            :src="!quest.request? requestquest : !quest.finish ? pushNotification :finishquest"
+                                            width="80px"
                                             alt="success"
                                         >
                                     </button>
-                                </div>
+                                </v-col>
                             </v-row>
                         </li>
                     </ul>
@@ -72,7 +75,8 @@ export default {
             },
             kidDetailquest: false,
             requestquest: `${require('@/assets/request.png')}`,
-            finishquest :  `${require('@/assets/good.png')}`
+            finishquest :  `${require('@/assets/good.png')}`,
+            pushNotification : `${require('@/assets/pushNotification.png')}`
           
 
         };
@@ -126,6 +130,10 @@ export default {
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Gochi+Hand);
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+.col{
+  padding: 0;
+}
 
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -320,9 +328,9 @@ li {
   border-radius: 3px;
 }
 .detail{
-  width: 70%;
-  margin-top: 5px;
-  text-align: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .right {
   float: right;

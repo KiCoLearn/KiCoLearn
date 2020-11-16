@@ -7,9 +7,10 @@
             <div
                 class="detail"
                 v-bind="attrs"
+                style="background:white;opacity:0.7"
                 v-on="on"
             >
-                퀘스트 : {{ target.name }}
+                <b>{{ target.name }}</b>
             </div>
         </template>
         <v-card>
@@ -94,8 +95,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    ::v-deep .v-card__subtitle, div{
-        padding-bottom: 8px !important;
-        margin-top: 0 !important;
-    }
+  
 </style>
