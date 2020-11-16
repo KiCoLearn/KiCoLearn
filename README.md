@@ -3,17 +3,17 @@
 > <br>
 > 어린이를 위한 쉽고 간편한 경제체험 서비스
 
+
 ## **✏️ Overview** 
 
 > 어릴 때의 경제 습관을 길들여야 한다는 경제 전문가들의 분석 결과가 존재한다. 하지만, 맞벌이 부부의 경우 자녀의 경제 습관 혹은 지식을 기르기 위해 시간을 내기가 힘들다. 또한, 부모와 자녀가 동시에 사용할 수 있는 컨텐츠 부족으로 시작하기 쉽지 않다. 이를 위해, 쉽고 간편한 경제교육 서비스를 만들었다.
 
-## **🔧 Tech Stack**
-
-![](./images/techstack.png)
 
 ## **⚙️ Install and Usage**
 
 ### Requirements
+
+---
 
 ### frontend
 **/frontend/.env**
@@ -63,9 +63,10 @@ jwt.salt=
 fcm.server-key=
 custom.server-url=
 ```
-<br>
 
 ### Project setup
+
+---
 
 #### frontend
 ``` sh
@@ -127,7 +128,11 @@ mvn package
 
 - 자녀의 소비 패턴(오늘, 이번주)과 잔액을 확인 가능
 
-<br>
+
+## **🔧 Tech Stack**
+
+![](./images/techstack.png)
+
 
 ## **👪 Contributors**
 
