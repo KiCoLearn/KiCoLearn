@@ -146,7 +146,7 @@
                     <v-col
                         v-else
                         cols="6"
-                        style="border-right: 2px solid #ffdd93;margin:auto"
+                        style="margin:auto"
                     >
                         <img
                             src="@/assets/empty.png"
