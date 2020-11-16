@@ -12,7 +12,7 @@
                 <img 
                     class="connect-image"
                     src="@/assets/children.png"
-                    width="45px"
+                    width="55px"
                     alt="addquest"
                 >
             </button>                          

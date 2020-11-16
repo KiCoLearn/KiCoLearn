@@ -45,7 +45,7 @@
                                     class="btn"
                                 >
                                     <img
-                                        width="45px"
+                                        width="55px"
                                         src="@/assets/good.png"
                                         alt="success"
                                     >
@@ -58,7 +58,7 @@
                                     <img
                                             
                                         :src="!kidQuest.request ? norequest :newrequest"
-                                        width="45px"
+                                        width="55px"
                                         alt="success"
                                     >
                                 </button>
