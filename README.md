@@ -1,4 +1,6 @@
-### 🏠 [Explore KiCoLearn](https://k3a506.p.ssafy.io/)
+## 🏠 [Explore KiCoLearn](https://k3a506.p.ssafy.io/)
+<br>
+
 ## 키코런
 
 > 어린이를 위한 쉽고 간편한 경제체험 서비스
