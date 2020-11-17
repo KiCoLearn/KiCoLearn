@@ -1,34 +1,87 @@
-## 🏠 [Explore KiCoLearn](https://k3a506.p.ssafy.io/)
-<br>
-
-# **키코런** 
+# **🏠[ 키코런](https://k3a506.p.ssafy.io/)** 
+> Kid + Economy + Learn 
+> <br>
 > 어린이를 위한 쉽고 간편한 경제체험 서비스
 
-## **✏️ 개요** 
+
+## **✏️ Overview** 
 
 > 어릴 때의 경제 습관을 길들여야 한다는 경제 전문가들의 분석 결과가 존재한다. 하지만, 맞벌이 부부의 경우 자녀의 경제 습관 혹은 지식을 기르기 위해 시간을 내기가 힘들다. 또한, 부모와 자녀가 동시에 사용할 수 있는 컨텐츠 부족으로 시작하기 쉽지 않다. 이를 위해, 쉽고 간편한 경제교육 서비스를 만들었다.
 
-## **🔧 Tech Stack**
-
-![](./images/techstack.png)
 
 ## **⚙️ Install and Usage**
 
-### **Frontend**
+### Requirements
 
-- Project setup
+---
 
+### frontend
+**/frontend/.env**
+``` properties
+VUE_APP_API_URL=
+VUE_APP_OAUTH_KAKAO_CLIENT_ID=
+VUE_APP_OAUTH_KAKAO_CLIENT_SECRET=
+VUE_APP_OAUTH_KAKAO_REDIRECTION_URI=
+
+VUE_APP_PUBLIC_VAPID_KEY=
+VUE_APP_API_KEY=
+VUE_APP_AUTH_DOMAIN=
+VUE_APP_DATABASE_URL=
+VUE_APP_PROJECT_ID=
+VUE_APP_STORAGE_BUCKET=
+VUE_APP_MESSAGE_SENDER_ID=
+VUE_APP_APP_ID=
+VUE_APP_MEASUREMENT_ID=
+
+VUE_APP_BUCKET_NAME=
+VUE_APP_BUCKET_REGION=
+VUE_APP_IDENTITY_POOL_ID=
+VUE_APP_S3_BASE_URL=
 ```
+
+### backend
+**/api/src/main/resources/application-properties**
+``` properties
+#database
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+#mybatis
+mybatis.config-location=classpath:/mybatis/mybatis_config.xml
+mybatis.configuration.return-instance-for-empty-row=true
+
+#port
+server.port=
+
+#jwt
+jwt.expmin=
+jwt.salt=
+
+#fcm
+fcm.server-key=
+custom.server-url=
+```
+
+### Project setup
+
+---
+
+#### frontend
+``` sh
+cd frontend
 yarn install
-```
-
-- Compiles and hot-reloads for development
-
-```
 yarn serve
 ```
 
-## **⭐ 키코런의 주요기능**
+#### backend
+``` sh
+cd api
+mvn package
+```
+
+## **⭐ Main Service**
 
 ### **1. Quest**
 
@@ -75,7 +128,10 @@ yarn serve
 
 - 자녀의 소비 패턴(오늘, 이번주)과 잔액을 확인 가능
 
-<br>
+
+## **🔧 Tech Stack**
+
+![](./images/techstack.png)
 
 ## **👪 팀원소개**
 
