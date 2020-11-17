@@ -135,5 +135,5 @@ mvn package
 | ------ | ---------------------------------------------- | --------- |
 | 김현욱   | [tristan3716](https://github.com/tristan3716)  | FullStack |
 | 이진영   | [leejinzero](https://github.com/leejinzero)    | FullStack |
-| 김형준   | [hyungjun268](https://github.com/hyungjun268)  | FullStack |
+| 김형준   | [hyungjun26](https://github.com/hyungjun26)  | FullStack |
 | 유현진   | [guswls](https://github.com/guswls)            | FrontEnd  |
