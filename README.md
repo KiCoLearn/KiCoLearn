@@ -13,8 +13,6 @@
 
 ### Requirements
 
----
-
 ### frontend
 **/frontend/.env**
 ``` properties
@@ -65,8 +63,6 @@ custom.server-url=
 ```
 
 ### Project setup
-
----
 
 #### frontend
 ``` sh
